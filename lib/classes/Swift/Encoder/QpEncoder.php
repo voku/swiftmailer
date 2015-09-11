@@ -279,9 +279,12 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      */
     protected function _standardize($string)
     {
-        $string = str_replace(array("\t=0D=0A", ' =0D=0A', '=0D=0A'),
-            array("=09\r\n", "=20\r\n", "\r\n"), $string
-            );
+        $string = str_replace(
+            array("\t=0D=0A", ' =0D=0A', '=0D=0A'),
+            array("=09\r\n", "=20\r\n", "\r\n"),
+            $string
+        );
+
         switch ($end = ord(substr($string, -1))) {
             case 0x09:
             case 0x20:
