@@ -15,57 +15,113 @@
  */
 class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 {
-    /** A collection of Headers for this mime entity */
+    /**
+     * A collection of Headers for this mime entity
+     *
+     * @var Swift_Mime_HeaderSet
+     */
     private $_headers;
 
-    /** The body as a string, or a stream */
+    /**
+     * The body as a string, or a stream
+     */
     private $_body;
 
-    /** The encoder that encodes the body into a streamable format */
+    /**
+     * The encoder that encodes the body into a streamable format
+     *
+     * @var Swift_Mime_ContentEncoder
+     */
     private $_encoder;
 
-    /** The grammar to use for id validation */
+    /**
+     * The grammar to use for id validation
+     *
+     * @var Swift_Mime_Grammar
+     */
     private $_grammar;
 
-    /** A mime boundary, if any is used */
+    /**
+     * A mime boundary, if any is used
+     */
     private $_boundary;
 
-    /** Mime types to be used based on the nesting level */
+    /**
+     * Mime types to be used based on the nesting level
+     *
+     * @var array
+     */
     private $_compositeRanges = array(
         'multipart/mixed' => array(self::LEVEL_TOP, self::LEVEL_MIXED),
         'multipart/alternative' => array(self::LEVEL_MIXED, self::LEVEL_ALTERNATIVE),
         'multipart/related' => array(self::LEVEL_ALTERNATIVE, self::LEVEL_RELATED),
     );
 
-    /** A set of filter rules to define what level an entity should be nested at */
+    /**
+     * A set of filter rules to define what level an entity should be nested at
+     *
+     * @var array
+     */
     private $_compoundLevelFilters = array();
 
-    /** The nesting level of this entity */
+    /**
+     * The nesting level of this entity
+     *
+     * @var int
+     */
     private $_nestingLevel = self::LEVEL_ALTERNATIVE;
 
-    /** A KeyCache instance used during encoding and streaming */
+    /**
+     * A KeyCache instance used during encoding and streaming
+     *
+     * @var Swift_KeyCache
+     */
     private $_cache;
 
-    /** Direct descendants of this entity */
+    /**
+     * Direct descendants of this entity
+     *
+     * @var Swift_Mime_MimeEntity[]|array
+     */
     private $_immediateChildren = array();
 
-    /** All descendants of this entity */
+    /**
+     * All descendants of this entity
+     *
+     * @var array
+     */
     private $_children = array();
 
-    /** The maximum line length of the body of this entity */
+    /**
+     * The maximum line length of the body of this entity
+     *
+     * @var int
+     */
     private $_maxLineLength = 78;
 
-    /** The order in which alternative mime types should appear */
+    /**
+     * The order in which alternative mime types should appear
+     *
+     * @var array
+     */
     private $_alternativePartOrder = array(
         'text/plain' => 1,
         'text/html' => 2,
         'multipart/related' => 3,
     );
 
-    /** The CID of this entity */
+    /**
+     * The CID of this entity
+     *
+     * @var string
+     */
     private $_id;
 
-    /** The key used for accessing the cache */
+    /**
+     * The key used for accessing the cache
+     *
+     * @var string
+     */
     private $_cacheKey;
 
     protected $_userContentType;
@@ -575,11 +631,17 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the model data (usually an array or a string) for $field.
+     *
+     * @param $field
+     *
+     * @return mixed|null
      */
     protected function _getHeaderFieldModel($field)
     {
         if ($this->_headers->has($field)) {
             return $this->_headers->get($field)->getFieldBodyModel();
+        } else {
+            return null;
         }
     }
 
@@ -733,6 +795,11 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         $this->_nestingLevel = $level;
     }
 
+    /**
+     * @param Swift_Mime_MimeEntity[] $children
+     *
+     * @return int
+     */
     private function _getCompoundLevel($children)
     {
         $level = 0;
@@ -743,6 +810,12 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         return $level;
     }
 
+    /**
+     * @param Swift_Mime_MimeEntity $child
+     * @param $compoundLevel
+     *
+     * @return mixed
+     */
     private function _getNeededChildLevel($child, $compoundLevel)
     {
         $filter = array();
@@ -762,11 +835,17 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         return $realLevel;
     }
 
+    /**
+     * @return Swift_Mime_SimpleMimeEntity
+     */
     private function _createChild()
     {
         return new self($this->_headers->newInstance(), $this->_encoder, $this->_cache, $this->_grammar);
     }
 
+    /**
+     * @param Swift_Mime_ContentEncoder $encoder
+     */
     private function _notifyEncoderChanged(Swift_Mime_ContentEncoder $encoder)
     {
         foreach ($this->_immediateChildren as $child) {
@@ -800,6 +879,12 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         }
     }
 
+    /**
+     * @param Swift_Mime_MimeEntity $a
+     * @param Swift_Mime_MimeEntity $b
+     *
+     * @return int
+     */
     private function _childSortAlgorithm($a, $b)
     {
         $typePrefs = array();
