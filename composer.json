@@ -19,7 +19,8 @@
     },
     "require-dev": {
         "mockery/mockery": "~0.9.1,<0.9.4",
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "0.7.*@dev"
     },
     "autoload": {
         "files": ["lib/swift_required.php"]

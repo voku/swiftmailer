@@ -3,15 +3,23 @@ language: php
 sudo: false
 
 before_script:
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - travis_retry composer self-update
+    - travis_retry composer install --no-interaction --prefer-source
+    - composer dump-autoload -o
     - cp tests/acceptance.conf.php.default tests/acceptance.conf.php
     - cp tests/smoke.conf.php.default tests/smoke.conf.php
-    - composer self-update
-    - composer update --no-interaction --prefer-source
     - gem install mailcatcher
     - mailcatcher --smtp-port 4456
 
 script:
-    - phpunit --verbose
+    - mkdir -p build/logs
+    - php vendor/bin/phpunit -c phpunit.xml
+
+after_script:
+    - php vendor/bin/coveralls -v
+    - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+    - bash <(curl -s https://codecov.io/bash)
 
 matrix:
     include:
