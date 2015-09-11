@@ -692,7 +692,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     private function _generateNewCacheKey()
     {
-        return md5(uniqid(getmypid().mt_rand(), true));
+        return md5(uniqid(getmypid() . mt_rand(), true));
     }
 
     private function _readStream(Swift_OutputByteStream $os)
@@ -843,7 +843,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     {
         $this->_headers = clone $this->_headers;
         $this->_encoder = clone $this->_encoder;
-        $this->_cacheKey = $this->_generateNewCacheKey();
+
         $children = array();
         foreach ($this->_children as $pos => $child) {
             if ($child instanceof Swift_Mime_Attachment) {
