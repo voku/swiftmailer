@@ -836,7 +836,11 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         $this->_cacheKey = uniqid();
         $children = array();
         foreach ($this->_children as $pos => $child) {
-            $children[$pos] = clone $child;
+            if ($child instanceof Swift_Mime_Attachment) {
+                $children[$pos] = $child;
+            } else {
+                $children[$pos] = clone $child;
+            }
         }
         $this->setChildren($children);
     }
