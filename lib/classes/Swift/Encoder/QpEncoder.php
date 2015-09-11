@@ -176,15 +176,12 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
         $this->_charStream->flushContents();
         $this->_charStream->importString($string);
 
-        // Fetching more than 4 chars at one is slower, as is fetching fewer bytes
-        // Conveniently 4 chars is the UTF-8 safe number since UTF-8 has up to 6
-        // bytes per char and (6 * 4 * 3 = 72 chars per line) * =NN is 3 bytes
         while (false !== $bytes = $this->_nextSequence()) {
-            // If we're filtering the input
+            // if we're filtering the input
             if (isset($this->_filter)) {
-                // If we can't filter because we need more bytes
+                // if we can't filter because we need more bytes
                 while ($this->_filter->shouldBuffer($bytes)) {
-                    // Then collect bytes into the buffer
+                    // then collect bytes into the buffer
                     if (false === $moreBytes = $this->_nextSequence(1)) {
                         break;
                     }
@@ -193,7 +190,7 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
                         $bytes[] = $b;
                     }
                 }
-                // And filter them
+                // and filter them
                 $bytes = $this->_filter->filter($bytes);
             }
 
@@ -260,11 +257,15 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
     /**
      * Get the next sequence of bytes to read from the char stream.
      *
+     * Fetching more than 4 chars at one is slower, as is fetching fewer bytes
+     * Conveniently 4 chars is the UTF-8 safe number since UTF-8 has up to 6
+     * bytes per char and (6 * 4 * 3 = 72 chars per line) * =NN is 3 bytes. -> TODO: need testing
+     *
      * @param int $size number of bytes to read
      *
      * @return integer[]
      */
-    protected function _nextSequence($size = 4)
+    protected function _nextSequence($size = 1024)
     {
         return $this->_charStream->readBytes($size);
     }
