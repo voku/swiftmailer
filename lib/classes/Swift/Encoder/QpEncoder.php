@@ -259,7 +259,9 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      *
      * Fetching more than 4 chars at one is slower, as is fetching fewer bytes
      * Conveniently 4 chars is the UTF-8 safe number since UTF-8 has up to 6
-     * bytes per char and (6 * 4 * 3 = 72 chars per line) * =NN is 3 bytes. -> TODO: need testing
+     * bytes per char and (6 * 4 * 3 = 72 chars per line) * =NN is 3 bytes.
+     *
+     * TODO: need testing
      *
      * @param int $size number of bytes to read
      *
