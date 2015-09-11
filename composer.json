@@ -1,5 +1,5 @@
 {
-    "name": "swiftmailer/swiftmailer",
+    "name": "voku/swiftmailer",
     "type": "library",
     "description": "Swiftmailer, free feature-rich PHP mailer",
     "keywords": ["mail","mailer","email"],
@@ -11,7 +11,14 @@
         },
         {
             "name": "Fabien Potencier",
-            "email": "fabien@symfony.com"
+            "email": "fabien@symfony.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Lars Moelleken",
+            "email": "lars@moelleken.org",
+            "homepage": "https://github.com/voku",
+            "role": "Developer"
         }
     ],
     "require": {
