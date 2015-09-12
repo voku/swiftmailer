@@ -104,6 +104,8 @@ class Swift_Transport_MailTransport implements Swift_Transport
      * @param string[]           $failedRecipients An array of failures by-reference
      *
      * @return int
+     *
+     * @throws Swift_TransportException
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
@@ -144,7 +146,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
 
         // Separate headers from body
         if (false !== $endHeaders = strpos($messageStr, "\r\n\r\n")) {
-            $headers = substr($messageStr, 0, $endHeaders)."\r\n"; //Keep last EOL
+            $headers = substr($messageStr, 0, $endHeaders)."\r\n"; // Keep last EOL
             $body = substr($messageStr, $endHeaders + 4);
         } else {
             $headers = $messageStr."\r\n";
@@ -204,7 +206,13 @@ class Swift_Transport_MailTransport implements Swift_Transport
         $this->_eventDispatcher->bindEventListener($plugin);
     }
 
-    /** Throw a TransportException, first sending it to any listeners */
+    /**
+     * Throw a TransportException, first sending it to any listeners
+     *
+     * @param Swift_TransportException $e
+     *
+     * @throws Swift_TransportException
+     */
     protected function _throwException(Swift_TransportException $e)
     {
         if ($evt = $this->_eventDispatcher->createTransportExceptionEvent($this, $e)) {
@@ -217,7 +225,13 @@ class Swift_Transport_MailTransport implements Swift_Transport
         }
     }
 
-    /** Determine the best-use reverse path for this message */
+    /**
+     * Determine the best-use reverse path for this message
+     *
+     * @param Swift_Mime_Message $message
+     *
+     * @return mixed|null|string
+     */
     private function _getReversePath(Swift_Mime_Message $message)
     {
         $return = $message->getReturnPath();

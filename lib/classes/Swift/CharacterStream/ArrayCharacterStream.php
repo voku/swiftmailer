@@ -15,28 +15,60 @@
  */
 class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStream
 {
-    /** A map of byte values and their respective characters */
+    /**
+     * A map of byte values and their respective characters
+     *
+     * @var array
+     */
     private static $_charMap;
 
-    /** A map of characters and their derivative byte values */
+    /**
+     * A map of characters and their derivative byte values
+     *
+     * @var array
+     */
     private static $_byteMap;
 
-    /** The char reader (lazy-loaded) for the current charset */
+    /**
+     * The char reader (lazy-loaded) for the current charset
+     *
+     * @var Swift_CharacterReader
+     */
     private $_charReader;
 
-    /** A factory for creating CharacterReader instances */
+    /**
+     * A factory for creating CharacterReader instance
+     *
+     * @var Swift_CharacterReaderFactory
+     */
     private $_charReaderFactory;
 
-    /** The character set this stream is using */
+    /**
+     * The character set this stream is using
+     *
+     * @var string
+     */
     private $_charset;
 
-    /** Array of characters */
+    /**
+     * Array of characters
+     *
+     * @var array
+     */
     private $_array = array();
 
-    /** Size of the array of character */
+    /**
+     * Size of the array of character
+     *
+     * @var array
+     */
     private $_array_size = array();
 
-    /** The current character offset in the stream */
+    /**
+     * The current character offset in the stream
+     *
+     * @var int
+     */
     private $_offset = 0;
 
     /**

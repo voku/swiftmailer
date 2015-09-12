@@ -15,25 +15,39 @@
  */
 class Swift_DependencyContainer
 {
-    /** Constant for literal value types */
+    /**
+     * Constant for literal value types
+     */
     const TYPE_VALUE = 0x0001;
 
-    /** Constant for new instance types */
+    /**
+     * Constant for new instance types
+     */
     const TYPE_INSTANCE = 0x0010;
 
-    /** Constant for shared instance types */
+    /**
+     * Constant for shared instance types
+     */
     const TYPE_SHARED = 0x0100;
 
-    /** Constant for aliases */
+    /**
+     * Constant for aliases
+     */
     const TYPE_ALIAS = 0x1000;
 
-    /** Singleton instance */
+    /**
+     * Singleton instance
+     */
     private static $_instance = null;
 
-    /** The data container */
+    /**
+     * The data container
+     */
     private $_store = array();
 
-    /** The current endpoint in the data container */
+    /**
+     * The current endpoint in the data container
+     */
     private $_endPoint;
 
     /**
@@ -291,13 +305,26 @@ class Swift_DependencyContainer
         return $this;
     }
 
-    /** Get the literal value with $itemName */
+    /**
+     * Get the literal value with $itemName
+     *
+     * @param $itemName
+     *
+     * @return mixed
+     */
     private function _getValue($itemName)
     {
         return $this->_store[$itemName]['value'];
     }
 
-    /** Resolve an alias to another item */
+    /**
+     * Resolve an alias to another item
+     *
+     * @param $itemName
+     *
+     * @return mixed
+     * @throws Swift_DependencyException
+     */
     private function _createAlias($itemName)
     {
         return $this->lookup($this->_store[$itemName]['ref']);
@@ -316,7 +343,13 @@ class Swift_DependencyContainer
         return $reflector->newInstance();
     }
 
-    /** Create and register a shared instance of $itemName */
+    /**
+     * Create and register a shared instance of $itemName
+     *
+     * @param $itemName
+     *
+     * @return mixed
+     */
     private function _createSharedInstance($itemName)
     {
         if (!isset($this->_store[$itemName]['instance'])) {
@@ -326,7 +359,11 @@ class Swift_DependencyContainer
         return $this->_store[$itemName]['instance'];
     }
 
-    /** Get the current endpoint in the store */
+    /**
+     * Get the current endpoint in the store
+     *
+     * @return mixed
+     */
     private function &_getEndPoint()
     {
         if (!isset($this->_endPoint)) {
@@ -338,7 +375,13 @@ class Swift_DependencyContainer
         return $this->_endPoint;
     }
 
-    /** Get an argument list with dependencies resolved */
+    /**
+     * Get an argument list with dependencies resolved
+     *
+     * @param array $args
+     *
+     * @return array
+     */
     private function _resolveArgs(array $args)
     {
         $resolved = array();

@@ -221,7 +221,13 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         }
     }
 
-    /** Write this bytes to the stream */
+    /**
+     * Write this bytes to the stream
+     *
+     * @param string $bytes
+     *
+     * @return int
+     */
     protected function _commit($bytes)
     {
         if (isset($this->_in)) {
