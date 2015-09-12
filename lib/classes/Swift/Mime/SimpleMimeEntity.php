@@ -931,7 +931,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
         $children = array();
         foreach ($this->_children as $pos => $child) {
-            if ($child instanceof Swift_Mime_Attachment) {
+            if ($child instanceof Swift_Mime_Attachment || $child instanceof Swift_Mime_EmbeddedFile) {
                 $children[$pos] = $child;
             } else {
                 $children[$pos] = clone $child;
