@@ -15,22 +15,44 @@
  */
 abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
 {
-    /** Input-Output buffer for sending/receiving SMTP commands and responses */
+    /**
+     * Input-Output buffer for sending/receiving SMTP commands and responses
+     *
+     * @var Swift_Transport_IoBuffer
+     */
     protected $_buffer;
 
-    /** Connection status */
+    /**
+     * Connection status
+     *
+     * @var bool
+     */
     protected $_started = false;
 
-    /** The domain name to use in HELO command */
+    /**
+     * The domain name to use in HELO command
+     *
+     * @var string
+     */
     protected $_domain = '[127.0.0.1]';
 
-    /** The event dispatching layer */
+    /**
+     * The event dispatching layer
+     *
+     * @var Swift_Events_EventDispatcher
+     */
     protected $_eventDispatcher;
 
-    /** Source Ip */
+    /**
+     * Source Ip
+     *
+     * @var string
+     */
     protected $_sourceIp;
 
-    /** Return an array of params for the Buffer */
+    /**
+     * Return an array of params for the Buffer
+     */
     abstract protected function _getBufferParams();
 
     /**
@@ -142,9 +164,12 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * The return value is the number of recipients who were accepted for delivery.
      *
      * @param Swift_Mime_Message $message
-     * @param string[]           $failedRecipients An array of failures by-reference
+     * @param string[]|null           $failedRecipients An array of failures by-reference
      *
      * @return int
+     *
+     * @throws Exception
+     * @throws Swift_TransportException
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
@@ -297,7 +322,11 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             );
     }
 
-    /** Send the MAIL FROM command */
+    /**
+     * Send the MAIL FROM command
+     *
+     * @param $address
+     */
     protected function _doMailFromCommand($address)
     {
         $this->executeCommand(
@@ -305,7 +334,11 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             );
     }
 
-    /** Send the RCPT TO command */
+    /**
+     * Send the RCPT TO command
+     *
+     * @param $address
+     */
     protected function _doRcptToCommand($address)
     {
         $this->executeCommand(
@@ -319,7 +352,13 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         $this->executeCommand("DATA\r\n", array(354));
     }
 
-    /** Stream the contents of the message over the buffer */
+    /**
+     * Stream the contents of the message over the buffer
+     *
+     * @param Swift_Mime_Message $message
+     *
+     * @throws Swift_TransportException
+     */
     protected function _streamMessage(Swift_Mime_Message $message)
     {
         $this->_buffer->setWriteTranslations(array("\r\n." => "\r\n.."));
@@ -333,7 +372,13 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         $this->executeCommand("\r\n.\r\n", array(250));
     }
 
-    /** Determine the best-use reverse path for this message */
+    /**
+     * Determine the best-use reverse path for this message
+     *
+     * @param Swift_Mime_Message $message
+     *
+     * @return mixed|null|string
+     */
     protected function _getReversePath(Swift_Mime_Message $message)
     {
         $return = $message->getReturnPath();
@@ -354,7 +399,13 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         return $path;
     }
 
-    /** Throw a TransportException, first sending it to any listeners */
+    /**
+     * Throw a TransportException, first sending it to any listeners
+     *
+     * @param Swift_TransportException $e
+     *
+     * @throws Swift_TransportException
+     */
     protected function _throwException(Swift_TransportException $e)
     {
         if ($evt = $this->_eventDispatcher->createTransportExceptionEvent($this, $e)) {
@@ -367,7 +418,14 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         }
     }
 
-    /** Throws an Exception if a response code is incorrect */
+    /**
+     * Throws an Exception if a response code is incorrect
+     *
+     * @param $response
+     * @param $wanted
+     *
+     * @throws Swift_TransportException
+     */
     protected function _assertResponseCode($response, $wanted)
     {
         list($code) = sscanf($response, '%3d');
@@ -388,7 +446,14 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         }
     }
 
-    /** Get an entire multi-line response using its sequence number */
+    /**
+     * Get an entire multi-line response using its sequence number
+     *
+     * @param $seq
+     *
+     * @return string
+     * @throws Swift_TransportException
+     */
     protected function _getFullResponse($seq)
     {
         $response = '';
@@ -409,7 +474,16 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         return $response;
     }
 
-    /** Send an email to the given recipients from the given reverse path */
+    /**
+     * Send an email to the given recipients from the given reverse path
+     *
+     * @param       $message
+     * @param       $reversePath
+     * @param array $recipients
+     * @param array $failedRecipients
+     *
+     * @return int
+     */
     private function _doMailTransaction($message, $reversePath, array $recipients, array &$failedRecipients)
     {
         $sent = 0;
@@ -433,7 +507,16 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         return $sent;
     }
 
-    /** Send a message to the given To: recipients */
+    /**
+     * Send a message to the given To: recipients
+     *
+     * @param Swift_Mime_Message $message
+     * @param                    $reversePath
+     * @param array              $to
+     * @param array              $failedRecipients
+     *
+     * @return int
+     */
     private function _sendTo(Swift_Mime_Message $message, $reversePath, array $to, array &$failedRecipients)
     {
         if (empty($to)) {
@@ -444,15 +527,27 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             $failedRecipients);
     }
 
-    /** Send a message to all Bcc: recipients */
+    /**
+     * Send a message to all Bcc: recipients
+     *
+     * @param Swift_Mime_Message $message
+     * @param                    $reversePath
+     * @param array              $bcc
+     * @param array              $failedRecipients
+     *
+     * @return int
+     */
     private function _sendBcc(Swift_Mime_Message $message, $reversePath, array $bcc, array &$failedRecipients)
     {
         $sent = 0;
         foreach ($bcc as $forwardPath => $name) {
             $message->setBcc(array($forwardPath => $name));
             $sent += $this->_doMailTransaction(
-                $message, $reversePath, array($forwardPath), $failedRecipients
-                );
+                $message,
+                $reversePath,
+                array($forwardPath),
+                $failedRecipients
+            );
         }
 
         return $sent;
@@ -469,7 +564,13 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         }
     }
 
-    /** Determine is the $hostname is a fully-qualified name */
+    /**
+     * Determine is the $hostname is a fully-qualified name
+     *
+     * @param $hostname
+     *
+     * @return bool
+     */
     private function _isFqdn($hostname)
     {
         // We could do a really thorough check, but there's really no point
