@@ -257,10 +257,12 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         $failures = (array) $failures;
         $stopSignal = false;
         $response = null;
+
         foreach ($this->_getActiveHandlers() as $handler) {
             $response = $handler->onCommand(
                 $this, $command, $codes, $failures, $stopSignal
-                );
+            );
+
             if ($stopSignal) {
                 return $response;
             }
@@ -275,11 +277,15 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     public function __call($method, $args)
     {
         foreach ($this->_handlers as $handler) {
-            if (in_array(strtolower($method),
-                array_map('strtolower', (array) $handler->exposeMixinMethods())
-                )) {
+            if (
+                in_array(
+                    strtolower($method),
+                    array_map('strtolower', (array) $handler->exposeMixinMethods())
+                )
+            ) {
                 $return = call_user_func_array(array($handler, $method), $args);
-                // Allow fluid method calls
+
+                // allow fluid method calls
                 if (is_null($return) && substr($method, 0, 3) == 'set') {
                     return $this;
                 } else {
@@ -287,7 +293,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
                 }
             }
         }
-        trigger_error('Call to undefined method '.$method, E_USER_ERROR);
+        trigger_error('Call to undefined method ' . $method, E_USER_ERROR);
     }
 
     /** Get the params to initialize the buffer */
@@ -296,7 +302,11 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         return $this->_params;
     }
 
-    /** Overridden to perform EHLO instead */
+    /**
+     * Overridden to perform EHLO instead
+     *
+     * @throws Swift_TransportException
+     */
     protected function _doHeloCommand()
     {
         try {
@@ -304,7 +314,8 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
                 sprintf("EHLO %s\r\n", $this->_domain), array(250)
                 );
         } catch (Swift_TransportException $e) {
-            return parent::_doHeloCommand();
+            parent::_doHeloCommand();
+            return null;
         }
 
         if ($this->_params['tls']) {
@@ -320,7 +331,8 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
                         sprintf("EHLO %s\r\n", $this->_domain), array(250)
                         );
                 } catch (Swift_TransportException $e) {
-                    return parent::_doHeloCommand();
+                    parent::_doHeloCommand();
+                    return null;
                 }
             } catch (Swift_TransportException $e) {
                 $this->_throwException($e);
@@ -334,18 +346,24 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         }
     }
 
-    /** Overridden to add Extension support */
+    /**
+     * Overridden to add Extension support
+     *
+     * @param $address
+     */
     protected function _doMailFromCommand($address)
     {
         $handlers = $this->_getActiveHandlers();
+
         $params = array();
         foreach ($handlers as $handler) {
             $params = array_merge($params, (array) $handler->getMailParams());
         }
+
         $paramStr = !empty($params) ? ' '.implode(' ', $params) : '';
         $this->executeCommand(
             sprintf("MAIL FROM:<%s>%s\r\n", $address, $paramStr), array(250)
-            );
+        );
     }
 
     /** Overridden to add Extension support */
@@ -391,7 +409,11 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         }
     }
 
-    /** Get ESMTP handlers which are currently ok to use */
+    /**
+     * Get ESMTP handlers which are currently ok to use
+     *
+     * @return Swift_Transport_EsmtpHandler[]
+     */
     private function _getActiveHandlers()
     {
         $handlers = array();
@@ -404,7 +426,14 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         return $handlers;
     }
 
-    /** Custom sort for extension handler ordering */
+    /**
+     * Custom sort for extension handler ordering
+     *
+     * @param Swift_Transport_EsmtpHandler $a
+     * @param Swift_Transport_EsmtpHandler $b
+     *
+     * @return mixed
+     */
     private function _sortHandlers($a, $b)
     {
         return $a->getPriorityOver($b->getHandledKeyword());

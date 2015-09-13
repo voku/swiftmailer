@@ -18,7 +18,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     /**
      * Input-Output buffer for sending/receiving SMTP commands and responses
      *
-     * @var Swift_Transport_IoBuffer
+     * @var Swift_Transport_IoBuffer|Swift_Transport_StreamBuffer
      */
     protected $_buffer;
 
@@ -319,7 +319,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     {
         $this->executeCommand(
             sprintf("HELO %s\r\n", $this->_domain), array(250)
-            );
+        );
     }
 
     /**
@@ -331,7 +331,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     {
         $this->executeCommand(
             sprintf("MAIL FROM:<%s>\r\n", $address), array(250)
-            );
+        );
     }
 
     /**
@@ -343,7 +343,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     {
         $this->executeCommand(
             sprintf("RCPT TO:<%s>\r\n", $address), array(250, 251, 252)
-            );
+        );
     }
 
     /** Send the DATA command */
@@ -362,12 +362,14 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     protected function _streamMessage(Swift_Mime_Message $message)
     {
         $this->_buffer->setWriteTranslations(array("\r\n." => "\r\n.."));
+
         try {
             $message->toByteStream($this->_buffer);
             $this->_buffer->flushBuffers();
         } catch (Swift_TransportException $e) {
             $this->_throwException($e);
         }
+
         $this->_buffer->setWriteTranslations(array());
         $this->executeCommand("\r\n.\r\n", array(250));
     }
@@ -385,22 +387,23 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         $sender = $message->getSender();
         $from = $message->getFrom();
         $path = null;
+
         if (!empty($return)) {
             $path = $return;
         } elseif (!empty($sender)) {
-            // Don't use array_keys
-            reset($sender); // Reset Pointer to first pos
-            $path = key($sender); // Get key
+            // don't use array_keys
+            reset($sender); // reset Pointer to first pos
+            $path = key($sender); // get key
         } elseif (!empty($from)) {
-            reset($from); // Reset Pointer to first pos
-            $path = key($from); // Get key
+            reset($from); // reset Pointer to first pos
+            $path = key($from); // get key
         }
 
         return $path;
     }
 
     /**
-     * Throw a TransportException, first sending it to any listeners
+     * Throw a TransportException, first sending it to any listeners.
      *
      * @param Swift_TransportException $e
      *
@@ -556,8 +559,11 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     /** Try to determine the hostname of the server this is run on */
     private function _lookupHostname()
     {
-        if (!empty($_SERVER['SERVER_NAME'])
-            && $this->_isFqdn($_SERVER['SERVER_NAME'])) {
+        if (
+            !empty($_SERVER['SERVER_NAME'])
+            &&
+            $this->_isFqdn($_SERVER['SERVER_NAME'])
+        ) {
             $this->_domain = $_SERVER['SERVER_NAME'];
         } elseif (!empty($_SERVER['SERVER_ADDR'])) {
             $this->_domain = sprintf('[%s]', $_SERVER['SERVER_ADDR']);
