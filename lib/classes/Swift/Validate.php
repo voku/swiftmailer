@@ -36,7 +36,7 @@ class Swift_Validate
         }
 
         return (bool) preg_match(
-                '/^'.self::$grammar->getDefinition('addr-spec').'$/D',
+                '/^' . self::$grammar->getDefinition('addr-spec') . '$/D',
                 $email
             );
     }

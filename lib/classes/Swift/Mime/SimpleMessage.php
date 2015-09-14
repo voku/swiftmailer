@@ -563,7 +563,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
     {
         $this->attach($entity);
 
-        return 'cid:'.$entity->getId();
+        return 'cid:' . $entity->getId();
     }
 
     /**

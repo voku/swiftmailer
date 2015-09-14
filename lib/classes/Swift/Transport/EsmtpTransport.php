@@ -360,7 +360,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
             $params = array_merge($params, (array) $handler->getMailParams());
         }
 
-        $paramStr = !empty($params) ? ' '.implode(' ', $params) : '';
+        $paramStr = !empty($params) ? ' ' . implode(' ', $params) : '';
         $this->executeCommand(
             sprintf("MAIL FROM:<%s>%s\r\n", $address, $paramStr), array(250)
         );
@@ -374,7 +374,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         foreach ($handlers as $handler) {
             $params = array_merge($params, (array) $handler->getRcptParams());
         }
-        $paramStr = !empty($params) ? ' '.implode(' ', $params) : '';
+        $paramStr = !empty($params) ? ' ' . implode(' ', $params) : '';
         $this->executeCommand(
             sprintf("RCPT TO:<%s>%s\r\n", $address, $paramStr), array(250, 251, 252)
             );
@@ -432,7 +432,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      * @param Swift_Transport_EsmtpHandler $a
      * @param Swift_Transport_EsmtpHandler $b
      *
-     * @return mixed
+     * @return integer
      */
     private function _sortHandlers($a, $b)
     {

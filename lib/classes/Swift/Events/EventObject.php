@@ -24,7 +24,7 @@ class Swift_Events_EventObject implements Swift_Events_Event
     /**
      * Create a new EventObject originating at $source.
      *
-     * @param object $source
+     * @param Swift_Transport $source
      */
     public function __construct($source)
     {

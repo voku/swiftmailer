@@ -70,7 +70,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      *
      * @throws Swift_RfcComplianceException
      *
-     * @return array
+     * @return string[]
      */
     public function getFieldBodyModel()
     {
@@ -196,7 +196,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      *
      * @see getNameAddresses()
      *
-     * @return string[]
+     * @return integer[]
      */
     public function getAddresses()
     {
@@ -326,7 +326,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
             $mailboxStr = $email;
             if (!is_null($name)) {
                 $nameStr = $this->createDisplayNameString($name, empty($strings));
-                $mailboxStr = $nameStr.' <'.$mailboxStr.'>';
+                $mailboxStr = $nameStr . ' <' . $mailboxStr . '>';
             }
             $strings[] = $mailboxStr;
         }
@@ -343,10 +343,10 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     private function _assertValidAddress($address)
     {
-        if (!preg_match('/^'.$this->getGrammar()->getDefinition('addr-spec').'$/D',
+        if (!preg_match('/^' . $this->getGrammar()->getDefinition('addr-spec') . '$/D',
             $address)) {
             throw new Swift_RfcComplianceException(
-                'Address in mailbox given ['.$address.
+                'Address in mailbox given [' . $address .
                 '] does not comply with RFC 2822, 3.6.2.'
                 );
         }

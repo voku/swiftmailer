@@ -298,6 +298,10 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
         $this->_array_size = 0;
     }
 
+    /**
+     * @param resource $fp
+     * @param integer $len
+     */
     private function _reloadBuffer($fp, $len)
     {
         if (!feof($fp) && ($bytes = fread($fp, $len)) !== false) {
