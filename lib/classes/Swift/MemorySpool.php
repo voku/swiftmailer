@@ -15,6 +15,15 @@
  */
 class Swift_MemorySpool implements Swift_Spool
 {
+
+    public function __construct()
+    {
+        $GLOBALS['swift_mailer_global']['transport'] = 'MemorySpool';
+    }
+
+    /**
+     * @var array
+     */
     protected $messages = array();
 
     /**

@@ -430,10 +430,12 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function __clone()
     {
-        $this->_factory = clone $this->_factory;
-        foreach ($this->_headers as $groupKey => $headerGroup) {
-            foreach ($headerGroup as $key => $header) {
-                $this->_headers[$groupKey][$key] = clone $header;
+        if ($GLOBALS['swift_mailer_global']['transport'] == 'MemorySpool') {
+            $this->_factory = clone $this->_factory;
+            foreach ($this->_headers as $groupKey => $headerGroup) {
+                foreach ($headerGroup as $key => $header) {
+                    $this->_headers[$groupKey][$key] = clone $header;
+                }
             }
         }
     }

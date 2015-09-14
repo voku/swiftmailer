@@ -573,7 +573,11 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
      */
     public function toString()
     {
-        if (count($children = $this->getChildren()) > 0 && $this->getBody() != '') {
+        if (
+            $this->getBody() != ''
+            &&
+            count($children = $this->getChildren()) > 0
+        ) {
             $this->setChildren(array_merge(array($this->_becomeMimePart()), $children));
             $string = parent::toString();
             $this->setChildren($children);

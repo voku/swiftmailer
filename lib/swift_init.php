@@ -18,6 +18,8 @@ if (defined('SWIFT_INIT_LOADED')) {
 
 define('SWIFT_INIT_LOADED', true);
 
+$GLOBALS['swift_mailer_global']['transport'] = null;
+
 // Load in dependency maps
 require dirname(__FILE__).'/dependency_maps/cache_deps.php';
 require dirname(__FILE__).'/dependency_maps/mime_deps.php';

@@ -532,7 +532,11 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     {
         $string = '';
 
-        if (isset($this->_body) && empty($this->_immediateChildren)) {
+        if (
+            isset($this->_body)
+            &&
+            empty($this->_immediateChildren)
+        ) {
             if ($this->_cache->hasKey($this->_cacheKey, 'body')) {
                 $body = $this->_cache->getString($this->_cacheKey, 'body');
             } else {
@@ -689,9 +693,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     protected function _fixHeaders()
     {
         if (count($this->_immediateChildren)) {
-            $this->_setHeaderParameter('Content-Type', 'boundary',
-                $this->getBoundary()
-                );
+            $this->_setHeaderParameter('Content-Type', 'boundary', $this->getBoundary());
             $this->_headers->remove('Content-Transfer-Encoding');
         } else {
             $this->_setHeaderParameter('Content-Type', 'boundary', null);
@@ -926,17 +928,19 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     public function __clone()
     {
-        $this->_headers = clone $this->_headers;
-        $this->_encoder = clone $this->_encoder;
+        if ($GLOBALS['swift_mailer_global']['transport'] == 'MemorySpool') {
+            $this->_headers = clone $this->_headers;
+            $this->_encoder = clone $this->_encoder;
 
-        $children = array();
-        foreach ($this->_children as $pos => $child) {
-            if ($child instanceof Swift_Mime_Attachment || $child instanceof Swift_Mime_EmbeddedFile) {
-                $children[$pos] = $child;
-            } else {
-                $children[$pos] = clone $child;
+            $children = array();
+            foreach ($this->_children as $pos => $child) {
+                if ($child instanceof Swift_Mime_Attachment || $child instanceof Swift_Mime_EmbeddedFile) {
+                    $children[$pos] = $child;
+                } else {
+                    $children[$pos] = clone $child;
+                }
             }
+            $this->setChildren($children);
         }
-        $this->setChildren($children);
     }
 }

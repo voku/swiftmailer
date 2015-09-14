@@ -301,6 +301,8 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      */
     public function __clone()
     {
-        $this->_charStream = clone $this->_charStream;
+        if ($GLOBALS['swift_mailer_global']['transport'] == 'MemorySpool') {
+            $this->_charStream = clone $this->_charStream;
+        }
     }
 }

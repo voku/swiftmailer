@@ -24,29 +24,36 @@ class Swift_MessageTest extends \PHPUnit_Framework_TestCase
         $this->_recursiveObjectCloningCheck($message1, $message2, $message1_clone);
     }
 
-    public function testBodySwap()
+    public function testBodySwapWithMemorySpool()
     {
+        $GLOBALS['swift_mailer_global']['transport'] = 'MemorySpool';
+
         $message1 = new Swift_Message('Test');
         $html = Swift_MimePart::newInstance('<html></html>', 'text/html');
         $html->getHeaders()->addTextHeader('X-Test-Remove', 'Test-Value');
         $html->getHeaders()->addTextHeader('X-Test-Alter', 'Test-Value');
         $message1->attach($html);
         $source = $message1->toString();
+
         $message2 = clone $message1;
         $message2->setSubject('Message2');
+
         foreach ($message2->getChildren() as $child) {
             $child->setBody('Test');
             $child->getHeaders()->removeAll('X-Test-Remove');
             $child->getHeaders()->get('X-Test-Alter')->setValue('Altered');
         }
+
         $final = $message1->toString();
         if ($source != $final) {
             $this->fail("Difference although object cloned \n [".$source."]\n[".$final."]\n");
         }
+
         $final = $message2->toString();
         if ($final == $source) {
             $this->fail('Two body matches although they should differ'."\n [".$source."]\n[".$final."]\n");
         }
+
         $id_1 = $message1->getId();
         $id_2 = $message2->getId();
         $this->assertEquals($id_1, $id_2, 'Message Ids differ');

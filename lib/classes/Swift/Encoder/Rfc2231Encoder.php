@@ -87,6 +87,8 @@ class Swift_Encoder_Rfc2231Encoder implements Swift_Encoder
      */
     public function __clone()
     {
-        $this->_charStream = clone $this->_charStream;
+        if ($GLOBALS['swift_mailer_global']['transport'] == 'MemorySpool') {
+            $this->_charStream = clone $this->_charStream;
+        }
     }
 }
