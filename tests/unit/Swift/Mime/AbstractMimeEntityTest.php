@@ -51,7 +51,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
    * @param $encoder
    * @param $cache
    *
-   * @return mixed
+   * @return Swift_Mime_SimpleMimeEntity
    */
   abstract protected function _createEntity($headers, $encoder, $cache);
 
