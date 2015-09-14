@@ -113,7 +113,7 @@ class Swift_DependencyContainer
     {
         if (!$this->has($itemName)) {
             throw new Swift_DependencyException(
-                'Cannot lookup dependency "'.$itemName.'" since it is not registered.'
+                'Cannot lookup dependency "' . $itemName . '" since it is not registered.'
                 );
         }
 

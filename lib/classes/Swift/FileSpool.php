@@ -39,7 +39,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
 
         if (!file_exists($this->_path)) {
             if (!mkdir($this->_path, 0777, true)) {
-                throw new Swift_IoException('Unable to create Path ['.$this->_path.']');
+                throw new Swift_IoException('Unable to create Path [' . $this->_path . ']');
             }
         }
     }
@@ -92,10 +92,10 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     public function queueMessage(Swift_Mime_Message $message)
     {
         $ser = serialize($message);
-        $fileName = $this->_path.'/'.$this->getRandomString(10);
+        $fileName = $this->_path . '/' . $this->getRandomString(10);
         for ($i = 0; $i < $this->_retryLimit; ++$i) {
             /* We try an exclusive creation of the file. This is an atomic operation, it avoid locking mechanism */
-            $fp = @fopen($fileName.'.message', 'x');
+            $fp = @fopen($fileName . '.message', 'x');
             if (false !== $fp) {
                 if (false === fwrite($fp, $ser)) {
                     return false;
@@ -163,12 +163,12 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
             }
 
             /* We try a rename, it's an atomic operation, and avoid locking the file */
-            if (rename($file, $file.'.sending')) {
-                $message = unserialize(file_get_contents($file.'.sending'));
+            if (rename($file, $file . '.sending')) {
+                $message = unserialize(file_get_contents($file . '.sending'));
 
                 $count += $transport->send($message, $failedRecipients);
 
-                unlink($file.'.sending');
+                unlink($file . '.sending');
             } else {
                 /* This message has just been catched by another process */
                 continue;

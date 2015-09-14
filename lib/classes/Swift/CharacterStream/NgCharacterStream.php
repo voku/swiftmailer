@@ -197,7 +197,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
                 $to = $start;
                 for (; $this->_currentPos < $end; ++$this->_currentPos) {
                     if (isset($this->_map['i'][$this->_currentPos])) {
-                        $ret .= substr($this->_datas, $start, $to - $start).'?';
+                        $ret .= substr($this->_datas, $start, $to - $start) . '?';
                         $start = $this->_map['p'][$this->_currentPos];
                     } else {
                         $to = $this->_map['p'][$this->_currentPos];

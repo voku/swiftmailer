@@ -33,8 +33,6 @@ class Swift_Mime_Headers_OpenDKIMHeader implements Swift_Mime_Header
      * Creates a new SimpleHeader with $name.
      *
      * @param string                   $name
-     * @param Swift_Mime_HeaderEncoder $encoder
-     * @param Swift_Mime_Grammar       $grammar
      */
     public function __construct($name)
     {
@@ -115,7 +113,7 @@ class Swift_Mime_Headers_OpenDKIMHeader implements Swift_Mime_Header
      */
     public function toString()
     {
-        return $this->_fieldName.': '.$this->_value;
+        return $this->_fieldName . ': ' . $this->_value;
     }
 
     /**

@@ -424,8 +424,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     /**
      * Throws an Exception if a response code is incorrect
      *
-     * @param $response
-     * @param $wanted
+     * @param string $response
+     * @param integer[] $wanted
      *
      * @throws Swift_TransportException
      */
@@ -442,8 +442,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         if (!$valid) {
             $this->_throwException(
                 new Swift_TransportException(
-                    'Expected response code '.implode('/', $wanted).' but got code '.
-                    '"'.$code.'", with message "'.$response.'"',
+                    'Expected response code ' . implode('/', $wanted) . ' but got code ' .
+                    '"' . $code . '", with message "' . $response . '"',
                     $code)
                 );
         }
@@ -480,7 +480,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     /**
      * Send an email to the given recipients from the given reverse path
      *
-     * @param       $message
+     * @param       Swift_Mime_Message $message
      * @param       $reversePath
      * @param array $recipients
      * @param array $failedRecipients
