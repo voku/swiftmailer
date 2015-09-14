@@ -15,16 +15,32 @@
  */
 class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
 {
-    /** The HeaderEncoder used by these headers */
+    /**
+     * The HeaderEncoder used by these headers
+     *
+     * @var Swift_Mime_HeaderEncoder
+     */
     private $_encoder;
 
-    /** The Encoder used by parameters */
+    /**
+     * The Encoder used by parameters
+     *
+     * @var Swift_Encoder
+     */
     private $_paramEncoder;
 
-    /** The Grammar */
+    /**
+     * The Grammar
+     *
+     * @var Swift_Mime_Grammar
+     */
     private $_grammar;
 
-    /** The charset of created Headers */
+    /**
+     * The charset of created Headers
+     *
+     * @var null|string
+     */
     private $_charset;
 
     /**
