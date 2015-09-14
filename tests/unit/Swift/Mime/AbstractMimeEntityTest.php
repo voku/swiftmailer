@@ -902,8 +902,8 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
             ->andReturn($newHeaders);
 
     $newHeaders->shouldReceive('toString')
-               ->zeroOrMoreTimes()
-               ->andReturn("Content-Type: multipart/alternative; boundary=\"yyy\"\r\n");
+            ->zeroOrMoreTimes()
+            ->andReturn("Content-Type: multipart/alternative; boundary=\"yyy\"\r\n");
 
     $entity = $this->_createEntity(
         $headers, $this->_createEncoder(),
