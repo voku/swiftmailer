@@ -15,27 +15,14 @@
  */
 class Swift_Transport_SpoolTransport implements Swift_Transport
 {
-    /**
-     * The spool instance
-     *
-     * @var null|Swift_Spool
-     */
+    /** The spool instance */
     private $_spool;
 
-    /**
-     * The event dispatcher from the plugin API
-     *
-     * @var Swift_Events_EventDispatcher
-     */
+    /** The event dispatcher from the plugin API */
     private $_eventDispatcher;
 
     /**
      * Constructor.
-     *
-     * Swift_Transport_SpoolTransport constructor.
-     *
-     * @param Swift_Events_EventDispatcher $eventDispatcher
-     * @param Swift_Spool|null             $spool
      */
     public function __construct(Swift_Events_EventDispatcher $eventDispatcher, Swift_Spool $spool = null)
     {

@@ -195,17 +195,11 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
      */
     public function __clone()
     {
-        if ($GLOBALS['swift_mailer_global']['transport'] == 'MemorySpool') {
-            $this->_encoder = clone $this->_encoder;
-            $this->_paramEncoder = clone $this->_paramEncoder;
-        }
+        $this->_encoder = clone $this->_encoder;
+        $this->_paramEncoder = clone $this->_paramEncoder;
     }
 
-    /**
-     * Apply the charset to the Header
-     *
-     * @param Swift_Mime_Header $header
-     */
+    /** Apply the charset to the Header */
     private function _setHeaderCharset(Swift_Mime_Header $header)
     {
         if (isset($this->_charset)) {
