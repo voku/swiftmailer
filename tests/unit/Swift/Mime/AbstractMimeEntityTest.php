@@ -17,6 +17,12 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     $this->assertSame($headers, $entity->getHeaders());
   }
 
+  /**
+   * @param array     $headers
+   * @param bool|true $stub
+   *
+   * @return \Mockery\Mock
+   */
   protected function _createHeaderSet($headers = array(), $stub = true)
   {
     $set = $this->getMockery('Swift_Mime_HeaderSet')->shouldIgnoreMissing();
@@ -40,6 +46,13 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     return $set;
   }
 
+  /**
+   * @param $headers
+   * @param $encoder
+   * @param $cache
+   *
+   * @return mixed
+   */
   abstract protected function _createEntity($headers, $encoder, $cache);
 
   protected function _createEncoder($name = 'quoted-printable', $stub = true)
@@ -65,6 +78,11 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     return $encoder;
   }
 
+  /**
+   * @param bool|true $stub
+   *
+   * @return \Mockery\Mock
+   */
   protected function _createCache($stub = true)
   {
     return $this->getMockery('Swift_KeyCache')->shouldIgnoreMissing();
@@ -84,6 +102,14 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     $this->assertEquals('image/jpeg-test', $entity->getContentType());
   }
 
+  /**
+   * @param           $name
+   * @param null      $model
+   * @param array     $params
+   * @param bool|true $stub
+   *
+   * @return \Mockery\Mock
+   */
   protected function _createHeader($name, $model = null, $params = array(), $stub = true)
   {
     $header = $this->getMockery('Swift_Mime_ParameterizedHeader')->shouldIgnoreMissing();
@@ -495,6 +521,12 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     $this->assertEquals('byte stream string', $entity->getBody());
   }
 
+  /**
+   * @param null      $data
+   * @param bool|true $stub
+   *
+   * @return \Mockery\MockInterface
+   */
   protected function _createOutputStream($data = null, $stub = true)
   {
     $os = $this->getMockery('Swift_OutputByteStream');
@@ -616,6 +648,13 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     $entity->setChildren(array($child));
   }
 
+  /**
+   * @param null      $level
+   * @param string    $string
+   * @param bool|true $stub
+   *
+   * @return \Mockery\Mock
+   */
   protected function _createChild($level = null, $string = '', $stub = true)
   {
     $child = $this->getMockery('Swift_Mime_MimeEntity')->shouldIgnoreMissing();
@@ -963,6 +1002,11 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     $entity->toByteStream($is);
   }
 
+  /**
+   * @param bool|true $stub
+   *
+   * @return PHPUnit_Framework_MockObject_MockObject
+   */
   protected function _createInputStream($stub = true)
   {
     return $this->getMock('Swift_InputByteStream');
