@@ -92,36 +92,44 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
         $charPos = count($currentMap['p']);
         $foundChars = 0;
         $invalid = false;
+
         for ($i = 0; $i < $strlen; ++$i) {
             $char = $string[$i];
             $size = self::$s_length_map[$char];
+
             if ($size == 0) {
-                /* char is invalid, we must wait for a resync */
+
+                // char is invalid, we must wait for a resync
                 $invalid = true;
                 continue;
+
             } else {
+
                 if ($invalid === true) {
-                    /* We mark the chars as invalid and start a new char */
+                    // We mark the chars as invalid and start a new char
                     $currentMap['p'][$charPos + $foundChars] = $startOffset + $i;
                     $currentMap['i'][$charPos + $foundChars] = true;
                     ++$foundChars;
                     $invalid = false;
                 }
+
                 if (($i + $size) > $strlen) {
                     $ignoredChars = substr($string, $i);
                     break;
                 }
+
                 for ($j = 1; $j < $size; ++$j) {
                     $char = $string[$i + $j];
                     if ($char > "\x7F" && $char < "\xC0") {
-                        // Valid - continue parsing
+                        // valid - continue parsing
                     } else {
-                        /* char is invalid, we must wait for a resync */
+                        // char is invalid, we must wait for a resync
                         $invalid = true;
                         continue 2;
                     }
                 }
-                /* Ok we got a complete char here */
+
+                // Ok we got a complete char here
                 $currentMap['p'][$charPos + $foundChars] = $startOffset + $i + $size;
                 $i += $j - 1;
                 ++$foundChars;
