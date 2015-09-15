@@ -157,21 +157,20 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
      *
      * @param int $length
      *
-     * @return string
+     * @return string|false false on error
      */
     public function read($length)
     {
         if ($this->_currentPos >= $this->_charCount) {
             return false;
         }
+
         $ret = false;
         $length = $this->_currentPos + $length > $this->_charCount ? $this->_charCount - $this->_currentPos : $length;
         switch ($this->_mapType) {
             case Swift_CharacterReader::MAP_TYPE_FIXED_LEN:
                 $len = $length * $this->_map;
-                $ret = substr($this->_datas,
-                        $this->_currentPos * $this->_map,
-                        $len);
+                $ret = substr($this->_datas, $this->_currentPos * $this->_map, $len);
                 $this->_currentPos += $length;
                 break;
 
@@ -190,10 +189,12 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
                 $end = $this->_currentPos + $length;
                 $end = $end > $this->_charCount ? $this->_charCount : $end;
                 $ret = '';
+
                 $start = 0;
                 if ($this->_currentPos > 0) {
                     $start = $this->_map['p'][$this->_currentPos - 1];
                 }
+
                 $to = $start;
                 for (; $this->_currentPos < $end; ++$this->_currentPos) {
                     if (isset($this->_map['i'][$this->_currentPos])) {
@@ -203,6 +204,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
                         $to = $this->_map['p'][$this->_currentPos];
                     }
                 }
+
                 $ret .= substr($this->_datas, $start, $to - $start);
                 break;
         }
@@ -215,7 +217,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
      *
      * @param int $length
      *
-     * @return integer[]
+     * @return integer[]|false false on error
      */
     public function readBytes($length)
     {
