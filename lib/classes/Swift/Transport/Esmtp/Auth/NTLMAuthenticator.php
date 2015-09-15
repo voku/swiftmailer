@@ -199,7 +199,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
     {
         list($domain, $username) = $this->getDomainAndUsername($username);
         //$challenge, $context, $targetInfoH, $targetName, $domainName, $workstation, $DNSDomainName, $DNSServerName, $blob, $ter
-        list($challenge,,,,, $workstation,,, $blob) = $this->parseMessage2($response);
+        list($challenge, , , , , $workstation, , , $blob) = $this->parseMessage2($response);
 
         if (!$v2) {
             // LMv1
