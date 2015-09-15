@@ -286,7 +286,11 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
                 $return = call_user_func_array(array($handler, $method), $args);
 
                 // allow fluid method calls
-                if (is_null($return) && substr($method, 0, 3) == 'set') {
+                if (
+                    null === $return
+                    &&
+                    substr($method, 0, 3) == 'set'
+                ) {
                     return $this;
                 } else {
                     return $return;
@@ -370,14 +374,16 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     protected function _doRcptToCommand($address)
     {
         $handlers = $this->_getActiveHandlers();
+
         $params = array();
         foreach ($handlers as $handler) {
             $params = array_merge($params, (array) $handler->getRcptParams());
         }
+
         $paramStr = !empty($params) ? ' ' . implode(' ', $params) : '';
         $this->executeCommand(
             sprintf("RCPT TO:<%s>%s\r\n", $address, $paramStr), array(250, 251, 252)
-            );
+        );
     }
 
     /** Determine ESMTP capabilities by function group */

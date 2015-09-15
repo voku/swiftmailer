@@ -116,7 +116,8 @@ class Swift_Mime_ContentEncoder_QpContentEncoder extends Swift_Encoder_QpEncoder
                 $lineLen = $size - strrpos($enc, '=0D=0A') - 6;
             }
         }
-        if (strlen($currentLine)) {
+
+        if ($currentLine !== '') {
             $is->write($prepend . $this->_standardize($currentLine));
         }
     }

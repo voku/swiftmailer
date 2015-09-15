@@ -113,16 +113,17 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     public function importByteStream(Swift_OutputByteStream $os)
     {
         if (!isset($this->_charReader)) {
-            $this->_charReader = $this->_charReaderFactory
-                ->getReaderFor($this->_charset);
+            $this->_charReader = $this->_charReaderFactory->getReaderFor($this->_charset);
         }
 
         $startLength = $this->_charReader->getInitialByteSize();
         while (false !== $bytes = $os->read($startLength)) {
             $c = array();
+
             for ($i = 0, $len = strlen($bytes); $i < $len; ++$i) {
                 $c[] = self::$_byteMap[$bytes[$i]];
             }
+
             $size = count($c);
             $need = $this->_charReader->validateByteSequence($c, $size);
             if ($need > 0 &&
@@ -131,6 +132,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                     $c[] = self::$_byteMap[$bytes[$i]];
                 }
             }
+
             $this->_array[] = $c;
             ++$this->_array_size;
         }
@@ -218,8 +220,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     public function write($chars)
     {
         if (!isset($this->_charReader)) {
-            $this->_charReader = $this->_charReaderFactory->getReaderFor(
-                $this->_charset);
+            $this->_charReader = $this->_charReaderFactory->getReaderFor($this->_charset);
         }
 
         $startLength = $this->_charReader->getInitialByteSize();

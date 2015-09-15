@@ -109,11 +109,13 @@ class Swift_CharacterReaderFactory_SimpleCharacterReaderFactory implements Swift
             if (preg_match($re, $charset)) {
                 if (!array_key_exists($pattern, self::$_loaded)) {
                     $reflector = new ReflectionClass($spec['class']);
+
                     if ($reflector->getConstructor()) {
                         $reader = $reflector->newInstanceArgs($spec['constructor']);
                     } else {
                         $reader = $reflector->newInstance();
                     }
+
                     self::$_loaded[$pattern] = $reader;
                 }
 

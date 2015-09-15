@@ -17,6 +17,8 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
 {
     /**
      * Write sequence.
+     *
+     * @var int
      */
     protected $_sequence = 0;
 
@@ -29,6 +31,8 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
 
     /**
      * A buffer for writing.
+     *
+     * @var string
      */
     private $_writeBuffer = '';
 
@@ -79,14 +83,14 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
      *
      * @throws Swift_IoException
      *
-     * @return int
+     * @return int|null
      */
     public function write($bytes)
     {
         $this->_writeBuffer .= $bytes;
         foreach ($this->_filters as $filter) {
             if ($filter->shouldBuffer($this->_writeBuffer)) {
-                return;
+                return null;
             }
         }
         $this->_doWrite($this->_writeBuffer);

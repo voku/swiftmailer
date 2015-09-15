@@ -275,7 +275,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      *
      * @param Swift_Mime_Header $header
      * @param string            $input
-     * @param integer            $usedLength optional
+     * @param integer           $usedLength optional
      *
      * @return string
      */
@@ -340,14 +340,15 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             if ($this->tokenNeedsEncoding($token)) {
                 $encodedToken .= $token;
             } else {
-                if (strlen($encodedToken) > 0) {
+                if ($encodedToken !== '') {
                     $tokens[] = $encodedToken;
                     $encodedToken = '';
                 }
                 $tokens[] = $token;
             }
         }
-        if (strlen($encodedToken)) {
+
+        if ($encodedToken !== '') {
             $tokens[] = $encodedToken;
         }
 
@@ -369,27 +370,21 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         if (isset($this->_lang)) {
             $charsetDecl .= '*' . $this->_lang;
         }
-        $encodingWrapperLength = strlen(
-            '=?' . $charsetDecl . '?' . $this->_encoder->getName() . '??='
-            );
+        $encodingWrapperLength = strlen('=?' . $charsetDecl . '?' . $this->_encoder->getName() . '??=');
 
         if ($firstLineOffset >= 75) {
-            //Does this logic need to be here?
+            // Does this logic need to be here?
             $firstLineOffset = 0;
         }
 
         $encodedTextLines = explode("\r\n",
-            $this->_encoder->encodeString(
-                $token, $firstLineOffset, 75 - $encodingWrapperLength, $this->_charset
-                )
+            $this->_encoder->encodeString($token, $firstLineOffset, 75 - $encodingWrapperLength, $this->_charset)
         );
 
         if (strtolower($this->_charset) !== 'iso-2022-jp') {
             // special encoding for iso-2022-jp using mb_encode_mimeheader
             foreach ($encodedTextLines as $lineNum => $line) {
-                $encodedTextLines[$lineNum] = '=?' . $charsetDecl .
-                    '?' . $this->_encoder->getName() .
-                    '?' . $line . '?=';
+                $encodedTextLines[$lineNum] = '=?' . $charsetDecl . '?' . $this->_encoder->getName() . '?' . $line . '?=';
             }
         }
 
@@ -449,7 +444,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     protected function toTokens($string = null)
     {
-        if (is_null($string)) {
+        if (null === $string) {
             $string = $this->getFieldBody();
         }
 
@@ -484,9 +479,13 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         // Build all tokens back into compliant header
         foreach ($tokens as $i => $token) {
             // Line longer than specified maximum or token was just a new line
-            if (("\r\n" == $token) ||
+            if (
+                ("\r\n" == $token)
+                ||
                 ($i > 0 && strlen($currentLine . $token) > $this->_lineLength)
-                && 0 < strlen($currentLine)) {
+                &&
+                0 < strlen($currentLine)
+            ) {
                 $headerLines[] = '';
                 $currentLine = &$headerLines[$lineCount++];
             }

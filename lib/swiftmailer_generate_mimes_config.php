@@ -103,29 +103,22 @@ function generateUpToDateMimeArray()
             $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
         }
 
-        // collect extensions
-        $valid_extensions = array();
-
         // all extensions from second match
         foreach ($matches[2] as $i => $extensions) {
             // explode multiple extensions from string
             $extensions = explode(' ', strtolower($extensions));
 
             // force array for foreach
-            if (!is_array($extensions)) {
-                $extensions = array($extensions);
-            }
-
-            foreach ($extensions as $extension) {
+            if ($extensions !== false) {
                 // get mime type
                 $mime_type = $matches[1][$i];
 
-                // check if string length lower than 10
-                if (strlen($extension) < 10) {
-                    // add extension
-                    $valid_extensions[] = $extension;
-
-                    if (!isset($valid_mime_types[$mime_type])) {
+                foreach ($extensions as $extension) {
+                    if (
+                        !isset($valid_mime_types[$mime_type])
+                        &&
+                        strlen($extension) < 10 // check if string length lower than 10
+                    ) {
                         // generate array for mimetype to extension resolver (only first match)
                         $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
                     }
@@ -167,7 +160,13 @@ function generateUpToDateMimeArray()
             $extension = strtolower(trim($node->glob['ddpattern'][0], '*.'));
 
             // skip none glob extensions and check if string length between 1 and 10
-            if (strpos($extension, '.') !== false || strlen($extension) < 1 || strlen($extension) > 9) {
+            if (
+                strpos($extension, '.') !== false
+                ||
+                strlen($extension) < 1
+                ||
+                strlen($extension) > 9
+            ) {
                 continue;
             }
 

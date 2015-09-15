@@ -38,7 +38,7 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
      *
      * @param string $string
      * @param int    $startOffset
-     * @param array  $currentMap
+     * @param int    $currentMap
      * @param mixed  $ignoredChars
      *
      * @return int

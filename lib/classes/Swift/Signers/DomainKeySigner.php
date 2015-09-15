@@ -485,9 +485,10 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
 
     protected function _endOfBody()
     {
-        if (strlen($this->_bodyCanonLine) > 0) {
+        if ($this->_bodyCanonLine !== '') {
             $this->_addToHash("\r\n");
         }
+
         $this->_hash = hash_final($this->_hashHandler, true);
     }
 

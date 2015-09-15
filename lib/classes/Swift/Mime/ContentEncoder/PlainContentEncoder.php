@@ -56,7 +56,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
             $string = $this->_canonicalize($string);
         }
 
-        return $this->_safeWordWrap($string, $maxLineLength, "\r\n");
+        return $this->_safeWordwrap($string, $maxLineLength, "\r\n");
     }
 
     /**
@@ -72,17 +72,20 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
         $leftOver = '';
         while (false !== $bytes = $os->read(8192)) {
             $toencode = $leftOver . $bytes;
+
             if ($this->_canonical) {
                 $toencode = $this->_canonicalize($toencode);
             }
-            $wrapped = $this->_safeWordWrap($toencode, $maxLineLength, "\r\n");
+
+            $wrapped = $this->_safeWordwrap($toencode, $maxLineLength, "\r\n");
             $lastLinePos = strrpos($wrapped, "\r\n");
             $leftOver = substr($wrapped, $lastLinePos);
             $wrapped = substr($wrapped, 0, $lastLinePos);
 
             $is->write($wrapped);
         }
-        if (strlen($leftOver)) {
+
+        if ($leftOver !== '') {
             $is->write($leftOver);
         }
     }
@@ -99,6 +102,8 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
 
     /**
      * Not used.
+     *
+     * @param string $charset
      */
     public function charsetChanged($charset)
     {
@@ -128,12 +133,15 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
             $lines[] = '';
             $currentLine = &$lines[$lineCount++];
 
-            //$chunks = preg_split('/(?<=[\ \t,\.!\?\-&\+\/])/', $originalLine);
+            //$chunks = preg_split('/(?<=[\ \t,\.!\?\-&\+\/])/', $originalLine); // old-code?
             $chunks = preg_split('/(?<=\s)/', $originalLine);
 
             foreach ($chunks as $chunk) {
-                if (0 != strlen($currentLine)
-                    && strlen($currentLine . $chunk) > $length) {
+                if (
+                    $currentLine !== ''
+                    &&
+                    strlen($currentLine . $chunk) > $length
+                ) {
                     $lines[] = '';
                     $currentLine = &$lines[$lineCount++];
                 }

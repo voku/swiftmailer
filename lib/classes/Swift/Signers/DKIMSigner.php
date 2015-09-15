@@ -645,9 +645,10 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
     protected function _endOfBody()
     {
         // Add trailing Line return if last line is non empty
-        if (strlen($this->_bodyCanonLine) > 0) {
+        if ($this->_bodyCanonLine !== '') {
             $this->_addToBodyHash("\r\n");
         }
+
         $this->_bodyHash = hash_final($this->_bodyHashHandler, true);
     }
 

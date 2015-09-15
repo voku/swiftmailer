@@ -16,10 +16,19 @@
  */
 class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
 {
+    /**
+     * @var bool
+     */
     private $_peclLoaded = false;
 
+    /**
+     * @var null|OpenDKIMSign
+     */
     private $_dkimHandler = null;
 
+    /**
+     * @var bool
+     */
     private $dropFirstLF = true;
 
     const CANON_RELAXED = 1;
@@ -27,6 +36,15 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
     const SIG_RSA_SHA1 = 3;
     const SIG_RSA_SHA256 = 4;
 
+    /**
+     * Swift_Signers_OpenDKIMSigner constructor.
+     *
+     * @param string $privateKey
+     * @param string $domainName
+     * @param string $selector
+     *
+     * @throws Swift_SwiftException
+     */
     public function __construct($privateKey, $domainName, $selector)
     {
         if (!extension_loaded('opendkim')) {
@@ -38,11 +56,24 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         parent::__construct($privateKey, $domainName, $selector);
     }
 
+    /**
+     * @param string $privateKey
+     * @param string $domainName
+     * @param string $selector
+     *
+     * @return static
+     */
     public static function newInstance($privateKey, $domainName, $selector)
     {
         return new static($privateKey, $domainName, $selector);
     }
 
+    /**
+     * @param Swift_Mime_HeaderSet $headers
+     *
+     * @return $this
+     * @throws Swift_SwiftException
+     */
     public function addSignature(Swift_Mime_HeaderSet $headers)
     {
         $header = new Swift_Mime_Headers_OpenDKIMHeader('DKIM-Signature');
@@ -56,16 +87,24 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         return $this;
     }
 
+    /**
+     * @param Swift_Mime_HeaderSet $headers
+     *
+     * @return $this
+     * @throws Swift_SwiftException
+     */
     public function setHeaders(Swift_Mime_HeaderSet $headers)
     {
         $bodyLen = $this->_bodyLen;
         if (is_bool($bodyLen)) {
             $bodyLen = -1;
         }
+
         $hash = $this->_hashAlgorithm == 'rsa-sha1' ? OpenDKIMSign::ALG_RSASHA1 : OpenDKIMSign::ALG_RSASHA256;
         $bodyCanon = $this->_bodyCanon == 'simple' ? OpenDKIMSign::CANON_SIMPLE : OpenDKIMSign::CANON_RELAXED;
         $headerCanon = $this->_headerCanon == 'simple' ? OpenDKIMSign::CANON_SIMPLE : OpenDKIMSign::CANON_RELAXED;
         $this->_dkimHandler = new OpenDKIMSign($this->_privateKey, $this->_selector, $this->_domainName, $headerCanon, $bodyCanon, $hash, $bodyLen);
+
         // Hardcode signature Margin for now
         $this->_dkimHandler->setMargin(78);
 
@@ -76,9 +115,11 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
                 throw new Swift_SwiftException('Unable to force signature timestamp [' . openssl_error_string() . ']');
             }
         }
+
         if (isset($this->_signerIdentity)) {
             $this->_dkimHandler->setSigner($this->_signerIdentity);
         }
+
         $listHeaders = $headers->listAll();
         foreach ($listHeaders as $hName) {
             // Check if we need to ignore Header
@@ -99,6 +140,9 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         return $this;
     }
 
+    /**
+     * @return $this|Swift_Signers_HeaderSigner|void
+     */
     public function startBody()
     {
         if (!$this->_peclLoaded) {
@@ -110,6 +154,9 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         return $this;
     }
 
+    /**
+     * @return $this|Swift_Signers_HeaderSigner|void
+     */
     public function endBody()
     {
         if (!$this->_peclLoaded) {
@@ -120,6 +167,9 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function reset()
     {
         $this->_dkimHandler = null;
@@ -172,18 +222,28 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
 
     // Protected
 
+    /**
+     * @param $string
+     */
     protected function _canonicalizeBody($string)
     {
         if (!$this->_peclLoaded) {
             return parent::_canonicalizeBody($string);
         }
+
         if (false && $this->dropFirstLF === true) {
-            if ($string[0] == "\r" && $string[1] == "\n") {
+            if (
+                $string[0] == "\r"
+                &&
+                $string[1] == "\n"
+            ) {
                 $string = substr($string, 2);
             }
         }
+
         $this->dropFirstLF = false;
-        if (strlen($string)) {
+
+        if ($string !== '') {
             $this->_dkimHandler->body($string);
         }
     }
