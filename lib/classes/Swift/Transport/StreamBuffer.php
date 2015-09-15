@@ -15,7 +15,11 @@
  */
 class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableInputStream implements Swift_Transport_IoBuffer
 {
-    /** A primary socket */
+    /**
+     * A primary socket
+     *
+     * @var resource
+     */
     private $_stream;
 
     /** The input stream */
@@ -27,10 +31,18 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
     /** Buffer initialization parameters */
     private $_params = array();
 
-    /** The ReplacementFilterFactory */
+    /**
+     * The ReplacementFilterFactory
+     *
+     * @var Swift_ReplacementFilterFactory
+     */
     private $_replacementFactory;
 
-    /** Translations performed on data being streamed into the buffer */
+    /**
+     * Translations performed on data being streamed into the buffer
+     *
+     * @var array
+     */
     private $_translations = array();
 
     /**
@@ -260,6 +272,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         if (!empty($this->_params['sourceIp'])) {
             $options['socket']['bindto'] = $this->_params['sourceIp'] . ':0';
         }
+
         if (isset($this->_params['stream_context_options'])) {
             $options = array_merge($options, $this->_params['stream_context_options']);
         }
@@ -292,7 +305,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
             0 => array('pipe', 'r'),
             1 => array('pipe', 'w'),
             2 => array('pipe', 'w'),
-            );
+        );
 
         $this->_stream = proc_open($command, $descriptorSpec, $pipes);
         stream_set_blocking($pipes[2], 0);

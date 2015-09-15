@@ -109,19 +109,21 @@ function generateUpToDateMimeArray()
             $extensions = explode(' ', strtolower($extensions));
 
             // force array for foreach
-            if ($extensions !== false) {
-                // get mime type
-                $mime_type = $matches[1][$i];
+            if (!is_array($extensions)) {
+              $extensions = array($extensions);
+            }
 
-                foreach ($extensions as $extension) {
-                    if (
-                        !isset($valid_mime_types[$mime_type])
-                        &&
-                        strlen($extension) < 10 // check if string length lower than 10
-                    ) {
-                        // generate array for mimetype to extension resolver (only first match)
-                        $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
-                    }
+            // get mime type
+            $mime_type = $matches[1][$i];
+
+            foreach ($extensions as $extension) {
+                if (
+                    !isset($valid_mime_types[$mime_type])
+                    &&
+                    strlen($extension) < 10 // check if string length lower than 10
+                ) {
+                    // generate array for mimetype to extension resolver (only first match)
+                    $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
                 }
             }
         }
