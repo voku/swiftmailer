@@ -161,7 +161,13 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
         }
     }
 
-    /** Run $bytes through all filters */
+    /**
+     * Run $bytes through all filters
+     *
+     * @param $bytes
+     *
+     * @return mixed
+     */
     private function _filter($bytes)
     {
         foreach ($this->_filters as $filter) {
@@ -171,7 +177,11 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
         return $bytes;
     }
 
-    /** Just write the bytes to the stream */
+    /**
+     * Just write the bytes to the stream
+     *
+     * @param $bytes
+     */
     private function _doWrite($bytes)
     {
         $this->_commit($this->_filter($bytes));
