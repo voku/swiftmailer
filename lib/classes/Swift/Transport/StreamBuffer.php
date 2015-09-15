@@ -173,7 +173,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
     {
         if (isset($this->_out) && !feof($this->_out)) {
             $line = fgets($this->_out);
-            if (strlen($line) == 0) {
+            if (!$line) {
                 $metas = stream_get_meta_data($this->_out);
                 if ($metas['timed_out']) {
                     throw new Swift_IoException('Connection to ' . $this->_getReadConnectionDescription() . ' Timed Out');
@@ -201,7 +201,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
     {
         if (isset($this->_out) && !feof($this->_out)) {
             $ret = fread($this->_out, $length);
-            if (strlen($ret) == 0) {
+            if (!$ret) {
                 $metas = stream_get_meta_data($this->_out);
                 if ($metas['timed_out']) {
                     throw new Swift_IoException('Connection to ' . $this->_getReadConnectionDescription() . ' Timed Out');

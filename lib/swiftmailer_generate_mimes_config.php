@@ -147,11 +147,6 @@ function generateUpToDateMimeArray()
             // remove get only last part
             $extension = explode('.', strtolower($extension));
             $extension = end($extension);
-
-            // maximum length in database column
-            if (strlen($extension) <= 9) {
-                $valid_extensions[] = $extension;
-            }
         }
 
         if (isset($node->glob['pattern'][0])) {
