@@ -60,9 +60,9 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     /**
      * Size of the array of character
      *
-     * @var array
+     * @var int
      */
-    private $_array_size = array();
+    private $_array_size = 0;
 
     /**
      * The current character offset in the stream
