@@ -114,14 +114,15 @@ function generateUpToDateMimeArray()
             }
 
             foreach ($extensions as $extension) {
+
+                // get mime type
+                $mime_type = $matches[1][$i];
+
                 if (
                     !isset($valid_mime_types[$mime_type])
                     &&
                     strlen($extension) < 10 // check if string length lower than 10
                 ) {
-                    // get mime type
-                    $mime_type = $matches[1][$i];
-
                     // generate array for mimetype to extension resolver (only first match)
                     $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
                 }
