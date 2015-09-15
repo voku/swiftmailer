@@ -124,8 +124,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                 $c[] = self::$_byteMap[$bytes[$i]];
             }
             $size = count($c);
-            $need = $this->_charReader
-                ->validateByteSequence($c, $size);
+            $need = $this->_charReader->validateByteSequence($c, $size);
             if ($need > 0 &&
                 false !== $bytes = $os->read($need)) {
                 for ($i = 0, $len = strlen($bytes); $i < $len; ++$i) {
@@ -155,7 +154,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
      *
      * @param int $length
      *
-     * @return string
+     * @return false|string false on error
      */
     public function read($length)
     {
@@ -172,7 +171,9 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
             }
             $arrays[] = $this->_array[$i];
         }
+
         $this->_offset += $i - $this->_offset; // Limit function calls
+
         $chars = false;
         foreach ($arrays as $array) {
             $chars .= implode('', array_map('chr', $array));
@@ -194,6 +195,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
         if ($this->_offset == $this->_array_size) {
             return false;
         }
+
         $arrays = array();
         $end = $length + $this->_offset;
         for ($i = $this->_offset; $i < $end; ++$i) {
@@ -202,6 +204,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
             }
             $arrays[] = $this->_array[$i];
         }
+
         $this->_offset += ($i - $this->_offset); // Limit function calls
 
         return call_user_func_array('array_merge', $arrays);
@@ -300,7 +303,9 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
     /**
      * @param resource $fp
-     * @param integer $len
+     * @param int      $len
+     *
+     * @return array|false false on error
      */
     private function _reloadBuffer($fp, $len)
     {
