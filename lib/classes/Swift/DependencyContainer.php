@@ -59,7 +59,7 @@ class Swift_DependencyContainer
      *
      * Use {@link getInstance()} instead.
      */
-    protected function __construct()
+    public function __construct()
     {
     }
 
