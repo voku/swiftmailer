@@ -32,7 +32,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     /**
      * The Encoder used to encode this Header.
      *
-     * @var Swift_Encoder
+     * @var Swift_Encoder|Swift_Mime_ContentEncoder
      */
     private $_encoder;
 
@@ -198,8 +198,6 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     /**
      * Get this Header rendered as a RFC 2822 compliant string.
      *
-     * @throws Swift_RfcComplianceException
-     *
      * @return string
      */
     public function toString()
@@ -271,7 +269,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     /**
      * Encode needed word tokens within a string of input.
      *
-     * @param Swift_Mime_Header $header
+     * @param Swift_Mime_Header|Swift_Mime_Headers_AbstractHeader $header
      * @param string            $input
      * @param integer           $usedLength optional
      *
@@ -363,11 +361,14 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     protected function getTokenAsEncodedWord($token, $firstLineOffset = 0)
     {
-        // Adjust $firstLineOffset to account for space needed for syntax
+        // Adjust $firstLineOffset to account for space needed for syntax.
+
         $charsetDecl = $this->_charset;
+
         if (isset($this->_lang)) {
             $charsetDecl .= '*' . $this->_lang;
         }
+
         $encodingWrapperLength = strlen('=?' . $charsetDecl . '?' . $this->_encoder->getName() . '??=');
 
         if ($firstLineOffset >= 75) {
@@ -375,8 +376,9 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             $firstLineOffset = 0;
         }
 
-        $encodedTextLines = explode("\r\n",
-            $this->_encoder->encodeString($token, $firstLineOffset, 75 - $encodingWrapperLength)
+        $encodedTextLines = explode(
+            "\r\n",
+            $this->_encoder->encodeString($token, $firstLineOffset, 75 - $encodingWrapperLength, $this->_charset)
         );
 
         if (strtolower($this->_charset) !== 'iso-2022-jp') {

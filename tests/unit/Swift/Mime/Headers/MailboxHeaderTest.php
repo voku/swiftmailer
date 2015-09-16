@@ -205,7 +205,7 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
         $this->assertEquals(
             'Chris =?'.$this->_charset.'?Q?C=8Frbyn?= <chris@swiftmailer.org>',
             array_shift($addresses)
-            );
+        );
     }
 
     public function testEncodingLineLengthCalculations()
