@@ -676,6 +676,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      * Set the parameter value of $parameter on $field header.
      * @param string $field
      * @param string $parameter
+     * @param        $value
+     *
+     * @return bool
      */
     protected function _setHeaderParameter($field, $parameter, $value)
     {
@@ -786,6 +789,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * @param string $boundary
+     *
+     * @throws Swift_RfcComplianceException
      */
     private function _assertValidBoundary($boundary)
     {

@@ -343,7 +343,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     private function _assertValidAddress($address)
     {
-        if (!preg_match('/^' . $this->getGrammar()->getDefinition('addr-spec') . '$/D', $address)) {
+        if (Swift_Validate::email($address) === false) {
             throw new Swift_RfcComplianceException('Address in mailbox given [' . $address . '] does not comply with RFC 2822, 3.6.2.');
         }
     }

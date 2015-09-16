@@ -122,7 +122,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
             count((array) $message->getTo())
             + count((array) $message->getCc())
             + count((array) $message->getBcc())
-            );
+        );
 
         $toHeader = $message->getHeaders()->get('To');
         $subjectHeader = $message->getHeaders()->get('Subject');
@@ -130,6 +130,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
         if (!$toHeader) {
             $this->_throwException(new Swift_TransportException('Cannot send message without a recipient'));
         }
+
         $to = $toHeader->getFieldBody();
         $subject = $subjectHeader ? $subjectHeader->getFieldBody() : '';
 

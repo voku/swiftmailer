@@ -22,7 +22,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "voku/email-check": "~1.0"
     },
     "require-dev": {
         "mockery/mockery": "~0.9.1,<0.9.4",

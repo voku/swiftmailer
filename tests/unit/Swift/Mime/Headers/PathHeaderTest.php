@@ -11,8 +11,8 @@ class Swift_Mime_Headers_PathHeaderTest extends \PHPUnit_Framework_TestCase
     public function testSingleAddressCanBeSetAndFetched()
     {
         $header = $this->_getHeader('Return-Path');
-        $header->setAddress('chris@swiftmailer.org');
-        $this->assertEquals('chris@swiftmailer.org', $header->getAddress());
+        $header->setAddress('chris@swiftmäiler.org');
+        $this->assertEquals('chris@swiftmäiler.org', $header->getAddress());
     }
 
     public function testAddressMustComplyWithRfc2822()

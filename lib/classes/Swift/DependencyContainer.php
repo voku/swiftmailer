@@ -37,11 +37,15 @@ class Swift_DependencyContainer
 
     /**
      * Singleton instance
+     *
+     * @var null|self
      */
     private static $_instance = null;
 
     /**
      * The data container
+     *
+     * @var array
      */
     private $_store = array();
 
@@ -94,8 +98,7 @@ class Swift_DependencyContainer
      */
     public function has($itemName)
     {
-        return array_key_exists($itemName, $this->_store)
-            && isset($this->_store[$itemName]['lookupType']);
+        return array_key_exists($itemName, $this->_store) && isset($this->_store[$itemName]['lookupType']);
     }
 
     /**
@@ -114,7 +117,7 @@ class Swift_DependencyContainer
         if (!$this->has($itemName)) {
             throw new Swift_DependencyException(
                 'Cannot lookup dependency "' . $itemName . '" since it is not registered.'
-                );
+            );
         }
 
         switch ($this->_store[$itemName]['lookupType']) {
