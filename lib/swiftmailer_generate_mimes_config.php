@@ -142,10 +142,6 @@ function generateUpToDateMimeArray()
             if (strpos($extension, '.') === false) {
                 continue;
             }
-
-            // remove get only last part
-            $extension = explode('.', strtolower($extension));
-            $extension = end($extension);
         }
 
         if (isset($node->glob['pattern'][0])) {
