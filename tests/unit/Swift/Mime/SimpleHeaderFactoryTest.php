@@ -24,9 +24,9 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testMailboxHeaderHasCorrectModel()
     {
         $header = $this->_factory->createMailboxHeader('X-Foo',
-            array('foo@bar' => 'FooBar')
+            array('foo@bar.com' => 'FooBar')
             );
-        $this->assertEquals(array('foo@bar' => 'FooBar'), $header->getFieldBodyModel());
+        $this->assertEquals(array('foo@bar.com' => 'FooBar'), $header->getFieldBodyModel());
     }
 
     public function testDateHeaderHasCorrectType()
@@ -123,8 +123,8 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testPathHeaderHasCorrectModel()
     {
-        $header = $this->_factory->createPathHeader('X-Path', 'foo@bar');
-        $this->assertEquals('foo@bar', $header->getFieldBodyModel());
+        $header = $this->_factory->createPathHeader('X-Path', 'foo@bar.com');
+        $this->assertEquals('foo@bar.com', $header->getFieldBodyModel());
     }
 
     public function testCharsetChangeNotificationNotifiesEncoders()
