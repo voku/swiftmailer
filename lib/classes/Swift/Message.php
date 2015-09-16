@@ -280,6 +280,7 @@ class Swift_Message extends Swift_Mime_SimpleMessage
     public function __clone()
     {
         parent::__clone();
+
         foreach ($this->bodySigners as $key => $bodySigner) {
             $this->bodySigners[$key] = clone($bodySigner);
         }

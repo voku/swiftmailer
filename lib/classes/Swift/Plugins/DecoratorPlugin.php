@@ -16,19 +16,39 @@
  */
 class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_Plugins_Decorator_Replacements
 {
-    /** The replacement map */
+    /**
+     * The replacement map
+     *
+     * @var array|Swift_Plugins_Decorator_Replacements
+     */
     private $_replacements;
 
-    /** The body as it was before replacements */
+    /**
+     * The body as it was before replacements
+     *
+     * @var string
+     */
     private $_originalBody;
 
-    /** The original headers of the message, before replacements */
+    /**
+     * The original headers of the message, before replacements
+     *
+     * @var array
+     */
     private $_originalHeaders = array();
 
-    /** Bodies of children before they are replaced */
+    /**
+     * Bodies of children before they are replaced
+     *
+     * @var array
+     */
     private $_originalChildBodies = array();
 
-    /** The Message that was last replaced */
+    /**
+     * The Message that was last replaced
+     *
+     * @var Swift_Mime_Message
+     */
     private $_lastMessage;
 
     /**
@@ -83,13 +103,14 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
         $this->_restoreMessage($message);
         $to = array_keys($message->getTo());
         $address = array_shift($to);
-        if ($replacements = $this->getReplacementsFor($address)) {
+
+        $replacements = $this->getReplacementsFor($address);
+        if ($replacements) {
             $body = $message->getBody();
             $search = array_keys($replacements);
             $replace = array_values($replacements);
-            $bodyReplaced = str_replace(
-                $search, $replace, $body
-                );
+            $bodyReplaced = str_replace($search, $replace, $body);
+
             if ($body != $bodyReplaced) {
                 $this->_originalBody = $body;
                 $message->setBody($bodyReplaced);
@@ -123,6 +144,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
 
             $children = (array) $message->getChildren();
             foreach ($children as $child) {
+                /* @var $child Swift_Mime_MimeEntity */
                 list($type) = sscanf($child->getContentType(), '%[^/]/%s');
                 if ('text' == $type) {
                     $body = $child->getBody();
@@ -190,6 +212,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
             }
             if (!empty($this->_originalChildBodies)) {
                 $children = (array) $message->getChildren();
+                /* @var $child Swift_Mime_MimeEntity */
                 foreach ($children as $child) {
                     $id = $child->getId();
                     if (array_key_exists($id, $this->_originalChildBodies)) {

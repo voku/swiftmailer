@@ -105,7 +105,10 @@ class Swift_Transport_SendmailTransport extends Swift_Transport_AbstractSmtpTran
         $count = 0;
 
         if (false !== strpos($command, ' -t')) {
-            if ($evt = $this->_eventDispatcher->createSendEvent($this, $message)) {
+
+            $evt = $this->_eventDispatcher->createSendEvent($this, $message);
+            if ($evt) {
+
                 $this->_eventDispatcher->dispatchEvent($evt, 'beforeSendPerformed');
                 if ($evt->bubbleCancelled()) {
                     return 0;

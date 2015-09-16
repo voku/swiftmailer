@@ -15,10 +15,18 @@
  */
 class Swift_Events_EventObject implements Swift_Events_Event
 {
-    /** The source of this Event */
+    /**
+     * The source of this Event
+     *
+     * @var Swift_Transport
+     */
     private $_source;
 
-    /** The state of this Event (should it bubble up the stack?) */
+    /**
+     * The state of this Event (should it bubble up the stack?)
+     *
+     * @var bool
+     */
     private $_bubbleCancelled = false;
 
     /**
@@ -34,7 +42,7 @@ class Swift_Events_EventObject implements Swift_Events_Event
     /**
      * Get the source object of this event.
      *
-     * @return object
+     * @return Swift_Transport
      */
     public function getSource()
     {

@@ -111,7 +111,9 @@ class Swift_Transport_MailTransport implements Swift_Transport
     {
         $failedRecipients = (array) $failedRecipients;
 
-        if ($evt = $this->_eventDispatcher->createSendEvent($this, $message)) {
+        $evt = $this->_eventDispatcher->createSendEvent($this, $message);
+        if ($evt) {
+
             $this->_eventDispatcher->dispatchEvent($evt, 'beforeSendPerformed');
             if ($evt->bubbleCancelled()) {
                 return 0;
@@ -181,7 +183,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
                 array_keys((array) $message->getTo()),
                 array_keys((array) $message->getCc()),
                 array_keys((array) $message->getBcc())
-                );
+            );
 
             if ($evt) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_FAILED);
@@ -216,11 +218,14 @@ class Swift_Transport_MailTransport implements Swift_Transport
      */
     protected function _throwException(Swift_TransportException $e)
     {
-        if ($evt = $this->_eventDispatcher->createTransportExceptionEvent($this, $e)) {
+        $evt = $this->_eventDispatcher->createTransportExceptionEvent($this, $e);
+        if ($evt) {
+
             $this->_eventDispatcher->dispatchEvent($evt, 'exceptionThrown');
             if (!$evt->bubbleCancelled()) {
                 throw $e;
             }
+
         } else {
             throw $e;
         }

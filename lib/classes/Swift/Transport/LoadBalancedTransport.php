@@ -105,6 +105,8 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      * @param string[]           $failedRecipients An array of failures by-reference
      *
      * @return int
+     *
+     * @throws Swift_TransportException
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
@@ -118,10 +120,13 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
                 if (!$transport->isStarted()) {
                     $transport->start();
                 }
-                if ($sent = $transport->send($message, $failedRecipients)) {
+
+                $sent = $transport->send($message, $failedRecipients);
+                if ($sent) {
                     $this->_lastUsedTransport = $transport;
                     break;
                 }
+
             } catch (Swift_TransportException $e) {
                 $this->_killCurrentTransport();
             }
@@ -155,7 +160,8 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      */
     protected function _getNextTransport()
     {
-        if ($next = array_shift($this->_transports)) {
+        $next = array_shift($this->_transports);
+        if ($next) {
             $this->_transports[] = $next;
         }
 
@@ -167,11 +173,14 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      */
     protected function _killCurrentTransport()
     {
-        if ($transport = array_pop($this->_transports)) {
+        $transport = array_pop($this->_transports);
+        if ($transport) {
+
             try {
                 $transport->stop();
             } catch (Exception $e) {
             }
+
             $this->_deadTransports[] = $transport;
         }
     }

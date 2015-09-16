@@ -455,6 +455,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
                         ^ $this->uRShift($b, 1)) & 0x01) == 0;
 
             list($high, $low) = str_split($v);
+
             if ($needsParity) {
                 $material[$k] = dechex(hexdec($high) | 0x0) . dechex(hexdec($low) | 0x1);
             } else {

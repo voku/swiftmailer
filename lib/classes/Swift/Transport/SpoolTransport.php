@@ -88,7 +88,9 @@ class Swift_Transport_SpoolTransport implements Swift_Transport
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
-        if ($evt = $this->_eventDispatcher->createSendEvent($this, $message)) {
+        $evt = $this->_eventDispatcher->createSendEvent($this, $message);
+        if ($evt) {
+
             $this->_eventDispatcher->dispatchEvent($evt, 'beforeSendPerformed');
             if ($evt->bubbleCancelled()) {
                 return 0;

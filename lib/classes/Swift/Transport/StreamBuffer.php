@@ -310,7 +310,8 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         $this->_stream = proc_open($command, $descriptorSpec, $pipes);
         stream_set_blocking($pipes[2], 0);
 
-        if ($err = stream_get_contents($pipes[2])) {
+        $err = stream_get_contents($pipes[2]);
+        if ($err) {
             throw new Swift_TransportException('Process could not be started [' . $err . ']');
         }
 

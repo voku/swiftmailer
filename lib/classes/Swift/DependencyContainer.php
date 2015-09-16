@@ -59,7 +59,7 @@ class Swift_DependencyContainer
      *
      * Use {@link getInstance()} instead.
      */
-    public function __construct()
+    protected function __construct()
     {
     }
 
@@ -340,7 +340,7 @@ class Swift_DependencyContainer
         if ($reflector->getConstructor()) {
             return $reflector->newInstanceArgs(
                 $this->createDependenciesFor($itemName)
-                );
+            );
         }
 
         return $reflector->newInstance();
@@ -372,7 +372,7 @@ class Swift_DependencyContainer
         if (!isset($this->_endPoint)) {
             throw new BadMethodCallException(
                 'Component must first be registered by calling register()'
-                );
+            );
         }
 
         return $this->_endPoint;

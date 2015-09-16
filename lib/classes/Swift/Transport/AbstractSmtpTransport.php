@@ -124,7 +124,10 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     public function start()
     {
         if (!$this->_started) {
-            if ($evt = $this->_eventDispatcher->createTransportChangeEvent($this)) {
+
+            $evt = $this->_eventDispatcher->createTransportChangeEvent($this);
+            if ($evt) {
+
                 $this->_eventDispatcher->dispatchEvent($evt, 'beforeTransportStarted');
                 if ($evt->bubbleCancelled()) {
                     return;
@@ -176,7 +179,9 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         $sent = 0;
         $failedRecipients = (array) $failedRecipients;
 
-        if ($evt = $this->_eventDispatcher->createSendEvent($this, $message)) {
+        $evt = $this->_eventDispatcher->createSendEvent($this, $message);
+        if ($evt) {
+
             $this->_eventDispatcher->dispatchEvent($evt, 'beforeSendPerformed');
             if ($evt->bubbleCancelled()) {
                 return 0;
@@ -230,7 +235,10 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     public function stop()
     {
         if ($this->_started) {
-            if ($evt = $this->_eventDispatcher->createTransportChangeEvent($this)) {
+
+            $evt = $this->_eventDispatcher->createTransportChangeEvent($this);
+            if ($evt) {
+
                 $this->_eventDispatcher->dispatchEvent($evt, 'beforeTransportStopped');
                 if ($evt->bubbleCancelled()) {
                     return;
@@ -300,9 +308,12 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         $failures = (array) $failures;
         $seq = $this->_buffer->write($command);
         $response = $this->_getFullResponse($seq);
-        if ($evt = $this->_eventDispatcher->createCommandEvent($this, $command, $codes)) {
+
+        $evt = $this->_eventDispatcher->createCommandEvent($this, $command, $codes);
+        if ($evt) {
             $this->_eventDispatcher->dispatchEvent($evt, 'commandSent');
         }
+
         $this->_assertResponseCode($response, $codes);
 
         return $response;
@@ -411,11 +422,14 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      */
     protected function _throwException(Swift_TransportException $e)
     {
-        if ($evt = $this->_eventDispatcher->createTransportExceptionEvent($this, $e)) {
+        $evt = $this->_eventDispatcher->createTransportExceptionEvent($this, $e);
+        if ($evt) {
+
             $this->_eventDispatcher->dispatchEvent($evt, 'exceptionThrown');
             if (!$evt->bubbleCancelled()) {
                 throw $e;
             }
+
         } else {
             throw $e;
         }
@@ -434,8 +448,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         list($code) = sscanf($response, '%3d');
         $valid = (empty($wanted) || in_array($code, $wanted));
 
-        if ($evt = $this->_eventDispatcher->createResponseEvent($this, $response,
-            $valid)) {
+        $evt = $this->_eventDispatcher->createResponseEvent($this, $response, $valid);
+        if ($evt) {
             $this->_eventDispatcher->dispatchEvent($evt, 'responseReceived');
         }
 
@@ -464,7 +478,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             do {
                 $line = $this->_buffer->readLine($seq);
                 $response .= $line;
-            } while (null !== $line && false !== $line && ' ' != $line{3});
+            } while (null !== $line && false !== $line && ' ' != $line[3]);
         } catch (Swift_TransportException $e) {
             $this->_throwException($e);
         } catch (Swift_IoException $e) {
@@ -491,6 +505,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     {
         $sent = 0;
         $this->_doMailFromCommand($reversePath);
+
         foreach ($recipients as $forwardPath) {
             try {
                 $this->_doRcptToCommand($forwardPath);
@@ -579,7 +594,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      */
     private function _isFqdn($hostname)
     {
-        // We could do a really thorough check, but there's really no point
+        // We could do a really thorough check, but there's really no point.
         if (false !== $dotPos = strpos($hostname, '.')) {
             return ($dotPos > 0) && ($dotPos != strlen($hostname) - 1);
         }

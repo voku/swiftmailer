@@ -29,7 +29,11 @@ class Swift_Plugins_BandwidthMonitorPlugin implements Swift_Events_SendListener,
      */
     private $_in = 0;
 
-    /** Bound byte streams */
+    /**
+     * Bound byte streams
+     *
+     * @var Swift_InputByteStream[]
+     */
     private $_mirrors = array();
 
     /**

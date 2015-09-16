@@ -80,6 +80,8 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
      * @param string                 $itemKey
      * @param Swift_OutputByteStream $os
      * @param int                    $mode
+     *
+     * @throws Swift_SwiftException
      */
     public function importFromByteStream($nsKey, $itemKey, Swift_OutputByteStream $os, $mode)
     {
@@ -97,9 +99,8 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
                 break;
             default:
                 throw new Swift_SwiftException(
-                    'Invalid mode [' . $mode . '] used to set nsKey=' .
-                    $nsKey . ', itemKey=' . $itemKey
-                    );
+                    'Invalid mode [' . $mode . '] used to set nsKey=' . $nsKey . ', itemKey=' . $itemKey
+                );
         }
     }
 

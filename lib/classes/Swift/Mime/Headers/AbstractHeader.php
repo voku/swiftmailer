@@ -376,6 +376,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             $firstLineOffset = 0;
         }
 
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $encodedTextLines = explode(
             "\r\n",
             $this->_encoder->encodeString($token, $firstLineOffset, 75 - $encodingWrapperLength, $this->_charset)

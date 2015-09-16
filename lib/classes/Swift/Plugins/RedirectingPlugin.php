@@ -165,7 +165,7 @@ class Swift_Plugins_RedirectingPlugin implements Swift_Events_SendListener
      */
     protected function _isWhitelisted($recipient)
     {
-        if (in_array($recipient, (array) $this->_recipient)) {
+        if (in_array($recipient, (array) $this->_recipient, true)) {
             return true;
         }
 

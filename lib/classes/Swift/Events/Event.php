@@ -26,6 +26,7 @@ interface Swift_Events_Event
      * Prevent this Event from bubbling any further up the stack.
      *
      * @param bool $cancel, optional
+     *
      * @return void
      */
     public function cancelBubble($cancel = true);

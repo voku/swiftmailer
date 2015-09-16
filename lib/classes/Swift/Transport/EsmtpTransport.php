@@ -280,7 +280,8 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
             if (
                 in_array(
                     strtolower($method),
-                    array_map('strtolower', (array) $handler->exposeMixinMethods())
+                    array_map('strtolower', (array) $handler->exposeMixinMethods()),
+                    true
                 )
             ) {
                 $return = call_user_func_array(array($handler, $method), $args);
