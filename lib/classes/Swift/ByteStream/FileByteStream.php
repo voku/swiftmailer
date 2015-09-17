@@ -174,11 +174,14 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _getReadHandle()
     {
         if (!isset($this->_reader)) {
-            if (!$this->_reader = fopen($this->_path, 'rb')) {
+            $this->_reader = fopen($this->_path, 'rb');
+
+            if (!$this->_reader) {
                 throw new Swift_IoException(
                     'Unable to open file for reading [' . $this->_path . ']'
                 );
             }
+
             if ($this->_offset != 0) {
                 $this->_getReadStreamSeekableStatus();
                 $this->_seekReadStreamToPosition($this->_offset);
@@ -192,7 +195,9 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _getWriteHandle()
     {
         if (!isset($this->_writer)) {
-            if (!$this->_writer = fopen($this->_path, $this->_mode)) {
+            $this->_writer = fopen($this->_path, $this->_mode);
+
+            if (!$this->_writer) {
                 throw new Swift_IoException(
                     'Unable to open file for writing [' . $this->_path . ']'
                 );
@@ -218,7 +223,13 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
         $this->_seekable = $metas['seekable'];
     }
 
-    /** Streams in a readOnly stream ensuring copy if needed */
+    /**
+     * Streams in a readOnly stream ensuring copy if needed
+     *
+     * @param $offset
+     *
+     * @throws Swift_IoException
+     */
     private function _seekReadStreamToPosition($offset)
     {
         if ($this->_seekable === null) {

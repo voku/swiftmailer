@@ -93,20 +93,44 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
      */
     private $_hashHandler;
 
+    /**
+     * @var string|null
+     */
     private $_hash;
 
+    /**
+     * @var string
+     */
     private $_canonData = '';
 
+    /**
+     * @var int
+     */
     private $_bodyCanonEmptyCounter = 0;
 
+    /**
+     * @var int
+     */
     private $_bodyCanonIgnoreStart = 2;
 
+    /**
+     * @var bool
+     */
     private $_bodyCanonSpace = false;
 
+    /**
+     * @var null|string
+     */
     private $_bodyCanonLastChar = null;
 
+    /**
+     * @var string
+     */
     private $_bodyCanonLine = '';
 
+    /**
+     * @var Swift_InputByteStream[]
+     */
     private $_bound = array();
 
     /**
@@ -255,7 +279,7 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
     /**
      * Set hash_algorithm, must be one of rsa-sha256 | rsa-sha1 defaults to rsa-sha256.
      *
-     * @param string $hash
+     * @param string $hash WARNING: $hash not used, it's set fixed to "rsa-sha1"
      *
      * @return Swift_Signers_DomainKeySigner
      */
