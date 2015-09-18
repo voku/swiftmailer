@@ -33,9 +33,8 @@ class Swift_SmtpTransport extends Swift_Transport_EsmtpTransport
     {
         call_user_func_array(
             array($this, 'Swift_Transport_EsmtpTransport::__construct'),
-            Swift_DependencyContainer::getInstance()
-                ->createDependenciesFor('transport.smtp')
-            );
+            Swift_DependencyContainer::getInstance()->createDependenciesFor('transport.smtp')
+        );
 
         $this->setHost($host);
         $this->setPort($port);
