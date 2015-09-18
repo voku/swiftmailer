@@ -258,6 +258,10 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
      */
     private function _establishSocketConnection()
     {
+        // set default "php"-options for "stream_context_create"
+        // and overwrite it with the "user"-options
+        $options = stream_context_get_options(stream_context_get_default());
+
         $host = $this->_params['host'];
         if (!empty($this->_params['protocol'])) {
             $host = $this->_params['protocol'] . '://' . $host;
@@ -271,10 +275,6 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         if (!empty($this->_params['sourceIp'])) {
             $options['socket']['bindto'] = $this->_params['sourceIp'] . ':0';
         }
-
-        // set default "php"-options for "stream_context_create"
-        // and overwrite it with the "user"-options
-        $options = stream_context_get_options(stream_context_get_default());
 
         if (isset($this->_params['stream_context_options'])) {
             $options = array_merge($options, $this->_params['stream_context_options']);
