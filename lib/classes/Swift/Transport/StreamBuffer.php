@@ -268,7 +268,13 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
             $timeout = $this->_params['timeout'];
         }
 
-        $options = array();
+        // set default "php"-options for "stream_context_create"
+        // and overwrite it with the "user"-options
+        $options = array_merge(
+            stream_context_get_options(stream_context_get_default()),
+            $this->_params['options']
+        );
+
         if (!empty($this->_params['sourceIp'])) {
             $options['socket']['bindto'] = $this->_params['sourceIp'] . ':0';
         }

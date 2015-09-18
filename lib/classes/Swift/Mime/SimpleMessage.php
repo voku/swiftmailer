@@ -498,8 +498,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
     public function setReadReceiptTo($addresses)
     {
         if (!$this->_setHeaderFieldModel('Disposition-Notification-To', $addresses)) {
-            $this->getHeaders()
-                ->addMailboxHeader('Disposition-Notification-To', $addresses);
+            $this->getHeaders()->addMailboxHeader('Disposition-Notification-To', $addresses);
         }
 
         return $this;
@@ -619,9 +618,13 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
     /** Turn the body of this message into a child of itself if needed */
     protected function _becomeMimePart()
     {
-        $part = new parent($this->getHeaders()->newInstance(), $this->getEncoder(),
-            $this->_getCache(), $this->_getGrammar(), $this->_userCharset
-            );
+        $part = new parent(
+            $this->getHeaders()->newInstance(),
+            $this->getEncoder(),
+            $this->_getCache(),
+            $this->_getGrammar(),
+            $this->_userCharset
+        );
         $part->setContentType($this->_userContentType);
         $part->setBody($this->getBody());
         $part->setFormat($this->_userFormat);

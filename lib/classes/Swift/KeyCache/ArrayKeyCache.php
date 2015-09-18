@@ -49,6 +49,8 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
      * @param string $itemKey
      * @param string $string
      * @param int    $mode
+     *
+     * @throws Swift_SwiftException
      */
     public function setString($nsKey, $itemKey, $string, $mode)
     {

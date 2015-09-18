@@ -186,6 +186,30 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     }
 
     /**
+     * Sets the connection options.
+     *
+     * @param array $options
+     *
+     * @return Swift_Transport_EsmtpTransport
+     */
+    public function setOptions($options)
+    {
+        $this->_params['options'] = $options;
+
+        return $this;
+    }
+
+    /**
+     * Returns the connection options.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->_params['options'];
+    }
+
+    /**
      * Sets the source IP.
      *
      * @param string $source
@@ -371,7 +395,11 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         );
     }
 
-    /** Overridden to add Extension support */
+    /**
+     * Overridden to add Extension support
+     *
+     * @param $address
+     */
     protected function _doRcptToCommand($address)
     {
         $handlers = $this->_getActiveHandlers();
@@ -387,7 +415,13 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         );
     }
 
-    /** Determine ESMTP capabilities by function group */
+    /**
+     * Determine ESMTP capabilities by function group
+     *
+     * @param $ehloResponse
+     *
+     * @return array
+     */
     private function _getCapabilities($ehloResponse)
     {
         $capabilities = array();
@@ -406,7 +440,9 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         return $capabilities;
     }
 
-    /** Set parameters which are used by each extension handler */
+    /**
+     * Set parameters which are used by each extension handler
+     */
     private function _setHandlerParams()
     {
         foreach ($this->_handlers as $keyword => $handler) {
