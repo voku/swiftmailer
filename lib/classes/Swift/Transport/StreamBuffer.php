@@ -204,7 +204,9 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
             if (!$ret) {
                 $metas = stream_get_meta_data($this->_out);
                 if ($metas['timed_out']) {
-                    throw new Swift_IoException('Connection to ' . $this->_getReadConnectionDescription() . ' Timed Out');
+                    throw new Swift_IoException(
+                        'Connection to ' . $this->_getReadConnectionDescription() . ' Timed Out'
+                    );
                 }
             }
 
@@ -231,6 +233,8 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
      * @param string $bytes
      *
      * @return int
+     *
+     * @throws Swift_IoException
      */
     protected function _commit($bytes)
     {
@@ -241,7 +245,9 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
             while ($totalBytesWritten < $bytesToWrite) {
                 $bytesWritten = fwrite($this->_in, substr($bytes, $totalBytesWritten));
                 if (false === $bytesWritten || 0 === $bytesWritten) {
-                    break;
+                    throw new Swift_IoException(
+                        'Connection to ' . $this->_getReadConnectionDescription() . ' has gone away'
+                    );
                 }
 
                 $totalBytesWritten += $bytesWritten;
