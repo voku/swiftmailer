@@ -186,30 +186,6 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     }
 
     /**
-     * Sets the connection options.
-     *
-     * @param array $options
-     *
-     * @return Swift_Transport_EsmtpTransport
-     */
-    public function setOptions($options)
-    {
-        $this->_params['options'] = $options;
-
-        return $this;
-    }
-
-    /**
-     * Returns the connection options.
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return $this->_params['options'];
-    }
-
-    /**
      * Sets the source IP.
      *
      * @param string $source
