@@ -512,6 +512,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
                 ++$sent;
             } catch (Swift_TransportException $e) {
                 $failedRecipients[] = $forwardPath;
+                //throw $e; // TODO: check this https://github.com/michaelhogg/swiftmailer/commit/b824cba068d10c46291018947e463cb201a3e572
             }
         }
 
@@ -541,8 +542,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             return 0;
         }
 
-        return $this->_doMailTransaction($message, $reversePath, array_keys($to),
-            $failedRecipients);
+        return $this->_doMailTransaction($message, $reversePath, array_keys($to), $failedRecipients);
     }
 
     /**
