@@ -11,8 +11,7 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $headers = $this->_createHeaders();
         $message = $this->_createMessage($headers);
 
-        $invoker->shouldReceive('mail')
-                ->once();
+        $invoker->shouldReceive('mail')->once();
 
         $transport->send($message);
     }
