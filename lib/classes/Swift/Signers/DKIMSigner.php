@@ -143,22 +143,51 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     protected $_dkimHeader;
 
+    /**
+     * @var resource
+     */
     private $_bodyHashHandler;
 
+    /**
+     * @var null
+     *
+     * no used?
+     */
     private $_headerHash;
 
+    /**
+     * @var string
+     */
     private $_headerCanonData = '';
 
+    /**
+     * @var int
+     */
     private $_bodyCanonEmptyCounter = 0;
 
+    /**
+     * @var int
+     */
     private $_bodyCanonIgnoreStart = 2;
 
+    /**
+     * @var bool
+     */
     private $_bodyCanonSpace = false;
 
+    /**
+     * @var null|string
+     */
     private $_bodyCanonLastChar = null;
 
+    /**
+     * @var string
+     */
     private $_bodyCanonLine = '';
 
+    /**
+     * @var array
+     */
     private $_bound = array();
 
     /**
