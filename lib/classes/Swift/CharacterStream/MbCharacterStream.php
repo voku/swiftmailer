@@ -13,7 +13,7 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
     /**
      * @var string
      */
-    private $_charset;
+    private $_charset = 'utf-8';
 
     /**
      * @var int
