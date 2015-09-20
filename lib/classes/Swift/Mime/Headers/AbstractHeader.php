@@ -282,7 +282,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         $tokens = $this->getEncodableWordTokens($input);
 
         foreach ($tokens as $token) {
-            // See RFC 2822, Sect 2.2 (really 2.2 ??)
+            // See RFC 2822, Sect 2.2 (really 2.2 ?? TODO ?)
             if ($this->tokenNeedsEncoding($token)) {
                 // Don't encode starting WSP
                 $firstChar = substr($token, 0, 1);
