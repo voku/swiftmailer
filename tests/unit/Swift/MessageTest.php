@@ -108,8 +108,7 @@ class Swift_MessageTest extends \PHPUnit_Framework_TestCase
                 $obj2_value = $obj2_properties[$property];
                 $obj1_clone_value = $obj1_clone_properties[$property];
 
-                // TODO: can we "return" here? -> https://github.com/bmurashin/swiftmailer/commit/544d290c7d14333337ceb80b1fa3ef1f57f0d794
-                return $this->_recursiveArrayCloningCheck($obj1_value, $obj2_value, $obj1_clone_value);
+                $this->_recursiveArrayCloningCheck($obj1_value, $obj2_value, $obj1_clone_value);
             }
 
             array_pop($this->_stack);
