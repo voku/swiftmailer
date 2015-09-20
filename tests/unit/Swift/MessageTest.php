@@ -2,6 +2,11 @@
 
 class Swift_MessageTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var array
+     */
+    protected $_stack = array();
+
     public function testCloning()
     {
         $message1 = new Swift_Message('subj', 'body', 'ctype');
@@ -62,24 +67,38 @@ class Swift_MessageTest extends \PHPUnit_Framework_TestCase
         $obj1_clone_properties = (array) $obj1_clone;
 
         foreach ($obj1_properties as $property => $value) {
+            // collect and format information from where the property is
+            $property_parts = explode ("\x0", $property);
+            $property_name = array_pop($property_parts);
+            $property_origin = array_pop($property_parts);
+            $this->_stack[] = array('property' => $property_name, 'origin' => $property_origin, 'parent_type' => gettype($obj1));
+
+            $stack = '';
+            foreach ($this->_stack as $depth => $entry) {
+                $string = ($entry['parent_type'] == 'object') ? "->{$entry['property']}" : "[{$entry['property']}]";
+                $string .= ($entry['origin'] && $entry['origin'] != '*') ? " (from: {$entry['origin']})" : '';
+                $stack .= $string;
+            }
+
+            $obj1_value = $obj1_properties[$property];
+            $obj2_value = $obj2_properties[$property];
+            $obj1_clone_value = $obj1_clone_properties[$property];
+
             if (is_object($value)) {
-                $obj1_value = $obj1_properties[$property];
-                $obj2_value = $obj2_properties[$property];
-                $obj1_clone_value = $obj1_clone_properties[$property];
 
                 if ($obj1_value !== $obj2_value) {
-                    // two separetely instanciated objects property not referencing same object
+                    // two separately instantiated objects property not referencing same object
                     $this->assertFalse(
                         // but object's clone does - not everything copied
                         $obj1_value === $obj1_clone_value,
-                        "Property `$property` cloning error: source and cloned objects property is referencing same object"
+                        "Property `$stack`: Cloning error: source and cloned objects property is referencing same object"
                     );
                 } else {
-                    // two separetely instanciated objects have same reference
+                    // two separately instantiated objects have same reference
                     $this->assertFalse(
                         // but object's clone doesn't - overdone making copies
                         $obj1_value !== $obj1_clone_value,
-                        "Property `$property` not properly cloned: it should reference same object as cloning source (overdone copping)"
+                        "Property `$stack`: Not properly cloned: it should reference same object as cloning source (overdone copying)"
                     );
                 }
                 // recurse
@@ -89,8 +108,11 @@ class Swift_MessageTest extends \PHPUnit_Framework_TestCase
                 $obj2_value = $obj2_properties[$property];
                 $obj1_clone_value = $obj1_clone_properties[$property];
 
+                // TODO: can we "return" here? -> https://github.com/bmurashin/swiftmailer/commit/544d290c7d14333337ceb80b1fa3ef1f57f0d794
                 return $this->_recursiveArrayCloningCheck($obj1_value, $obj2_value, $obj1_clone_value);
             }
+
+            array_pop($this->_stack);
         }
     }
 
