@@ -130,6 +130,8 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     public function setEncoder(Swift_Mime_HeaderEncoder $encoder)
     {
         $this->_encoder = $encoder;
+        $this->_encoder->charsetChanged($this->_charset);
+
         $this->setCachedValue(null);
     }
 
