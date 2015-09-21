@@ -109,7 +109,7 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
     {
         if ($charset) {
             $this->_charset = $charset;
-        } 
+        }
     }
 
     /**
