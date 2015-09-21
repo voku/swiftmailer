@@ -107,7 +107,9 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
      */
     public function setCharacterSet($charset)
     {
-        $this->_charset = $charset;
+        if ($charset) {
+            $this->_charset = $charset;
+        } 
     }
 
     /**
