@@ -32,13 +32,12 @@ class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
      * ?>
      * </code>
      *
-     * @param string             $name    of Header
-     * @param Swift_Mime_Grammar $grammar
+     * @param string $name    of Header
      */
-    public function __construct($name, Swift_Mime_Grammar $grammar)
+    public function __construct($name)
     {
         $this->setFieldName($name);
-        parent::__construct($grammar);
+        parent::__construct();
     }
 
     /**

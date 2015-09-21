@@ -27,13 +27,14 @@ class Swift_Mime_Headers_IdentificationHeader extends Swift_Mime_Headers_Abstrac
     /**
      * Creates a new IdentificationHeader with the given $name and $id.
      *
-     * @param string             $name
-     * @param Swift_Mime_Grammar $grammar
+     * @param string                     $name
+     * @param Swift_EmailValidatorBridge $emailValidator
      */
-    public function __construct($name, Swift_Mime_Grammar $grammar)
+    public function __construct($name, Swift_EmailValidatorBridge $emailValidator)
     {
         $this->setFieldName($name);
-        parent::__construct($grammar);
+        $this->_emailValidator = $emailValidator;
+        parent::__construct();
     }
 
     /**
@@ -167,14 +168,10 @@ class Swift_Mime_Headers_IdentificationHeader extends Swift_Mime_Headers_Abstrac
      */
     private function _assertValidId($id)
     {
-        if (!preg_match(
-            '/^' . $this->getGrammar()->getDefinition('id-left') . '@' .
-            $this->getGrammar()->getDefinition('id-right') . '$/D',
-            $id
-            )) {
+        if ($this->_emailValidator->isValidSimpleWrapper($id) === false) {
             throw new Swift_RfcComplianceException(
                 'Invalid ID given <' . $id . '>'
-                );
+            );
         }
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-require __DIR__ . '/../mime_types.php';
+require dirname(__FILE__) . '/../mime_types.php';
 
 Swift_DependencyContainer::getInstance()
     ->register('properties.charset')
     ->asValue('utf-8')
 
-    ->register('mime.grammar')
-    ->asSharedInstanceOf('Swift_Mime_Grammar')
+    ->register('email.validator')
+    ->asSharedInstanceOf('Swift_EmailValidatorBridge')
 
     ->register('mime.message')
     ->asNewInstanceOf('Swift_Mime_SimpleMessage')
@@ -15,7 +15,7 @@ Swift_DependencyContainer::getInstance()
         'mime.headerset',
         'mime.qpcontentencoder',
         'cache',
-        'mime.grammar',
+        'email.validator',
         'properties.charset',
     ))
 
@@ -25,7 +25,7 @@ Swift_DependencyContainer::getInstance()
         'mime.headerset',
         'mime.qpcontentencoder',
         'cache',
-        'mime.grammar',
+        'email.validator',
         'properties.charset',
     ))
 
@@ -35,7 +35,7 @@ Swift_DependencyContainer::getInstance()
         'mime.headerset',
         'mime.base64contentencoder',
         'cache',
-        'mime.grammar',
+        'email.validator',
     ))
     ->addConstructorValue($swift_mime_types)
 
@@ -45,7 +45,7 @@ Swift_DependencyContainer::getInstance()
         'mime.headerset',
         'mime.base64contentencoder',
         'cache',
-        'mime.grammar',
+        'email.validator',
     ))
     ->addConstructorValue($swift_mime_types)
 
@@ -54,7 +54,7 @@ Swift_DependencyContainer::getInstance()
     ->withDependencies(array(
             'mime.qpheaderencoder',
             'mime.rfc2231encoder',
-            'mime.grammar',
+            'email.validator',
             'properties.charset',
         ))
 

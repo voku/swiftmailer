@@ -67,11 +67,11 @@ class Swift_Mime_Headers_PathHeaderTest extends \PHPUnit_Framework_TestCase
         $header->setAddress('chris@swiftmailer.org');
         $this->assertEquals('Return-Path: <chris@swiftmailer.org>'."\r\n",
             $header->toString()
-            );
+        );
     }
 
     private function _getHeader($name)
     {
-        return new Swift_Mime_Headers_PathHeader($name, new Swift_Mime_Grammar());
+        return new Swift_Mime_Headers_PathHeader($name, new Swift_EmailValidatorBridge());
     }
 }

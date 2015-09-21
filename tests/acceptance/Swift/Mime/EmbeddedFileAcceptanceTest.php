@@ -4,27 +4,27 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
     private $_contentEncoder;
     private $_cache;
-    private $_grammar;
+    private $_emailValidator;
     private $_headers;
 
     public function setUp()
     {
         $this->_cache = new Swift_KeyCache_ArrayKeyCache(
             new Swift_KeyCache_SimpleKeyCacheInputStream()
-            );
+        );
         $factory = new Swift_CharacterReaderFactory_SimpleCharacterReaderFactory();
         $this->_contentEncoder = new Swift_Mime_ContentEncoder_Base64ContentEncoder();
 
         $headerEncoder = new Swift_Mime_HeaderEncoder_QpHeaderEncoder(
             new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8')
-            );
+        );
         $paramEncoder = new Swift_Encoder_Rfc2231Encoder(
             new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8')
-            );
-        $this->_grammar = new Swift_Mime_Grammar();
+        );
+        $this->_emailValidator = new Swift_EmailValidatorBridge();
         $this->_headers = new Swift_Mime_SimpleHeaderSet(
-            new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $this->_grammar)
-            );
+            new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $this->_emailValidator)
+        );
     }
 
     public function testContentIdIsSetInHeader()
@@ -38,7 +38,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-ID: <foo@bar>'."\r\n".
             'Content-Disposition: inline'."\r\n",
             $file->toString()
-            );
+        );
     }
 
     public function testDispositionIsSetInHeader()
@@ -53,7 +53,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-ID: <'.$id.'>'."\r\n".
             'Content-Disposition: attachment'."\r\n",
             $file->toString()
-            );
+        );
     }
 
     public function testFilenameIsSetInHeader()
@@ -68,7 +68,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-ID: <'.$id.'>'."\r\n".
             'Content-Disposition: inline; filename=foo.pdf'."\r\n",
             $file->toString()
-            );
+        );
     }
 
     public function testSizeIsSetInHeader()
@@ -83,7 +83,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-ID: <'.$id.'>'."\r\n".
             'Content-Disposition: inline; size=12340'."\r\n",
             $file->toString()
-            );
+        );
     }
 
     public function testMultipleParametersInHeader()
@@ -100,7 +100,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-ID: <'.$id.'>'."\r\n".
             'Content-Disposition: inline; filename=foo.pdf; size=12340'."\r\n",
             $file->toString()
-            );
+        );
     }
 
     public function testEndToEnd()
@@ -119,7 +119,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
             "\r\n".
             base64_encode('abcd'),
             $file->toString()
-            );
+        );
     }
 
     // -- Private helpers
@@ -130,8 +130,8 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
             $this->_headers,
             $this->_contentEncoder,
             $this->_cache,
-            $this->_grammar
-            );
+            $this->_emailValidator
+        );
 
         return $entity;
     }

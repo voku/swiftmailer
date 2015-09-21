@@ -7,18 +7,21 @@
  * file that was distributed with this source code.
  */
 
-use voku\helper\EmailCheck;
-
 /**
- * Utility Class allowing users to simply check expressions again Swift Grammar.
+ * Utility Class allowing users to simply check expressions again Swift EmailValidatorBridge.
  *
  * @author  Xavier De Cock <xdecock@gmail.com>
  */
 class Swift_Validate
 {
+    /**
+     * @var Swift_EmailValidatorBridge
+     */
+    private static $_emailValidator = null;
+
 
     /**
-     * Checks if an e-mail address matches the current grammars.
+     * Checks if an e-mail address is valid.
      *
      * @param string $email
      *
@@ -26,6 +29,10 @@ class Swift_Validate
      */
     public static function email($email)
     {
-        return EmailCheck::isValid($email);
+        if (self::$_emailValidator === null) {
+            self::$_emailValidator = new Swift_EmailValidatorBridge();
+        }
+
+        return self::$_emailValidator->isValidWrapper($email);
     }
 }

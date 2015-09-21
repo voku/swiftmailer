@@ -148,12 +148,10 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     private function _createFactory($encoder = null, $paramEncoder = null)
     {
         return new Swift_Mime_SimpleHeaderFactory(
-            $encoder
-                ? $encoder : $this->_createHeaderEncoder(),
-            $paramEncoder
-                ? $paramEncoder : $this->_createParamEncoder(),
-            new Swift_Mime_Grammar()
-            );
+            $encoder ? $encoder : $this->_createHeaderEncoder(),
+            $paramEncoder ? $paramEncoder : $this->_createParamEncoder(),
+            new Swift_EmailValidatorBridge()
+        );
     }
 
     private function _createHeaderEncoder()

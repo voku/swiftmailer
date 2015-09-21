@@ -4,27 +4,27 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
     private $_contentEncoder;
     private $_cache;
-    private $_grammar;
+    private $_emailValidator;
     private $_headers;
 
     public function setUp()
     {
         $this->_cache = new Swift_KeyCache_ArrayKeyCache(
             new Swift_KeyCache_SimpleKeyCacheInputStream()
-            );
+        );
         $factory = new Swift_CharacterReaderFactory_SimpleCharacterReaderFactory();
         $this->_contentEncoder = new Swift_Mime_ContentEncoder_Base64ContentEncoder();
 
         $headerEncoder = new Swift_Mime_HeaderEncoder_QpHeaderEncoder(
             new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8')
-            );
+        );
         $paramEncoder = new Swift_Encoder_Rfc2231Encoder(
             new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8')
-            );
-        $this->_grammar = new Swift_Mime_Grammar();
+        );
+        $this->_emailValidator = new Swift_EmailValidatorBridge();
         $this->_headers = new Swift_Mime_SimpleHeaderSet(
-            new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $this->_grammar)
-            );
+            new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $this->_emailValidator)
+        );
     }
 
     public function testDispositionIsSetInHeader()
@@ -37,7 +37,7 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-Disposition: inline'."\r\n",
             $attachment->toString()
-            );
+        );
     }
 
     public function testDispositionIsAttachmentByDefault()
@@ -49,7 +49,7 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-Disposition: attachment'."\r\n",
             $attachment->toString()
-            );
+        );
     }
 
     public function testFilenameIsSetInHeader()
@@ -62,7 +62,7 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-Disposition: attachment; filename=foo.pdf'."\r\n",
             $attachment->toString()
-            );
+        );
     }
 
     public function testSizeIsSetInHeader()
@@ -75,7 +75,7 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-Disposition: attachment; size=12340'."\r\n",
             $attachment->toString()
-            );
+        );
     }
 
     public function testMultipleParametersInHeader()
@@ -89,7 +89,7 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-Disposition: attachment; filename=foo.pdf; size=12340'."\r\n",
             $attachment->toString()
-            );
+        );
     }
 
     public function testEndToEnd()
@@ -106,7 +106,7 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
             "\r\n".
             base64_encode('abcd'),
             $attachment->toString()
-            );
+        );
     }
 
     // -- Private helpers
@@ -117,8 +117,8 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
             $this->_headers,
             $this->_contentEncoder,
             $this->_cache,
-            $this->_grammar
-            );
+            $this->_emailValidator
+        );
 
         return $entity;
     }

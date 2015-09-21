@@ -104,7 +104,7 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
             $header->setId('a b c@d');
             $this->fail(
                 'Exception should be thrown since "a b c" is not valid id-left.'
-                );
+            );
         } catch (Exception $e) {
         }
     }
@@ -140,7 +140,7 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
             $header->setId('a@b c d');
             $this->fail(
                 'Exception should be thrown since "b c d" is not valid id-right.'
-                );
+            );
         } catch (Exception $e) {
         }
     }
@@ -156,7 +156,7 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
             $header->setId('abc');
             $this->fail(
                 'Exception should be thrown since "abc" is does not contain @.'
-                );
+            );
         } catch (Exception $e) {
         }
     }
@@ -184,6 +184,6 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
 
     private function _getHeader($name)
     {
-        return new Swift_Mime_Headers_IdentificationHeader($name, new Swift_Mime_Grammar());
+        return new Swift_Mime_Headers_IdentificationHeader($name, new Swift_EmailValidatorBridge());
     }
 }

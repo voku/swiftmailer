@@ -296,20 +296,22 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
     public function testToString()
     {
         $header = $this->_getHeader('From', $this->_getEncoder('Q', true));
-        $header->setNameAddresses(array(
-            'chris@swiftmailer.org' => 'Chris Corbyn',
-            'mark@swiftmailer.org' => 'Mark Corbyn',
-            ));
+        $header->setNameAddresses(
+            array(
+                'chris@swiftmailer.org' => 'Chris Corbyn',
+                'mark@swiftmailer.org' => 'Mark Corbyn',
+            )
+        );
+
         $this->assertEquals(
-            'From: Chris Corbyn <chris@swiftmailer.org>, '.
-            'Mark Corbyn <mark@swiftmailer.org>'."\r\n",
+            'From: Chris Corbyn <chris@swiftmailer.org>, '. 'Mark Corbyn <mark@swiftmailer.org>'."\r\n",
             $header->toString()
-            );
+        );
     }
 
     private function _getHeader($name, $encoder)
     {
-        $header = new Swift_Mime_Headers_MailboxHeader($name, $encoder, new Swift_Mime_Grammar());
+        $header = new Swift_Mime_Headers_MailboxHeader($name, $encoder, new Swift_EmailValidatorBridge());
         $header->setCharset($this->_charset);
 
         return $header;

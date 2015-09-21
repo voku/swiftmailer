@@ -156,8 +156,8 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
 
         $headerEncoder = new Swift_Mime_HeaderEncoder_QpHeaderEncoder(new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8'));
         $paramEncoder = new Swift_Encoder_Rfc2231Encoder(new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8'));
-        $grammar = new Swift_Mime_Grammar();
-        $headers = new Swift_Mime_SimpleHeaderSet(new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $grammar));
+        $emailValidator = new Swift_EmailValidatorBridge();
+        $headers = new Swift_Mime_SimpleHeaderSet(new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $emailValidator));
 
         return $headers;
     }
@@ -174,8 +174,8 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
 
         $headerEncoder = new Swift_Mime_HeaderEncoder_QpHeaderEncoder(new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8'));
         $paramEncoder = new Swift_Encoder_Rfc2231Encoder(new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8'));
-        $grammar = new Swift_Mime_Grammar();
-        $headerFactory = new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $grammar);
+        $emailValidator = new Swift_EmailValidatorBridge();
+        $headerFactory = new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $emailValidator);
         $headers = $this->getMockery('Swift_Mime_HeaderSet');
 
         $headers->shouldReceive('listAll')

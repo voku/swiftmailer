@@ -35,11 +35,11 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     private $_encoder;
 
     /**
-     * The grammar to use for id validation
+     * The validator for email
      *
-     * @var Swift_Mime_Grammar
+     * @var Swift_EmailValidatorBridge
      */
-    private $_grammar;
+    private $_emailValidator;
 
     /**
      * A mime boundary, if any is used
@@ -129,17 +129,17 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /**
      * Create a new SimpleMimeEntity with $headers, $encoder and $cache.
      *
-     * @param Swift_Mime_HeaderSet      $headers
-     * @param Swift_Mime_ContentEncoder $encoder
-     * @param Swift_KeyCache            $cache
-     * @param Swift_Mime_Grammar        $grammar
+     * @param Swift_Mime_HeaderSet       $headers
+     * @param Swift_Mime_ContentEncoder  $encoder
+     * @param Swift_KeyCache             $cache
+     * @param Swift_EmailValidatorBridge $emailValidator
      */
-    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_Mime_Grammar $grammar)
+    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_EmailValidatorBridge $emailValidator)
     {
         $this->_cacheKey = $this->_generateNewCacheKey();
         $this->_cache = $cache;
         $this->_headers = $headers;
-        $this->_grammar = $grammar;
+        $this->_emailValidator = $emailValidator;
         $this->setEncoder($encoder);
         $this->_headers->defineOrdering(array('Content-Type', 'Content-Transfer-Encoding'));
 
@@ -718,13 +718,13 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     }
 
     /**
-     * Get the grammar used for validation.
+     * Get the email-validator.
      *
-     * @return Swift_Mime_Grammar
+     * @return Swift_EmailValidatorBridge
      */
-    protected function _getGrammar()
+    protected function _getEmailValidator()
     {
-        return $this->_grammar;
+        return $this->_emailValidator;
     }
 
     /**
@@ -856,7 +856,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     private function _createChild()
     {
-        return new self($this->_headers->newInstance(), $this->_encoder, $this->_cache, $this->_grammar);
+        return new self($this->_headers->newInstance(), $this->_encoder, $this->_cache, $this->_emailValidator);
     }
 
     /**
@@ -943,7 +943,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     private function _assertValidId($id)
     {
-        if (!preg_match('/^' . $this->_grammar->getDefinition('id-left') . '@' . $this->_grammar->getDefinition('id-right') . '$/D', $id)) {
+        if ($this->_emailValidator->isValidWrapper($id) === false) {
             throw new Swift_RfcComplianceException('Invalid ID given <' . $id . '>');
         }
     }
