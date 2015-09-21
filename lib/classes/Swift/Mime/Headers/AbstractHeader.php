@@ -247,7 +247,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      *
      * @return string
      */
-    protected function escapeSpecials($token, Array $include = array())
+    protected function escapeSpecials($token, array $include = array())
     {
         foreach (array_merge(array('\\'), $include) as $char) {
             $token = str_replace($char, '\\'.$char, $token);
