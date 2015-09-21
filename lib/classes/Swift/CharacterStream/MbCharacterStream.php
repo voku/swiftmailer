@@ -71,11 +71,7 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
 
         $readChars = min($length, $this->_strlen - $this->_strpos);
 
-        if ($this->_charset == 'utf-8') {
-            $ret = mb_substr($this->_buffer, $this->_strpos, $readChars, $this->_charset);
-        } else {
-            $ret = substr($this->_buffer, $this->_strpos, $readChars);
-        }
+        $ret = mb_substr($this->_buffer, $this->_strpos, $readChars, $this->_charset);
 
         $this->_strpos += $readChars;
 
@@ -111,7 +107,9 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
      */
     public function setCharacterSet($charset)
     {
-        $this->_charset = $charset;
+        if ($charset) {
+            $this->_charset = $charset;
+        } 
     }
 
     /**
@@ -128,11 +126,6 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
     public function write($chars)
     {
         $this->_buffer .= $chars;
-
-        if ($this->_charset == 'utf-8') {
-            $this->_strlen += mb_strlen($chars, $this->_charset);
-        } else {
-            $this->_strlen += strlen($chars);
-        }
+        $this->_strlen += mb_strlen($chars, $this->_charset);
     }
 }
