@@ -266,7 +266,7 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
 
     private function _createTransport($dispatcher)
     {
-        return new Swift_Transport_MailTransport($dispatcher);
+        return \Mockery::mock('Swift_Transport_MailTransport', array($dispatcher))->makePartial();
     }
 
     private function _createEventDispatcher()
