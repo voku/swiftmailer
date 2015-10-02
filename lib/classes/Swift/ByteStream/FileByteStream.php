@@ -174,13 +174,15 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _getReadHandle()
     {
         if (!isset($this->_reader)) {
-            $this->_reader = fopen($this->_path, 'rb');
+            $pointer = fopen($this->_path, 'rb');
 
-            if (!$this->_reader) {
+            if (!$pointer) {
                 throw new Swift_IoException(
                     'Unable to open file for reading [' . $this->_path . ']'
                 );
             }
+
+            $this->_reader = $pointer;
 
             if ($this->_offset != 0) {
                 $this->_getReadStreamSeekableStatus();
@@ -195,13 +197,15 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _getWriteHandle()
     {
         if (!isset($this->_writer)) {
-            $this->_writer = fopen($this->_path, $this->_mode);
+            $pointer = fopen($this->_path, $this->_mode);
 
-            if (!$this->_writer) {
+            if (!$pointer) {
                 throw new Swift_IoException(
                     'Unable to open file for writing [' . $this->_path . ']'
                 );
             }
+
+            $this->_writer = $pointer;
         }
 
         return $this->_writer;
