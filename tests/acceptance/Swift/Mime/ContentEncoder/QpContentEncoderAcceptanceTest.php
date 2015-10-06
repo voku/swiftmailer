@@ -20,8 +20,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_
             }
 
             $encoding = $encodingDir;
-            $charStream = new Swift_CharacterStream_NgCharacterStream(
-                $this->_factory, $encoding);
+            $charStream = new Swift_CharacterStream_NgCharacterStream($this->_factory, $encoding);
             $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
 
             $sampleDir = $this->_samplesDir.'/'.$encodingDir;
@@ -47,10 +46,10 @@ class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_
                     }
 
                     $this->assertEquals(
-                        quoted_printable_decode($encoded), $text,
-                        '%s: Encoded string should decode back to original string for sample '.
-                        $sampleDir.'/'.$sampleFile
-                        );
+                        quoted_printable_decode($encoded),
+                        $text,
+                        '%s: Encoded string should decode back to original string for sample '. $sampleDir.'/'.$sampleFile
+                    );
                 }
                 closedir($fileFp);
             }

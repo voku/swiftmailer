@@ -145,8 +145,8 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
      *
      * This does not override the From field, but it has a higher significance.
      *
-     * @param string $address
-     * @param string $name    optional
+     * @param string|array $address
+     * @param string       $name    optional
      *
      * @return Swift_Mime_SimpleMessage
      */
@@ -457,7 +457,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
             3 => 'Normal',
             4 => 'Low',
             5 => 'Lowest',
-            );
+        );
         $pMapKeys = array_keys($priorityMap);
         if ($priority > max($pMapKeys)) {
             $priority = max($pMapKeys);

@@ -39,9 +39,7 @@ class Swift_Bug76Test extends \PHPUnit_Framework_TestCase
 
         $this->_encoder->encodeByteStream($os, $is, 0, 80); //Exceeds 76
 
-        $this->assertMaxLineLength(76, $this->_outputFile,
-            '%s: Line length should not exceed 76 characters'
-        );
+        $this->assertMaxLineLength(76, $this->_outputFile, '%s: Line length should not exceed 76 characters');
     }
 
     // -- Custom Assertions
