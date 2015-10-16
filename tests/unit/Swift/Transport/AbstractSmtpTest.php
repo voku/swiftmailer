@@ -1150,9 +1150,11 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
         $this->_finishBuffer($buf);
         $smtp->start();
         $this->assertEquals(1, $smtp->send($message, $failures));
-        $this->assertEquals(array('zip@button', 'test@domain'), $failures,
+        $this->assertEquals(
+            array('zip@button', 'test@domain'),
+            $failures,
             '%s: Failures should be caught in an array'
-            );
+        );
     }
 
     public function testSendingRegeneratesMessageId()
