@@ -213,6 +213,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         $message->setBcc($bcc);
 
         if ($evt) {
+
             if ($sent == count($to) + count($cc) + count($bcc)) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_SUCCESS);
             } elseif ($sent > 0) {
@@ -220,11 +221,12 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             } else {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_FAILED);
             }
+
             $evt->setFailedRecipients($failedRecipients);
             $this->_eventDispatcher->dispatchEvent($evt, 'sendPerformed');
         }
 
-        $message->generateId(); //Make sure a new Message ID is used
+        $message->generateId(); // Make sure a new Message ID is used
 
         return $sent;
     }
