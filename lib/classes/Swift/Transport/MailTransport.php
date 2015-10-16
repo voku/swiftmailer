@@ -192,10 +192,13 @@ class Swift_Transport_MailTransport implements Swift_Transport
                 $this->_eventDispatcher->dispatchEvent($evt, 'sendPerformed');
             }
 
+            // TODO: Why do we do this only on error?
+            // -> take a look at "AbstractSmtpTransport"
+            //
+            $message->generateId(); // Make sure a new Message ID is used
+
             $count = 0;
         }
-
-        $message->generateId(); // Make sure a new Message ID is used
 
         return $count;
     }
