@@ -70,7 +70,7 @@ class Swift_Bug666Test extends \PHPUnit_Framework_TestCase
                    "\r\n".
                    preg_quote(base64_encode(file_get_contents($this->_attFile_1)), '~').
                    "\r\n\r\n".
-                   '--'.$boundary.''." \r\n".
+                   '--'.$boundary.''."\r\n".
                    'Content-Type: '.$this->_attFileType_2.'; name='.$this->_attFileName_2."\r\n".
                    'Content-Transfer-Encoding: base64'."\r\n".
                    'Content-Disposition: attachment; filename='.$this->_attFileName_2."\r\n".
