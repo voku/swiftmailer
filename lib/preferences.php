@@ -14,9 +14,11 @@ $preferences->setCharset('utf-8');
 // Without these lines the default caching mechanism is "array" but this uses a lot of memory.
 // If possible, use a disk cache to enable attaching large attachments etc.
 // You can override the default temporary directory by setting the TMPDIR environment variable.
-if (@is_writable($tmpDir = sys_get_temp_dir())) {
+$tmpDir = sys_get_temp_dir();
+if (@is_writable($tmpDir)) {
     $preferences->setTempDir($tmpDir)->setCacheType('disk');
 }
+unset($tmpDir);
 
 // this should only be done when Swiftmailer won't use the native QP content encoder
 // see mime_deps.php
