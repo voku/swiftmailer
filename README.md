@@ -12,3 +12,8 @@
 WARNING: this is only a Fork of "https://github.com/swiftmailer/swiftmailer"
 
 > Comprehensive mailing tools for PHP http://swiftmailer.org/
+
+## Install via "composer require"
+```shell
+composer require voku/swiftmailer
+```
