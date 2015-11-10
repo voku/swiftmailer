@@ -628,6 +628,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
         $part->setBody($this->getBody());
         $part->setFormat($this->_userFormat);
         $part->setDelSp($this->_userDelSp);
+        $part->setMaxLineLength($this->getMaxLineLength());
         $part->_setNestingLevel($this->_getTopNestingLevel());
 
         return $part;
