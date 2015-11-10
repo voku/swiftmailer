@@ -305,7 +305,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     protected function tokenNeedsEncoding($token)
     {
-        return preg_match('~[\x00-\x08\x10-\x19\x7F-\xFF\r\n]~', $token);
+        return preg_match('~[\x00-\x08\x10-\x19\x7F-\xFF\r\n]~', $token) || strlen($token) > 76;
     }
 
     /**
