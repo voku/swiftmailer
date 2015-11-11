@@ -50,6 +50,37 @@ class Swift_Mime_HeaderEncoder_Base64HeaderEncoder extends Swift_Encoder_Base64E
             return $newstring;
         }
 
-        return parent::encodeString($string, $firstLineOffset, $maxLineLength);
+        // safety measure copy-pasted from parent method
+        if (0 >= $maxLineLength || 76 < $maxLineLength) {
+            $maxLineLength = 76;
+        }
+
+        $cursorPosition = 0;
+        $encoded = '';
+        while ($cursorPosition < strlen($string)) {
+            $maxChunkLength = $this->maxChunkLength($firstLineOffset, $maxLineLength);
+            if ($cursorPosition > 0 || $firstLineOffset > $maxChunkLength) {
+                $encoded .= "\r\n";
+                $maxChunkLength = $this->maxChunkLength(0, $maxLineLength);
+            }
+            $chunk = mb_strcut($string, $cursorPosition, $maxChunkLength);
+            $encoded .= base64_encode($chunk);
+            $cursorPosition += strlen($chunk);
+        }
+        return $encoded;
+    }
+
+    /**
+     * Returns maximum number of bytes that can fit in a line with given
+     * offset and maximum length if encoded with base64
+     *
+     * @param int $firstLineOffset
+     * @param int $maxLineLength
+     *
+     * @return int
+     */
+    private function maxChunkLength($firstLineOffset, $maxLineLength)
+    {
+        return floor(($maxLineLength - $firstLineOffset) / 4) * 3;
     }
 }
