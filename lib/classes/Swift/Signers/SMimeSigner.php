@@ -349,6 +349,9 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
      *
      * @param Swift_OutputByteStream $fromStream
      * @param Swift_Message          $message
+     *
+     * @throws Swift_DependencyException
+     * @throws Swift_SwiftException
      */
     protected function streamToMime(Swift_OutputByteStream $fromStream, Swift_Message $message)
     {

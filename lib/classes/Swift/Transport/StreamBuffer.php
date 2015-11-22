@@ -22,13 +22,19 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
      */
     private $_stream;
 
-    /** The input stream */
+    /**
+     * The input stream
+     */
     private $_in;
 
-    /** The output stream */
+    /**
+     * The output stream
+     */
     private $_out;
 
-    /** Buffer initialization parameters */
+    /**
+     * Buffer initialization parameters
+     */
     private $_params = array();
 
     /**
@@ -150,8 +156,9 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         foreach ($replacements as $search => $replace) {
             if (!isset($this->_translations[$search])) {
                 $this->addFilter(
-                    $this->_replacementFactory->createFilter($search, $replace), $search
-                    );
+                    $this->_replacementFactory->createFilter($search, $replace),
+                    $search
+                );
                 $this->_translations[$search] = true;
             }
         }
