@@ -218,7 +218,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         // Treat token as exactly what was given
         $phraseStr = $string;
         // If it's not valid
-        if (!preg_match('/^'.self::PHRASE_PATTERN.'$/D', $phraseStr)) {
+        if (!preg_match('/^' . self::PHRASE_PATTERN . '$/D', $phraseStr)) {
             // .. but it is just ascii text, try escaping some characters
             // and make it a quoted-string
             if (preg_match('/^[\x00-\x08\x0B\x0C\x0E-\x7F]*$/D', $phraseStr)) {
@@ -250,8 +250,9 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     protected function escapeSpecials($token, array $include = array())
     {
         foreach (array_merge(array('\\'), $include) as $char) {
-            $token = str_replace($char, '\\'.$char, $token);
+            $token = str_replace($char, '\\' . $char, $token);
         }
+
         return $token;
     }
 
@@ -259,8 +260,8 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      * Encode needed word tokens within a string of input.
      *
      * @param Swift_Mime_Header|Swift_Mime_Headers_AbstractHeader $header
-     * @param string            $input
-     * @param integer           $usedLength optional
+     * @param string                                              $input
+     * @param integer                                             $usedLength optional
      *
      * @return string
      */
@@ -305,7 +306,15 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     protected function tokenNeedsEncoding($token)
     {
-        return preg_match('~[\x00-\x08\x10-\x19\x7F-\xFF\r\n]~', $token) || strlen($token) > 76;
+        if (
+            preg_match('~[\x00-\x08\x10-\x19\x7F-\xFF\r\n]~', $token)
+            ||
+            strlen($token) > $this->getMaxLineLength()
+        ) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**
