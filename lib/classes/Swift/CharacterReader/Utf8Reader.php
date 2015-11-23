@@ -88,7 +88,7 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
             $currentMap['p'] = $currentMap['i'] = array();
         }
 
-        $strlen = strlen($string);
+        $strlen = mb_strlen($string);
         $charPos = count($currentMap['p']);
         $foundChars = 0;
         $invalid = false;
@@ -114,7 +114,7 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
                 }
 
                 if (($i + $size) > $strlen) {
-                    $ignoredChars = substr($string, $i);
+                    $ignoredChars = mb_substr($string, $i);
                     break;
                 }
 

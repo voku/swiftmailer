@@ -50,7 +50,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoder extends Swift_Encoder_Base6
             }
 
             $base64ReadBufferRemainderBytes = null;
-            $bytesLength = strlen($streamTheseBytes);
+            $bytesLength = mb_strlen($streamTheseBytes);
 
             if ($bytesLength === 0) { // no data left to encode
                 break;
@@ -70,7 +70,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoder extends Swift_Encoder_Base6
             $encodedTransformed = '';
             $thisMaxLineLength = $maxLineLength - $remainder - $firstLineOffset;
 
-            while ($thisMaxLineLength < strlen($encoded)) {
+            while ($thisMaxLineLength < mb_strlen($encoded)) {
                 $encodedTransformed .= substr($encoded, 0, $thisMaxLineLength) . "\r\n";
                 $firstLineOffset = 0;
                 $encoded = substr($encoded, $thisMaxLineLength);
@@ -78,7 +78,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoder extends Swift_Encoder_Base6
                 $remainder = 0;
             }
 
-            if (0 < $remainingLength = strlen($encoded)) {
+            if (0 < $remainingLength = mb_strlen($encoded)) {
                 $remainder += $remainingLength;
                 $encodedTransformed .= $encoded;
                 $encoded = null;

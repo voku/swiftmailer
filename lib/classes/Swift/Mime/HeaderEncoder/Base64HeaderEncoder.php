@@ -57,7 +57,7 @@ class Swift_Mime_HeaderEncoder_Base64HeaderEncoder extends Swift_Encoder_Base64E
 
         $cursorPosition = 0;
         $encoded = '';
-        while ($cursorPosition < strlen($string)) {
+        while ($cursorPosition < mb_strlen($string)) {
             $maxChunkLength = $this->maxChunkLength($firstLineOffset, $maxLineLength);
             if ($cursorPosition > 0 || $firstLineOffset > $maxChunkLength) {
                 $encoded .= "\r\n";
@@ -65,7 +65,7 @@ class Swift_Mime_HeaderEncoder_Base64HeaderEncoder extends Swift_Encoder_Base64E
             }
             $chunk = mb_strcut($string, $cursorPosition, $maxChunkLength);
             $encoded .= base64_encode($chunk);
-            $cursorPosition += strlen($chunk);
+            $cursorPosition += mb_strlen($chunk);
         }
         return $encoded;
     }

@@ -63,7 +63,7 @@ class Swift_Encoder_Rfc2231Encoder implements Swift_Encoder
             if (
                 $currentLine !== ''
                 &&
-                strlen($currentLine . $encodedChar) > $thisLineLength
+                mb_strlen($currentLine . $encodedChar) > $thisLineLength
             ) {
                 $lines[] = '';
                 $currentLine = &$lines[$lineCount++];

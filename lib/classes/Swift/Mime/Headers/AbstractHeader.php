@@ -228,7 +228,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
                 // ... otherwise it needs encoding
                 // Determine space remaining on line if first line
                 if ($shorten) {
-                    $usedLength = strlen($header->getFieldName() . ': ');
+                    $usedLength = mb_strlen($header->getFieldName() . ': ');
                 } else {
                     $usedLength = 0;
                 }
@@ -280,11 +280,11 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
                     case ' ':
                     case "\t":
                         $value .= $firstChar;
-                        $token = substr($token, 1);
+                        $token = mb_substr($token, 1);
                 }
 
                 if (-1 == $usedLength) {
-                    $usedLength = strlen($header->getFieldName() . ': ') + strlen($value);
+                    $usedLength = mb_strlen($header->getFieldName() . ': ') + mb_strlen($value);
                 }
                 $value .= $this->getTokenAsEncodedWord($token, $usedLength);
 
@@ -363,7 +363,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             $charsetDecl .= '*' . $this->_lang;
         }
 
-        $encodingWrapperLength = strlen('=?' . $charsetDecl . '?' . $this->_encoder->getName() . '??=');
+        $encodingWrapperLength = mb_strlen('=?' . $charsetDecl . '?' . $this->_encoder->getName() . '??=');
 
         if ($firstLineOffset >= 75) {
             // Does this logic need to be here?
@@ -477,9 +477,9 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             if (
                 ("\r\n" == $token)
                 ||
-                ($i > 0 && strlen($currentLine . $token) > $this->_lineLength)
+                ($i > 0 && mb_strlen($currentLine . $token) > $this->_lineLength)
                 &&
-                0 < strlen($currentLine)
+                0 < mb_strlen($currentLine)
             ) {
                 $headerLines[] = '';
                 $currentLine = &$headerLines[$lineCount++];
