@@ -114,7 +114,7 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
                 }
 
                 if (($i + $size) > $strlen) {
-                    $ignoredChars = mb_substr($string, $i);
+                    $ignoredChars = substr($string, $i);
                     break;
                 }
 
