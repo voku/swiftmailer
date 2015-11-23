@@ -140,7 +140,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
                 if (
                     $currentLine !== ''
                     &&
-                    mb_strlen($currentLine . $chunk) > $length
+                    strlen($currentLine . $chunk) > $length
                 ) {
                     $lines[] = '';
                     $currentLine = &$lines[$lineCount++];

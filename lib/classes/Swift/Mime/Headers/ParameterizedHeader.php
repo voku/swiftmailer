@@ -182,7 +182,7 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
 
         $encoded = false;
         // Allow room for parameter name, indices, "=" and DQUOTEs
-        $maxValueLength = $this->getMaxLineLength() - mb_strlen($name . '=*N"";') - 1;
+        $maxValueLength = $this->getMaxLineLength() - strlen($name . '=*N"";') - 1;
         $firstLineOffset = 0;
 
         // If it's not already a valid parameter value...
@@ -192,13 +192,13 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
             if (!preg_match('/^[\x00-\x08\x0B\x0C\x0E-\x7F]*$/D', $value)) {
                 $encoded = true;
                 // Allow space for the indices, charset and language
-                $maxValueLength = $this->getMaxLineLength() - mb_strlen($name . '*N*="";') - 1;
-                $firstLineOffset = mb_strlen($this->getCharset() . "'" . $this->getLanguage() . "'");
+                $maxValueLength = $this->getMaxLineLength() - strlen($name . '*N*="";') - 1;
+                $firstLineOffset = strlen($this->getCharset() . "'" . $this->getLanguage() . "'");
             }
         }
 
         // Encode if we need to
-        if ($encoded || mb_strlen($value) > $maxValueLength) {
+        if ($encoded || strlen($value) > $maxValueLength) {
             if (isset($this->_paramEncoder)) {
                 $value = $this->_paramEncoder->encodeString(
                     $origValue,

@@ -606,7 +606,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     {
         // We could do a really thorough check, but there's really no point.
         if (false !== $dotPos = strpos($hostname, '.')) {
-            return ($dotPos > 0) && ($dotPos != mb_strlen($hostname) - 1);
+            return ($dotPos > 0) && ($dotPos != strlen($hostname) - 1);
         }
 
         return false;

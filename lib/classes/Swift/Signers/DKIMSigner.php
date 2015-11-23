@@ -620,7 +620,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
 
     protected function _canonicalizeBody($string)
     {
-        $len = mb_strlen($string);
+        $len = strlen($string);
         $canon = '';
         $method = ($this->_bodyCanon == 'relaxed');
         for ($i = 0; $i < $len; ++$i) {
@@ -686,7 +686,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     private function _addToBodyHash($string)
     {
-        $len = mb_strlen($string);
+        $len = strlen($string);
         if ($len > ($new_len = ($this->_maxLen - $this->_bodyLen))) {
             $string = substr($string, 0, $new_len);
             $len = $new_len;

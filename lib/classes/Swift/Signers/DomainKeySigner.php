@@ -461,7 +461,7 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
      */
     protected function _canonicalizeBody($string)
     {
-        $len = mb_strlen($string);
+        $len = strlen($string);
         $canon = '';
         $nofws = ($this->_canon == 'nofws');
         for ($i = 0; $i < $len; ++$i) {
