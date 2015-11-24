@@ -575,12 +575,11 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn',));
         $message->setBody(
             'Just s'.pack('C*', 0xC2, 0x01, 0x01).'me multi-'."\r\n".
             'line message!'
-            );
+        );
         $id = $message->getId();
         $date = $message->getDate();
         $this->assertEquals(
@@ -596,7 +595,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Just s=C2=01=01me multi-'."\r\n".
             'line message!',
             $message->toString()
-            );
+        );
     }
 
     public function testChildrenCanBeAttached()
@@ -604,8 +603,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn',));
 
         $id = $message->getId();
         $date = $message->getDate();
@@ -657,8 +655,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
 
         $id = $message->getId();
         $date = preg_quote(date('r', $message->getDate()), '~');
@@ -711,7 +708,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             '--'.$boundary.'--'."\r\n".
             '$~D',
             $message->toString()
-            );
+        );
     }
 
     public function testAttachmentsAndEmbeddedFilesBeingAttached()
@@ -719,8 +716,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
 
         $id = $message->getId();
         $date = preg_quote(date('r', $message->getDate()), '~');
@@ -797,7 +793,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             '--'.$boundary.'--'."\r\n".
             '$~D',
             $message->toString()
-            );
+        );
     }
 
     public function testComplexEmbeddingOfContent()
@@ -805,8 +801,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
 
         $id = $message->getId();
         $date = preg_quote(date('r', $message->getDate()), '~');
@@ -874,7 +869,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             '--'.$boundary.'--'."\r\n".
             '$~D',
             $message->toString()
-            );
+        );
     }
 
     public function testAttachingAndDetachingContent()
@@ -882,8 +877,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
 
         $id = $message->getId();
         $date = preg_quote(date('r', $message->getDate()), '~');
@@ -949,7 +943,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             '$~D',
             $message->toString(),
             '%s: Attachment should have been detached'
-            );
+        );
     }
 
     public function testBoundaryDoesNotAppearAfterAllPartsAreDetached()
@@ -957,8 +951,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
 
         $id = $message->getId();
         $date = $message->getDate();
@@ -992,7 +985,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-Transfer-Encoding: quoted-printable'."\r\n",
             $message->toString(),
             '%s: Message should be restored to orignal state after parts are detached'
-            );
+        );
     }
 
     public function testCharsetFormatOrDelSpAreNotShownWhenBoundaryIsSet()
@@ -1000,8 +993,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
         $message->setCharset('utf-8');
         $message->setFormat('flowed');
         $message->setDelSp(true);
@@ -1048,7 +1040,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             "\r\n\r\n".
             '--'.$boundary.'--'."\r\n",
             $message->toString()
-            );
+        );
     }
 
     public function testBodyCanBeSetWithAttachments()
@@ -1056,8 +1048,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
         $message->setContentType('text/html');
         $message->setCharset('iso-8859-1');
         $message->setBody('foo');
@@ -1098,7 +1089,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             "\r\n\r\n".
             '--'.$boundary.'--'."\r\n",
             $message->toString()
-            );
+        );
     }
 
     public function testHtmlPartAlwaysAppearsLast()
@@ -1148,7 +1139,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             "\r\n\r\n".
             '--'.$boundary.'--'."\r\n",
             $message->toString()
-            );
+        );
     }
 
     public function testBodyBecomesPartIfOtherPartsAttached()
@@ -1156,8 +1147,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
         $message->setContentType('text/html');
         $message->setBody('foo');
 
@@ -1195,7 +1185,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             "\r\n\r\n".
             '--'.$boundary.'--'."\r\n",
             $message->toString()
-            );
+        );
     }
 
     public function testBodyIsCanonicalized()
@@ -1203,12 +1193,11 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $message->setReturnPath('chris@w3style.co.uk');
         $message->setSubject('just a test subject');
-        $message->setFrom(array(
-            'chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
+        $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn', ));
         $message->setBody(
             'just a test body'."\n".
             'with a new line'
-            );
+        );
         $id = $message->getId();
         $date = $message->getDate();
         $this->assertEquals(
@@ -1224,7 +1213,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             'just a test body'."\r\n".
             'with a new line',
             $message->toString()
-            );
+        );
     }
 
     // -- Private helpers
