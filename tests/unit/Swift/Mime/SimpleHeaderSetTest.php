@@ -359,6 +359,9 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
         $set->addIdHeader('Message-ID', 'other@id');
         $set->remove('Message-ID', 1);
         $this->assertFalse($set->has('Message-ID', 1));
+        $this->assertTrue($set->has('Message-ID', 0));
+        $set->remove('Message-ID', 0);
+        $this->assertFalse($set->has('Message-ID', 0));
     }
 
     public function testRemoveWithSpecifiedIndexLeavesOtherHeaders()

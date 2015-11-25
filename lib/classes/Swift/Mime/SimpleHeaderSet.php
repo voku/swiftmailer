@@ -252,6 +252,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
         $lowerName = strtolower($name);
         if (array_key_exists($lowerName, $this->_headers)) {
             array_splice($this->_headers[$lowerName], $index, 1);
+
             if (empty($this->_headers[$lowerName])) {
                 $this->removeAll($lowerName);
             }
@@ -352,7 +353,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
     /**
      * Save a Header to the internal collection
      *
-     * @param                   $name
+     * @param string            $name
      * @param Swift_Mime_Header $header
      * @param null|int          $offset
      */
@@ -361,6 +362,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
         if (!isset($this->_headers[strtolower($name)])) {
             $this->_headers[strtolower($name)] = array();
         }
+
         if (!isset($offset)) {
             $this->_headers[strtolower($name)][] = $header;
         } else {
