@@ -2,23 +2,34 @@
 
 class Swift_Bug76Test extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var string
+     */
     private $_inputFile;
+
+    /**
+     * @var string
+     */
     private $_outputFile;
+
+    /**
+     * @var Swift_Mime_ContentEncoder_Base64ContentEncoder
+     */
     private $_encoder;
 
     public function setUp()
     {
         if (!defined('SWIFT_TMP_DIR') || !is_writable(SWIFT_TMP_DIR)) {
             $this->markTestSkipped(
-                'Cannot run test without a writable directory to use ('.
+                'Cannot run test without a writable directory to use (' .
                 'define SWIFT_TMP_DIR in tests/config.php if you wish to run this test)'
-             );
+            );
         }
 
-        $this->_inputFile = SWIFT_TMP_DIR.'/in.bin';
+        $this->_inputFile = SWIFT_TMP_DIR . '/in.bin';
         file_put_contents($this->_inputFile, '');
 
-        $this->_outputFile = SWIFT_TMP_DIR.'/out.bin';
+        $this->_outputFile = SWIFT_TMP_DIR . '/out.bin';
         file_put_contents($this->_outputFile, '');
 
         $this->_encoder = $this->_createEncoder();
@@ -62,7 +73,7 @@ class Swift_Bug76Test extends \PHPUnit_Framework_TestCase
         file_put_contents($file, '');
         $fp = fopen($file, 'wb');
         for ($i = 0; $i < $byteCount; ++$i) {
-            $byteVal = rand(0, 255);
+            $byteVal = mt_rand(0, 255);
             fwrite($fp, pack('i', $byteVal));
         }
         fclose($fp);

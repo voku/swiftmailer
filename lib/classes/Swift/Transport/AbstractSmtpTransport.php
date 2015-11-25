@@ -167,17 +167,17 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * The return value is the number of recipients who were accepted for delivery.
      *
      * @param Swift_Mime_Message $message
-     * @param string[]|null           $failedRecipients An array of failures by-reference
+     * @param string[]|null      $failedRecipients An array of failures by-reference
      *
      * @return int
      *
      * @throws Exception
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, /** @noinspection ParameterByRefWithDefaultInspection */ &$failedRecipients = null)
     {
         $sent = 0;
-        $failedRecipients = (array) $failedRecipients;
+        $failedRecipients = (array)$failedRecipients;
 
         $evt = $this->_eventDispatcher->createSendEvent($this, $message);
         if ($evt) {
@@ -189,16 +189,17 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         }
 
         if (!$reversePath = $this->_getReversePath($message)) {
-            $this->_throwException(new Swift_TransportException(
-                'Cannot send message without a sender address'
+            $this->_throwException(
+                new Swift_TransportException(
+                    'Cannot send message without a sender address'
                 )
             );
         }
 
-        $to = (array) $message->getTo();
-        $cc = (array) $message->getCc();
+        $to = (array)$message->getTo();
+        $cc = (array)$message->getCc();
         $tos = array_merge($to, $cc);
-        $bcc = (array) $message->getBcc();
+        $bcc = (array)$message->getBcc();
 
         $message->setBcc(array());
 
@@ -305,9 +306,9 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      *
      * @return string
      */
-    public function executeCommand($command, $codes = array(), &$failures = null)
+    public function executeCommand($command, $codes = array(), &$failures)
     {
-        $failures = (array) $failures;
+        $failures = (array)$failures;
         $seq = $this->_buffer->write($command);
         $response = $this->_getFullResponse($seq);
 
@@ -338,7 +339,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     /**
      * Send the MAIL FROM command
      *
-     * @param $address
+     * @param string $address
      */
     protected function _doMailFromCommand($address)
     {
@@ -350,7 +351,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     /**
      * Send the RCPT TO command
      *
-     * @param $address
+     * @param string $address
      */
     protected function _doRcptToCommand($address)
     {
@@ -440,14 +441,16 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     /**
      * Throws an Exception if a response code is incorrect
      *
-     * @param string $response
+     * @param string    $response
      * @param integer[] $wanted
      *
      * @throws Swift_TransportException
      */
     protected function _assertResponseCode($response, $wanted)
     {
+        /** @noinspection PrintfScanfArgumentsInspection */
         list($code) = sscanf($response, '%3d');
+        /** @noinspection TypeUnsafeArraySearchInspection */
         $valid = (empty($wanted) || in_array($code, $wanted));
 
         $evt = $this->_eventDispatcher->createResponseEvent($this, $response, $valid);
@@ -460,15 +463,16 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
                 new Swift_TransportException(
                     'Expected response code ' . implode('/', $wanted) . ' but got code ' .
                     '"' . $code . '", with message "' . $response . '"',
-                    $code)
-                );
+                    $code
+                )
+            );
         }
     }
 
     /**
      * Get an entire multi-line response using its sequence number
      *
-     * @param $seq
+     * @param int $seq
      *
      * @return string
      * @throws Swift_TransportException
@@ -486,8 +490,9 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         } catch (Swift_IoException $e) {
             $this->_throwException(
                 new Swift_TransportException(
-                    $e->getMessage())
-                );
+                    $e->getMessage()
+                )
+            );
         }
 
         return $response;
@@ -496,10 +501,10 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     /**
      * Send an email to the given recipients from the given reverse path
      *
-     * @param       Swift_Mime_Message $message
-     * @param       $reversePath
-     * @param array $recipients
-     * @param array $failedRecipients
+     * @param Swift_Mime_Message $message
+     * @param string             $reversePath
+     * @param array              $recipients
+     * @param array              $failedRecipients
      *
      * @return int
      */
