@@ -306,7 +306,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      *
      * @return string
      */
-    public function executeCommand($command, $codes = array(), &$failures)
+    public function executeCommand($command, $codes = array(), /** @noinspection ParameterByRefWithDefaultInspection */ &$failures = null)
     {
         $failures = (array)$failures;
         $seq = $this->_buffer->write($command);
