@@ -15,6 +15,9 @@ if (is_file(__DIR__.'/acceptance.conf.php')) {
 if (is_file(__DIR__.'/smoke.conf.php')) {
     require_once __DIR__.'/smoke.conf.php';
 }
+if (is_file(__DIR__.'/config.php')) {
+    require_once __DIR__.'/config.php';
+}
 require_once __DIR__.'/StreamCollector.php';
 require_once __DIR__.'/IdenticalBinaryConstraint.php';
 require_once __DIR__.'/SwiftMailerTestCase.php';

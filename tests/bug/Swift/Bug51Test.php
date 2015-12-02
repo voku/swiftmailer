@@ -80,7 +80,8 @@ class Swift_Bug51Test extends \SwiftMailerTestCase
             $attachmentBase64 = trim(substr($source, $attachmentDataStart));
         } else {
             $attachmentBase64 = trim(substr(
-                $source, $attachmentDataStart,
+                $source,
+                $attachmentDataStart,
                 $attachmentDataEnd - $attachmentDataStart
             ));
         }
