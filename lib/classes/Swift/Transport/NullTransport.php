@@ -20,6 +20,8 @@ class Swift_Transport_NullTransport implements Swift_Transport
 
     /**
      * Constructor.
+     *
+     * @param Swift_Events_EventDispatcher $eventDispatcher
      */
     public function __construct(Swift_Events_EventDispatcher $eventDispatcher)
     {
