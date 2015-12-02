@@ -113,13 +113,27 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     public function read($length)
     {
         $fp = $this->_getReadHandle();
-        if (!feof($fp)) {
+        if ($fp && !feof($fp)) {
 
             if ($this->_quotes) {
                 ini_set('magic_quotes_runtime', 0);
             }
 
+            // checking for errors v1
+            if (ord(fread($fp, 1)) != 0) {
+                $this->_resetReadHandle();
+
+                return false;
+            }
+
             $bytes = fread($fp, $length);
+
+            // checking for errors v2
+            if ($bytes === false) {
+                $this->_resetReadHandle();
+
+                return false;
+            }
 
             if ($this->_quotes) {
                 ini_set('magic_quotes_runtime', 1);
