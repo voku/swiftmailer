@@ -120,7 +120,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
             }
 
             // checking for errors v1
-            if (ord(fread($fp, 1)) != 0) {
+            if ($this->_offset != 0 && ord(fread($fp, 1)) != 0) {
                 $this->_resetReadHandle();
 
                 return false;
