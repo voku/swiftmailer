@@ -169,7 +169,9 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
         $this->setCharset($charset);
     }
 
-    /** Fix the content-type and encoding of this entity */
+    /**
+     * Fix the content-type and encoding of this entity
+     */
     protected function _fixHeaders()
     {
         parent::_fixHeaders();
@@ -184,18 +186,29 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
         }
     }
 
-    /** Set the nesting level of this entity */
+    /**
+     * Set the nesting level of this entity
+     *
+     * @param $level
+     */
     protected function _setNestingLevel($level)
     {
         $this->_nestingLevel = $level;
     }
 
-    /** Encode charset when charset is not utf-8 */
+    /**
+     * Encode charset when charset is not utf-8
+     *
+     * @param $string
+     *
+     * @return string
+     * @throws Swift_SwiftException
+     */
     protected function _convertString($string)
     {
         $charset = Swift::strtolowerWithStaticCache($this->getCharset());
 
-        if (!in_array($charset, array('utf-8', 'iso-8859-1', ''), true)) {
+        if (!in_array($charset, array('utf-8', 'iso-8859-1', 'iso-8859-15', ''), true)) {
             // mb_convert_encoding must be the first one to check, since iconv cannot convert some words.
             if (function_exists('mb_convert_encoding')) {
                 $string = mb_convert_encoding($string, $charset, 'utf-8');
