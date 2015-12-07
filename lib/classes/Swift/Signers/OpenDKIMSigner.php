@@ -123,7 +123,7 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         $listHeaders = $headers->listAll();
         foreach ($listHeaders as $hName) {
             // Check if we need to ignore Header
-            if (!isset($this->_ignoredHeaders[strtolower($hName)])) {
+            if (!isset($this->_ignoredHeaders[Swift::strtolowerWithStaticCache($hName)])) {
                 $tmp = $headers->getAll($hName);
                 if ($headers->has($hName)) {
                     foreach ($tmp as $header) {

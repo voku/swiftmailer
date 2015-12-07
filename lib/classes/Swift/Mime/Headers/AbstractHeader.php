@@ -376,7 +376,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             $this->_encoder->encodeString($token, $firstLineOffset, 75 - $encodingWrapperLength, $this->_charset)
         );
 
-        if (strtolower($this->_charset) !== 'iso-2022-jp') {
+        if (Swift::strtolowerWithStaticCache($this->_charset) !== 'iso-2022-jp') {
             // special encoding for iso-2022-jp using mb_encode_mimeheader
             foreach ($encodedTextLines as $lineNum => $line) {
                 $encodedTextLines[$lineNum] = '=?' . $charsetDecl . '?' . $this->_encoder->getName() . '?' . $line . '?=';

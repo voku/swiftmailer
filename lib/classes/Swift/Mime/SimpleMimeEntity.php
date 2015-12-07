@@ -161,9 +161,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
                 self::LEVEL_ALTERNATIVE => array(
                     'text/plain' => self::LEVEL_ALTERNATIVE,
                     'text/html' => self::LEVEL_RELATED,
-                    ),
                 ),
-            );
+            ),
+        );
 
         $this->_id = $this->getRandomId();
     }
@@ -647,7 +647,11 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the model data for $field.
+     *
      * @param string $field
+     * @param $model
+     *
+     * @return bool
      */
     protected function _setHeaderFieldModel($field, $model)
     {
@@ -698,8 +702,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     {
         if (count($this->_immediateChildren)) {
             $this->_setHeaderParameter('Content-Type', 'boundary',
-                $this->getBoundary()
-                );
+                                       $this->getBoundary()
+            );
             $this->_headers->remove('Content-Transfer-Encoding');
         } else {
             $this->_setHeaderParameter('Content-Type', 'boundary', null);
@@ -842,7 +846,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         }
 
         $realLevel = $child->getNestingLevel();
-        $lowercaseType = strtolower($child->getContentType());
+        $lowercaseType = Swift::strtolowerWithStaticCache($child->getContentType());
 
         if (isset($filter[$realLevel]) && isset($filter[$realLevel][$lowercaseType])) {
             return $filter[$realLevel][$lowercaseType];
@@ -909,12 +913,12 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         $typePrefs = array();
 
         $types = array(
-            strtolower($a->getContentType()),
-            strtolower($b->getContentType())
+            Swift::strtolowerWithStaticCache($a->getContentType()),
+            Swift::strtolowerWithStaticCache($b->getContentType())
         );
 
         foreach ($types as $type) {
-            if (array_key_exists($type, $this->_alternativePartOrder)) {
+            if (isset($this->_alternativePartOrder[$type])) {
                 $typePrefs[] = $this->_alternativePartOrder[$type];
             } else {
                 $typePrefs[] = max($this->_alternativePartOrder) + 1;

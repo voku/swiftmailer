@@ -69,7 +69,7 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
                 throw new Swift_SwiftException(
                     'Invalid mode [' . $mode . '] used to set nsKey=' .
                     $nsKey . ', itemKey=' . $itemKey
-                    );
+                );
         }
     }
 
@@ -171,7 +171,7 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
     {
         $this->_prepareCache($nsKey);
 
-        return array_key_exists($itemKey, $this->_contents[$nsKey]);
+        return isset($this->_contents[$nsKey][$itemKey]);
     }
 
     /**
@@ -202,7 +202,7 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
      */
     private function _prepareCache($nsKey)
     {
-        if (!array_key_exists($nsKey, $this->_contents)) {
+        if (!isset($this->_contents[$nsKey])) {
             $this->_contents[$nsKey] = array();
         }
     }

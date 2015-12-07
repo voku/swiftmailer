@@ -41,7 +41,7 @@ abstract class Swift
      */
     public static function autoload($class)
     {
-        // Don't interfere with other autoloaders
+        // "maybe" don't interfere with other autoloaders
         if (0 !== strpos($class, 'Swift_')) {
             return;
         }
@@ -74,6 +74,27 @@ abstract class Swift
         if (null !== $callable) {
             self::$inits[] = $callable;
         }
+
         spl_autoload_register(array('Swift', 'autoload'));
+    }
+
+    /**
+     * php-strtolower with static-cache
+     *
+     * @param $string
+     *
+     * @return mixed
+     */
+    public static function strtolowerWithStaticCache($string)
+    {
+        static $staticStrtolowerCache = array();
+
+        if (isset($staticStrtolowerCache[$string])) {
+            return $staticStrtolowerCache[$string];
+        } else {
+            $staticStrtolowerCache[$string] = strtolower($string);
+
+            return $staticStrtolowerCache[$string];
+        }
     }
 }

@@ -137,9 +137,11 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
         $this->setFilename(basename($file->getPath()));
         $this->setBody($file, $contentType);
         if (!isset($contentType)) {
-            $extension = strtolower(substr($file->getPath(), strrpos($file->getPath(), '.') + 1));
+            $extension = Swift::strtolowerWithStaticCache(
+                substr($file->getPath(), strrpos($file->getPath(), '.') + 1)
+            );
 
-            if (array_key_exists($extension, $this->_mimeTypes)) {
+            if (isset($this->_mimeTypes[$extension])) {
                 $this->setContentType($this->_mimeTypes[$extension]);
             }
         }

@@ -385,7 +385,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
             }
 
             $header = explode(':', $headerLine, 2);
-            $currentHeaderName = strtolower($header[0]);
+            $currentHeaderName = Swift::strtolowerWithStaticCache($header[0]);
             $headers[$currentHeaderName] = trim($header[1]);
         }
 

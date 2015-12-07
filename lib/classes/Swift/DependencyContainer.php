@@ -98,7 +98,7 @@ class Swift_DependencyContainer
      */
     public function has($itemName)
     {
-        return array_key_exists($itemName, $this->_store) && isset($this->_store[$itemName]['lookupType']);
+        return isset($this->_store[$itemName]) && isset($this->_store[$itemName]['lookupType']);
     }
 
     /**

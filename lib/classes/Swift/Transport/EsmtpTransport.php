@@ -285,11 +285,11 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     {
         foreach ($this->_handlers as $handler) {
             if (
-            in_array(
-                strtolower($method),
-                array_map('strtolower', (array)$handler->exposeMixinMethods()),
-                true
-            )
+                in_array(
+                    strtolower($method),
+                    array_map('strtolower', (array)$handler->exposeMixinMethods()),
+                    true
+                )
             ) {
                 $return = call_user_func_array(array($handler, $method), $args);
 
@@ -431,7 +431,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     private function _setHandlerParams()
     {
         foreach ($this->_handlers as $keyword => $handler) {
-            if (array_key_exists($keyword, $this->_capabilities)) {
+            if (isset($this->_capabilities[$keyword])) {
                 $handler->setKeywordParams($this->_capabilities[$keyword]);
             }
         }
@@ -446,7 +446,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     {
         $handlers = array();
         foreach ($this->_handlers as $keyword => $handler) {
-            if (array_key_exists($keyword, $this->_capabilities)) {
+            if (isset($this->_capabilities[$keyword])) {
                 $handlers[] = $handler;
             }
         }
