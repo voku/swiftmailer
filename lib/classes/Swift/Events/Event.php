@@ -18,7 +18,7 @@ interface Swift_Events_Event
     /**
      * Get the source object of this event.
      *
-     * @return object
+     * @return Swift_Transport
      */
     public function getSource();
 

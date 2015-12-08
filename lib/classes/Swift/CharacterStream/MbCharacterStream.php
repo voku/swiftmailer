@@ -61,7 +61,7 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
     /**
      * @param int $length
      *
-     * @return bool|string
+     * @return false|string
      */
     public function read($length)
     {
