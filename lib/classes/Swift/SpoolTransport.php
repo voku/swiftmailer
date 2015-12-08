@@ -22,8 +22,7 @@ class Swift_SpoolTransport extends Swift_Transport_SpoolTransport
      */
     public function __construct(Swift_Spool $spool)
     {
-        $arguments = Swift_DependencyContainer::getInstance()
-            ->createDependenciesFor('transport.spool');
+        $arguments = Swift_DependencyContainer::getInstance()->createDependenciesFor('transport.spool');
 
         $arguments[] = $spool;
 

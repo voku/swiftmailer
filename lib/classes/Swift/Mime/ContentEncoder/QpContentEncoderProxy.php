@@ -51,8 +51,10 @@ class Swift_Mime_ContentEncoder_QpContentEncoderProxy implements Swift_Mime_Cont
      */
     public function __clone()
     {
-        $this->safeEncoder = clone $this->safeEncoder;
-        $this->nativeEncoder = clone $this->nativeEncoder;
+        if (true === Swift::$useMemorySpool) {
+            $this->safeEncoder = clone $this->safeEncoder;
+            $this->nativeEncoder = clone $this->nativeEncoder;
+        }
     }
 
     /**
