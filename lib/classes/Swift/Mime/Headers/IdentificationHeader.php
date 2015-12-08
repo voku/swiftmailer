@@ -69,7 +69,7 @@ class Swift_Mime_Headers_IdentificationHeader extends Swift_Mime_Headers_Abstrac
      *
      * This method returns an array of IDs
      *
-     * @return array
+     * @return string[]
      */
     public function getFieldBodyModel()
     {
