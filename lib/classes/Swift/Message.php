@@ -287,16 +287,14 @@ class Swift_Message extends Swift_Mime_SimpleMessage
      */
     public function __clone()
     {
-        if (true === Swift::$useMemorySpool) {
-            parent::__clone();
+        parent::__clone();
 
-            foreach ($this->bodySigners as $key => $bodySigner) {
-                $this->bodySigners[$key] = clone($bodySigner);
-            }
+        foreach ($this->bodySigners as $key => $bodySigner) {
+            $this->bodySigners[$key] = clone($bodySigner);
+        }
 
-            foreach ($this->headerSigners as $key => $headerSigner) {
-                $this->headerSigners[$key] = clone($headerSigner);
-            }
+        foreach ($this->headerSigners as $key => $headerSigner) {
+            $this->headerSigners[$key] = clone($headerSigner);
         }
     }
 }
