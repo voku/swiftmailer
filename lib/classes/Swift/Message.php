@@ -60,6 +60,19 @@ class Swift_Message extends Swift_Mime_SimpleMessage
     }
 
     /**
+     * use this only if you use the memory-spool and
+     * you need to generate a message, before you define the transport
+     *
+     * @param bool $bool
+     */
+    public function setUseMemorySpool($bool)
+    {
+        if (is_bool($bool)) {
+            Swift::$useMemorySpool = $bool;
+        }
+    }
+
+    /**
      * Create a new Message.
      *
      * @param string $subject
@@ -287,14 +300,16 @@ class Swift_Message extends Swift_Mime_SimpleMessage
      */
     public function __clone()
     {
-        parent::__clone();
+        if (true === Swift::$useMemorySpool) {
+            parent::__clone();
 
-        foreach ($this->bodySigners as $key => $bodySigner) {
-            $this->bodySigners[$key] = clone($bodySigner);
-        }
+            foreach ($this->bodySigners as $key => $bodySigner) {
+                $this->bodySigners[$key] = clone($bodySigner);
+            }
 
-        foreach ($this->headerSigners as $key => $headerSigner) {
-            $this->headerSigners[$key] = clone($headerSigner);
+            foreach ($this->headerSigners as $key => $headerSigner) {
+                $this->headerSigners[$key] = clone($headerSigner);
+            }
         }
     }
 }
