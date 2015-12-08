@@ -403,7 +403,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     /**
      * Determine ESMTP capabilities by function group
      *
-     * @param $ehloResponse
+     * @param string $ehloResponse
      *
      * @return array
      */
