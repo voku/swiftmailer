@@ -10,7 +10,9 @@ class Swift_MessageTest extends \PHPUnit_Framework_TestCase
     public function testCloning()
     {
         $message1 = new Swift_Message('subj', 'body', 'ctype');
+        $message1->setUseMemorySpool(true);
         $message2 = new Swift_Message('subj', 'body', 'ctype');
+        $message1->setUseMemorySpool(true);
         $message1_clone = clone $message1;
 
         $this->_recursiveObjectCloningCheck($message1, $message2, $message1_clone);
