@@ -19,7 +19,6 @@ abstract class Swift
     const VERSION = '5.x';
 
     public static $initialized = false;
-    public static $useMemorySpool = false;
     public static $inits = array();
 
     /**

@@ -197,10 +197,8 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
      */
     public function __clone()
     {
-        if (true === Swift::$useMemorySpool) {
-            $this->_encoder = clone $this->_encoder;
-            $this->_paramEncoder = clone $this->_paramEncoder;
-        }
+        $this->_encoder = clone $this->_encoder;
+        $this->_paramEncoder = clone $this->_paramEncoder;
     }
 
     /**

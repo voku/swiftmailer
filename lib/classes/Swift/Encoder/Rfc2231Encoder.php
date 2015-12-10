@@ -90,8 +90,6 @@ class Swift_Encoder_Rfc2231Encoder implements Swift_Encoder
      */
     public function __clone()
     {
-        if (true === Swift::$useMemorySpool) {
-            $this->_charStream = clone $this->_charStream;
-        }
+        $this->_charStream = clone $this->_charStream;
     }
 }

@@ -446,13 +446,11 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function __clone()
     {
-        if (true === Swift::$useMemorySpool) {
-            $this->_factory = clone $this->_factory;
+        $this->_factory = clone $this->_factory;
 
-            foreach ($this->_headers as $groupKey => $headerGroup) {
-                foreach ($headerGroup as $key => $header) {
-                    $this->_headers[$groupKey][$key] = clone $header;
-                }
+        foreach ($this->_headers as $groupKey => $headerGroup) {
+            foreach ($headerGroup as $key => $header) {
+                $this->_headers[$groupKey][$key] = clone $header;
             }
         }
     }
