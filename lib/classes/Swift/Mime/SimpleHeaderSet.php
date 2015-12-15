@@ -153,7 +153,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function has($name, $index = 0)
     {
-        $lowerName = Swift::strtolowerWithStaticCache($name);
+        $lowerName = strtolower($name);
 
         if (
             isset($this->_headers[$lowerName])
@@ -197,7 +197,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
     public function get($name, $index = 0)
     {
         if ($this->has($name, $index)) {
-            $lowerName = Swift::strtolowerWithStaticCache($name);
+            $lowerName = strtolower($name);
 
             return $this->_headers[$lowerName][$index];
         }
@@ -221,7 +221,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
             return $headers;
         }
 
-        $lowerName = Swift::strtolowerWithStaticCache($name);
+        $lowerName = strtolower($name);
         if (!isset($this->_headers[$lowerName])) {
             return array();
         }
@@ -254,7 +254,8 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function remove($name, $index = 0)
     {
-        $lowerName = Swift::strtolowerWithStaticCache($name);
+        $lowerName = strtolower($name);
+
         if (isset($this->_headers[$lowerName])) {
             array_splice($this->_headers[$lowerName], $index, 1);
 
@@ -271,7 +272,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function removeAll($name)
     {
-        $lowerName = Swift::strtolowerWithStaticCache($name);
+        $lowerName = strtolower($name);
         unset($this->_headers[$lowerName]);
     }
 
@@ -294,7 +295,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function defineOrdering(array $sequence)
     {
-        $this->_order = array_flip(array_map(array('Swift', 'strtolowerWithStaticCache'), $sequence));
+        $this->_order = array_flip(array_map('strtolower', $sequence));
     }
 
     /**
@@ -306,7 +307,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function setAlwaysDisplayed(array $names)
     {
-        $this->_required = array_flip(array_map(array('Swift', 'strtolowerWithStaticCache'), $names));
+        $this->_required = array_flip(array_map('strtolower', $names));
     }
 
     /**
@@ -364,14 +365,16 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     private function _storeHeader($name, Swift_Mime_Header $header, $offset = null)
     {
-        if (!isset($this->_headers[Swift::strtolowerWithStaticCache($name)])) {
-            $this->_headers[Swift::strtolowerWithStaticCache($name)] = array();
+        $lowerName = strtolower($name);
+
+        if (!isset($this->_headers[$lowerName])) {
+            $this->_headers[$lowerName] = array();
         }
 
         if (!isset($offset)) {
-            $this->_headers[Swift::strtolowerWithStaticCache($name)][] = $header;
+            $this->_headers[$lowerName][] = $header;
         } else {
-            $this->_headers[Swift::strtolowerWithStaticCache($name)][$offset] = $header;
+            $this->_headers[$lowerName][$offset] = $header;
         }
     }
 
@@ -391,8 +394,8 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     private function _sortHeaders($a, $b)
     {
-        $lowerA = Swift::strtolowerWithStaticCache($a);
-        $lowerB = Swift::strtolowerWithStaticCache($b);
+        $lowerA = strtolower($a);
+        $lowerB = strtolower($b);
         $aPos = isset($this->_order[$lowerA]) ? $this->_order[$lowerA] : -1;
         $bPos = isset($this->_order[$lowerB]) ? $this->_order[$lowerB] : -1;
 
