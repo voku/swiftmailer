@@ -3,6 +3,9 @@
 abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
     extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_Transport_StreamBuffer
+     */
     protected $_buffer;
 
     abstract protected function _initializeBuffer();
@@ -16,6 +19,7 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
              );
         }
 
+        /** @noinspection PhpParamsInspection */
         $this->_buffer = new Swift_Transport_StreamBuffer(
             $this->getMock('Swift_ReplacementFilterFactory')
         );
@@ -127,6 +131,9 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
 
     // -- Creation Methods
 
+    /**
+     * @return Swift_InputByteStream|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createMockInputStream()
     {
         return $this->getMock('Swift_InputByteStream');

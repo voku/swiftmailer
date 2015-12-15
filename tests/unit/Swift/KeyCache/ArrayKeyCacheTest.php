@@ -129,7 +129,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
             ->method('read')
             ->will($this->returnValue(false));
 
-        $is = $this->_createKeyCacheInputStream(true);
+        $is = $this->_createKeyCacheInputStream();
 
         $cache = $this->_createCache($is);
 
@@ -156,7 +156,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
            ->method('read')
            ->will($this->returnValue(false));
 
-        $is = $this->_createKeyCacheInputStream(true);
+        $is = $this->_createKeyCacheInputStream();
 
         $cache = $this->_createCache($is);
 
@@ -176,7 +176,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
         $is->expects($this->atLeastOnce())
            ->method('write');
 
-        $kcis = $this->_createKeyCacheInputStream(true);
+        $kcis = $this->_createKeyCacheInputStream();
 
         $cache = $this->_createCache($kcis);
 
@@ -225,16 +225,25 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
         return new Swift_KeyCache_ArrayKeyCache($is);
     }
 
+    /**
+     * @return Swift_KeyCache_KeyCacheInputStream|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createKeyCacheInputStream()
     {
         return $this->getMock('Swift_KeyCache_KeyCacheInputStream');
     }
 
+    /**
+     * @return Swift_OutputByteStream|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createOutputStream()
     {
         return $this->getMock('Swift_OutputByteStream');
     }
 
+    /**
+     * @return Swift_InputByteStream|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createInputStream()
     {
         return $this->getMock('Swift_InputByteStream');

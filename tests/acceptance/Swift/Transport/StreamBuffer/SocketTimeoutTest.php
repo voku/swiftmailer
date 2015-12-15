@@ -2,10 +2,19 @@
 
 class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_Transport_StreamBuffer
+     */
     protected $_buffer;
 
+    /**
+     * @var int
+     */
     protected $_randomHighPort;
 
+    /**
+     * @var resource
+     */
     protected $_server;
 
     public function setUp()
@@ -17,15 +26,12 @@ class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_
              );
         }
 
-        $serverStarted = false;
         for ($i = 0; $i < 5; ++$i) {
             $this->_randomHighPort = rand(50000, 65000);
             $this->_server = stream_socket_server('tcp://127.0.0.1:'.$this->_randomHighPort);
-            if ($this->_server) {
-                $serverStarted = true;
-            }
         }
 
+        /** @noinspection PhpParamsInspection */
         $this->_buffer = new Swift_Transport_StreamBuffer(
             $this->getMock('Swift_ReplacementFilterFactory')
         );
@@ -51,6 +57,7 @@ class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_
         $this->_initializeBuffer();
         $e = null;
         try {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             $line = $this->_buffer->readLine(0);
         } catch (Exception $e) {
         }

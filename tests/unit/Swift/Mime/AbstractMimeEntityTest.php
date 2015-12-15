@@ -81,7 +81,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
   /**
    * @param bool|true $stub
    *
-   * @return \Mockery\Mock
+   * @return Swift_KeyCache|\Mockery\Mock
    */
   protected function _createCache($stub = true)
   {
@@ -1005,7 +1005,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
   /**
    * @param bool|true $stub
    *
-   * @return PHPUnit_Framework_MockObject_MockObject
+   * @return Swift_InputByteStream|PHPUnit_Framework_MockObject_MockObject
    */
   protected function _createInputStream($stub = true)
   {

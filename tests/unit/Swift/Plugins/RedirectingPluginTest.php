@@ -171,6 +171,11 @@ class Swift_Plugins_RedirectingPluginTest extends \PHPUnit_Framework_TestCase
 
     // -- Creation Methods
 
+    /**
+     * @param Swift_Mime_Message $message
+     *
+     * @return Swift_Events_SendEvent|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createSendEvent(Swift_Mime_Message $message)
     {
         $evt = $this->getMockBuilder('Swift_Events_SendEvent')

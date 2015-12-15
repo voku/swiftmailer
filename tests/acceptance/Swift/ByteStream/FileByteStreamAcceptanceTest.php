@@ -162,6 +162,9 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
         return new Swift_StreamFilters_StringReplacementFilter($search, $replace);
     }
 
+    /**
+     * @return Swift_InputByteStream|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createMockInputStream()
     {
         return $this->getMock('Swift_InputByteStream');

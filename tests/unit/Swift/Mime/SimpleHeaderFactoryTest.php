@@ -2,6 +2,9 @@
 
 class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_Mime_SimpleHeaderFactory
+     */
     private $_factory;
 
     public function setUp()
@@ -23,9 +26,10 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testMailboxHeaderHasCorrectModel()
     {
-        $header = $this->_factory->createMailboxHeader('X-Foo',
+        $header = $this->_factory->createMailboxHeader(
+            'X-Foo',
             array('foo@bar.com' => 'FooBar')
-            );
+        );
         $this->assertEquals(array('foo@bar.com' => 'FooBar'), $header->getFieldBodyModel());
     }
 
@@ -85,9 +89,10 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testParameterizedHeaderHasCorrectParams()
     {
-        $header = $this->_factory->createParameterizedHeader('X-Foo', 'bar',
+        $header = $this->_factory->createParameterizedHeader(
+            'X-Foo', 'bar',
             array('zip' => 'button')
-            );
+        );
         $this->assertEquals(array('zip' => 'button'), $header->getParameters());
     }
 
@@ -145,6 +150,12 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
 
     // -- Creation methods
 
+    /**
+     * @param null $encoder
+     * @param null $paramEncoder
+     *
+     * @return Swift_Mime_SimpleHeaderFactory
+     */
     private function _createFactory($encoder = null, $paramEncoder = null)
     {
         return new Swift_Mime_SimpleHeaderFactory(
@@ -154,11 +165,17 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return Swift_Mime_HeaderEncoder|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createHeaderEncoder()
     {
         return $this->getMock('Swift_Mime_HeaderEncoder');
     }
 
+    /**
+     * @return Swift_Encoder|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createParamEncoder()
     {
         return $this->getMock('Swift_Encoder');

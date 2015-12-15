@@ -87,11 +87,17 @@ class Swift_Events_SendEventTest extends \PHPUnit_Framework_TestCase
         return new Swift_Events_SendEvent($source, $message);
     }
 
+    /**
+     * @return Swift_Transport|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createTransport()
     {
         return $this->getMock('Swift_Transport');
     }
 
+    /**
+     * @return Swift_Mime_Message|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createMessage()
     {
         return $this->getMock('Swift_Mime_Message');

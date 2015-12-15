@@ -29,6 +29,9 @@ class Swift_Events_CommandEventTest extends \PHPUnit_Framework_TestCase
         return new Swift_Events_CommandEvent($source, $command, $successCodes);
     }
 
+    /**
+     * @return Swift_Transport|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createTransport()
     {
         return $this->getMock('Swift_Transport');

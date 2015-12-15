@@ -125,6 +125,9 @@ class Swift_Plugins_LoggerPluginTest extends \SwiftMailerTestCase
 
     // -- Creation Methods
 
+    /**
+     * @return Swift_Plugins_Logger|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createLogger()
     {
         return $this->getMock('Swift_Plugins_Logger');
@@ -159,11 +162,17 @@ class Swift_Plugins_LoggerPluginTest extends \SwiftMailerTestCase
         return $evt;
     }
 
+    /**
+     * @return Swift_Transport|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createTransport()
     {
         return $this->getMock('Swift_Transport');
     }
 
+    /**
+     * @return Swift_Events_TransportChangeEvent|PHPUnit_Framework_MockObject_MockObject
+     */
     private function _createTransportChangeEvent()
     {
         $evt = $this->getMockBuilder('Swift_Events_TransportChangeEvent')
