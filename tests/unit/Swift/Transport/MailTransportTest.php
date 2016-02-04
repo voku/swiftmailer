@@ -8,17 +8,19 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport = $this->_createTransport($dispatcher);
 
         $to = $this->_createHeader();
-        $headers = $this->_createHeaders(array(
-            'To' => $to,
-        ));
+        $headers = $this->_createHeaders(
+            array(
+                'To' => $to,
+            )
+        );
         $message = $this->_createMessage($headers);
 
         $to->shouldReceive('getFieldBody')
            ->zeroOrMoreTimes()
            ->andReturn('Foo <foo@bar>');
         $transport->shouldReceive('mail')
-                ->once()
-                ->with('Foo <foo@bar>', \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
+                  ->once()
+                  ->with('Foo <foo@bar>', \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
 
         $transport->send($message);
     }
@@ -29,17 +31,19 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport = $this->_createTransport($dispatcher);
 
         $subj = $this->_createHeader();
-        $headers = $this->_createHeaders(array(
-            'Subject' => $subj,
-        ));
+        $headers = $this->_createHeaders(
+            array(
+                'Subject' => $subj,
+            )
+        );
         $message = $this->_createMessage($headers);
 
         $subj->shouldReceive('getFieldBody')
              ->zeroOrMoreTimes()
              ->andReturn('Thing');
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), 'Thing', \Mockery::any(), \Mockery::any(), \Mockery::any());
+                  ->once()
+                  ->with(\Mockery::any(), 'Thing', \Mockery::any(), \Mockery::any(), \Mockery::any());
 
         $transport->send($message);
     }
@@ -53,16 +57,105 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $message = $this->_createMessage($headers);
 
         $message->shouldReceive('toString')
-             ->zeroOrMoreTimes()
-             ->andReturn(
-                "To: Foo <foo@bar>\r\n".
-                "\r\n".
-                'This body'
-             );
+                ->zeroOrMoreTimes()
+                ->andReturn(
+                    "To: Foo <foo@bar>\r\n" .
+                    "\r\n" .
+                    'This body'
+                );
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), \Mockery::any(), 'This body', \Mockery::any(), \Mockery::any());
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), 'This body', \Mockery::any(), \Mockery::any());
 
+        $transport->send($message);
+    }
+
+    public function testTransportSettingUsingReturnPathForExtraParams()
+    {
+        $dispatcher = $this->_createEventDispatcher();
+        $transport = $this->_createTransport($dispatcher);
+
+        $headers = $this->_createHeaders();
+        $message = $this->_createMessage($headers);
+        $message->shouldReceive('getReturnPath')
+                ->zeroOrMoreTimes()
+                ->andReturn(
+                    'foo@bar.de'
+                );
+        $transport->shouldReceive('mail')
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
+        $transport->send($message);
+    }
+
+    public function testTransportSettingEmptyExtraParams()
+    {
+        $dispatcher = $this->_createEventDispatcher();
+        $transport = $this->_createTransport($dispatcher);
+
+        $headers = $this->_createHeaders();
+        $message = $this->_createMessage($headers);
+        $message->shouldReceive('getReturnPath')
+                ->zeroOrMoreTimes()
+                ->andReturn(null);
+        $message->shouldReceive('getSender')
+                ->zeroOrMoreTimes()
+                ->andReturn(null);
+        $message->shouldReceive('getFrom')
+                ->zeroOrMoreTimes()
+                ->andReturn(null);
+        $transport->shouldReceive('mail')
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
+        $transport->send($message);
+    }
+
+    public function testTransportSettingSettingExtraParamsWithF()
+    {
+        $dispatcher = $this->_createEventDispatcher();
+        $transport = $this->_createTransport($dispatcher);
+
+        $transport->setExtraParams('-x\'foo\' -f%s');
+        $headers = $this->_createHeaders();
+        $message = $this->_createMessage($headers);
+        $message->shouldReceive('getReturnPath')
+                ->zeroOrMoreTimes()
+                ->andReturn(
+                    'foo@bar'
+                );
+        $message->shouldReceive('getSender')
+                ->zeroOrMoreTimes()
+                ->andReturn(null);
+        $message->shouldReceive('getFrom')
+                ->zeroOrMoreTimes()
+                ->andReturn(null);
+        $transport->shouldReceive('mail')
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
+        $transport->send($message);
+    }
+
+    public function testTransportSettingSettingExtraParamsWithoutF()
+    {
+        $dispatcher = $this->_createEventDispatcher();
+        $transport = $this->_createTransport($dispatcher);
+        $transport->setExtraParams('-x\'foo\'');
+        $headers = $this->_createHeaders();
+        $message = $this->_createMessage($headers);
+        $message->shouldReceive('getReturnPath')
+                ->zeroOrMoreTimes()
+                ->andReturn(
+                    'foo@bar'
+                );
+        $message->shouldReceive('getSender')
+                ->zeroOrMoreTimes()
+                ->andReturn(null);
+        $message->shouldReceive('getFrom')
+                ->zeroOrMoreTimes()
+                ->andReturn(null);
+        $transport->shouldReceive('mail')
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), '-x\'foo\'');
         $transport->send($message);
     }
 
@@ -73,18 +166,16 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
 
         $headers = $this->_createHeaders();
         $message = $this->_createMessage($headers);
-
         $message->shouldReceive('toString')
-             ->zeroOrMoreTimes()
-             ->andReturn(
-                "Subject: Stuff\r\n".
-                "\r\n".
-                'This body'
-             );
+                ->zeroOrMoreTimes()
+                ->andReturn(
+                    "Subject: Stuff\r\n" .
+                    "\r\n" .
+                    'This body'
+                );
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), 'Subject: Stuff'.PHP_EOL, \Mockery::any());
-
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), 'Subject: Stuff' . PHP_EOL, \Mockery::any());
         $transport->send($message);
     }
 
@@ -103,9 +194,9 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
                 ->zeroOrMoreTimes()
                 ->andReturn(array('test@test' => null));
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any())
-                ->andReturn(true);
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any())
+                  ->andReturn(true);
 
         $this->assertEquals(3, $transport->send($message));
     }
@@ -125,9 +216,9 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
                 ->zeroOrMoreTimes()
                 ->andReturn(array('test@test' => null));
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any())
-                ->andReturn(false);
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any())
+                  ->andReturn(false);
 
         $this->assertEquals(0, $transport->send($message));
     }
@@ -138,9 +229,11 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport = $this->_createTransport($dispatcher);
 
         $to = $this->_createHeader();
-        $headers = $this->_createHeaders(array(
-            'To' => $to,
-        ));
+        $headers = $this->_createHeaders(
+            array(
+                'To' => $to,
+            )
+        );
         $message = $this->_createMessage($headers);
 
         $headers->shouldReceive('remove')
@@ -149,8 +242,8 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $headers->shouldReceive('remove')
                 ->zeroOrMoreTimes();
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
 
         $transport->send($message);
     }
@@ -161,9 +254,11 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport = $this->_createTransport($dispatcher);
 
         $subject = $this->_createHeader();
-        $headers = $this->_createHeaders(array(
-            'Subject' => $subject,
-        ));
+        $headers = $this->_createHeaders(
+            array(
+                'Subject' => $subject,
+            )
+        );
         $message = $this->_createMessage($headers);
 
         $headers->shouldReceive('remove')
@@ -172,8 +267,8 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $headers->shouldReceive('remove')
                 ->zeroOrMoreTimes();
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
 
         $transport->send($message);
     }
@@ -184,9 +279,11 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport = $this->_createTransport($dispatcher);
 
         $to = $this->_createHeader();
-        $headers = $this->_createHeaders(array(
-            'To' => $to,
-        ));
+        $headers = $this->_createHeaders(
+            array(
+                'To' => $to,
+            )
+        );
         $message = $this->_createMessage($headers);
 
         $headers->shouldReceive('set')
@@ -195,8 +292,8 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $headers->shouldReceive('set')
                 ->zeroOrMoreTimes();
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
 
         $transport->send($message);
     }
@@ -207,9 +304,11 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport = $this->_createTransport($dispatcher);
 
         $subject = $this->_createHeader();
-        $headers = $this->_createHeaders(array(
-            'Subject' => $subject,
-        ));
+        $headers = $this->_createHeaders(
+            array(
+                'Subject' => $subject,
+            )
+        );
         $message = $this->_createMessage($headers);
 
         $headers->shouldReceive('set')
@@ -218,8 +317,8 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $headers->shouldReceive('set')
                 ->zeroOrMoreTimes();
         $transport->shouldReceive('mail')
-                ->once()
-                ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
+                  ->once()
+                  ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any());
 
         $transport->send($message);
     }
@@ -232,18 +331,20 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $subject = $this->_createHeader();
         $subject->shouldReceive('getFieldBody')->andReturn("Foo\r\nBar");
 
-        $headers = $this->_createHeaders(array(
-            'Subject' => $subject,
-        ));
+        $headers = $this->_createHeaders(
+            array(
+                'Subject' => $subject,
+            )
+        );
         $message = $this->_createMessage($headers);
         $message->shouldReceive('toString')
-            ->zeroOrMoreTimes()
-            ->andReturn(
-                "From: Foo\r\n<foo@bar>\r\n".
-                "\r\n".
-                "This\r\n".
-                'body'
-            );
+                ->zeroOrMoreTimes()
+                ->andReturn(
+                    "From: Foo\r\n<foo@bar>\r\n" .
+                    "\r\n" .
+                    "This\r\n" .
+                    'body'
+                );
 
         if ("\r\n" != PHP_EOL) {
             $expectedHeaders = "From: Foo\n<foo@bar>\n";
@@ -256,8 +357,8 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         }
 
         $transport->shouldReceive('mail')
-            ->once()
-            ->with(\Mockery::any(), $expectedSubject, $expectedBody, $expectedHeaders, \Mockery::any());
+                  ->once()
+                  ->with(\Mockery::any(), $expectedSubject, $expectedBody, $expectedHeaders, \Mockery::any());
 
         $transport->send($message);
     }

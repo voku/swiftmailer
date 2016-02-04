@@ -104,7 +104,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
-        $failedRecipients = (array) $failedRecipients;
+        $failedRecipients = (array)$failedRecipients;
 
         $evt = $this->_eventDispatcher->createSendEvent($this, $message);
         if ($evt) {
@@ -116,9 +116,9 @@ class Swift_Transport_MailTransport implements Swift_Transport
         }
 
         $count = (
-            count((array) $message->getTo())
-            + count((array) $message->getCc())
-            + count((array) $message->getBcc())
+            count((array)$message->getTo())
+            + count((array)$message->getCc())
+            + count((array)$message->getBcc())
         );
 
         /*
@@ -172,7 +172,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
             $body = str_replace("\r\n.", "\r\n..", $body);
         }
 
-        if ($this->mail($to, $subject, $body, $headers, sprintf($this->_extraParams, $reversePath))) {
+        if ($this->mail($to, $subject, $body, $headers, $this->_formatExtraParams($this->_extraParams, $reversePath))) {
             if ($evt) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_SUCCESS);
                 $evt->setFailedRecipients($failedRecipients);
@@ -181,9 +181,9 @@ class Swift_Transport_MailTransport implements Swift_Transport
         } else {
             $failedRecipients = array_merge(
                 $failedRecipients,
-                array_keys((array) $message->getTo()),
-                array_keys((array) $message->getCc()),
-                array_keys((array) $message->getBcc())
+                array_keys((array)$message->getTo()),
+                array_keys((array)$message->getCc()),
+                array_keys((array)$message->getBcc())
             );
 
             if ($evt) {
@@ -281,5 +281,24 @@ class Swift_Transport_MailTransport implements Swift_Transport
         }
 
         return $path;
+    }
+
+    /**
+     * Return php mail extra params to use for invoker->mail.
+     *
+     * @param $extraParams
+     * @param $reversePath
+     *
+     * @return mixed <string|null>
+     */
+    private function _formatExtraParams($extraParams, $reversePath)
+    {
+        if (strpos($extraParams, '-f%s') !== false) {
+            $extraParams = empty($reversePath)
+                ? str_replace('-f%s', '', $extraParams)
+                : sprintf($extraParams, escapeshellarg($reversePath));
+        }
+
+        return !empty($extraParams) ? $extraParams : null;
     }
 }
