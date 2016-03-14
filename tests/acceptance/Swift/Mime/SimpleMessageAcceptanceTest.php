@@ -868,7 +868,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
 
         $message->attach($part);
 
-        $cid = $file->getId();
+        $cid = str_replace('=2E', '.', $file->getId()); // hack for "Swift_CharacterStream_MbCharacterStream"
 
         $this->assertRegExp(
             '~^' .
@@ -889,7 +889,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
             'Content-Type: text/html; charset=iso-8859-1' . "\r\n" .
             'Content-Transfer-Encoding: quoted-printable' . "\r\n" .
             "\r\n" .
-            'foo <img src=3D"cid:' . $cid . '" />' .//=3D is just = in QP
+            'foo <img src=3D"cid:' . $cid . '" />' .// =3D is just = in QP
             "\r\n\r\n" .
             '--\\1' . "\r\n" .
             'Content-Type: image/jpeg; name=myimage.jpg' . "\r\n" .

@@ -109,12 +109,14 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
     public function __construct(Swift_CharacterStream $charStream, Swift_StreamFilter $filter = null)
     {
         $this->_charStream = $charStream;
+
         if (!isset(self::$_safeMapShare[$this->getSafeMapShareId()])) {
             $this->initSafeMap();
             self::$_safeMapShare[$this->getSafeMapShareId()] = $this->_safeMap;
         } else {
             $this->_safeMap = self::$_safeMapShare[$this->getSafeMapShareId()];
         }
+
         $this->_filter = $filter;
     }
 
@@ -142,8 +144,8 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
     {
         foreach (
             array_merge(
-                array(0x09, 0x20), 
-                range(0x21, 0x3C), 
+                array(0x09, 0x20),
+                range(0x21, 0x3C),
                 range(0x3E, 0x7E)
             ) as $byte
         ) {
