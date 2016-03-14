@@ -1,5 +1,7 @@
 <?php
 
+use voku\helper\UTF8;
+
 /*
  * This file is part of SwiftMailer.
  * (c) 2004-2009 Chris Corbyn
@@ -88,7 +90,7 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
             $currentMap['p'] = $currentMap['i'] = array();
         }
 
-        $strlen = strlen($string);
+        $strlen = UTF8::strlen($string);
         $charPos = count($currentMap['p']);
         $foundChars = 0;
         $invalid = false;
@@ -97,7 +99,7 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
             $char = $string[$i];
             $size = self::$s_length_map[$char];
 
-            if ($size == 0) {
+            if ($size === 0) {
 
                 // char is invalid, we must wait for a resync
                 $invalid = true;
@@ -114,7 +116,7 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
                 }
 
                 if (($i + $size) > $strlen) {
-                    $ignoredChars = substr($string, $i);
+                    $ignoredChars = UTF8::substr($string, $i);
                     break;
                 }
 

@@ -330,7 +330,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
     public function setHashAlgorithm($hash)
     {
         // Unable to sign with rsa-sha256
-        if ($hash == 'rsa-sha1') {
+        if ($hash === 'rsa-sha1') {
             $this->_hashAlgorithm = 'rsa-sha1';
         } else {
             $this->_hashAlgorithm = 'rsa-sha256';
@@ -348,7 +348,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     public function setBodyCanon($canon)
     {
-        if ($canon == 'relaxed') {
+        if ($canon === 'relaxed') {
             $this->_bodyCanon = 'relaxed';
         } else {
             $this->_bodyCanon = 'simple';
@@ -366,7 +366,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     public function setHeaderCanon($canon)
     {
-        if ($canon == 'relaxed') {
+        if ($canon === 'relaxed') {
             $this->_headerCanon = 'relaxed';
         } else {
             $this->_headerCanon = 'simple';
@@ -622,7 +622,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
     {
         $len = strlen($string);
         $canon = '';
-        $method = ($this->_bodyCanon == 'relaxed');
+        $method = ($this->_bodyCanon === 'relaxed');
         for ($i = 0; $i < $len; ++$i) {
             if ($this->_bodyCanonIgnoreStart > 0) {
                 --$this->_bodyCanonIgnoreStart;
@@ -633,16 +633,18 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
                     $this->_bodyCanonLastChar = "\r";
                     break;
                 case "\n":
-                    if ($this->_bodyCanonLastChar == "\r") {
+                    if ($this->_bodyCanonLastChar === "\r") {
                         if ($method) {
                             $this->_bodyCanonSpace = false;
                         }
-                        if ($this->_bodyCanonLine == '') {
+
+                        if ($this->_bodyCanonLine === '') {
                             ++$this->_bodyCanonEmptyCounter;
                         } else {
                             $this->_bodyCanonLine = '';
                             $canon .= "\r\n";
                         }
+                        
                     } else {
                         // Wooops Error
                         // todo handle it but should never happen

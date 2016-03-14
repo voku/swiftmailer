@@ -121,7 +121,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         foreach (new DirectoryIterator($this->_path) as $file) {
             $file = $file->getRealPath();
 
-            if (substr($file, -16) == '.message.sending') {
+            if (substr($file, -16) === '.message.sending') {
                 $lockedtime = filectime($file);
                 if ((time() - $lockedtime) > $timeout) {
                     rename($file, substr($file, 0, -8));
@@ -138,14 +138,14 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
      *
      * @return int The number of sent e-mail's
      */
-    public function flushQueue(Swift_Transport $transport, &$failedRecipients = null)
+    public function flushQueue(Swift_Transport $transport, &$failedRecipients)
     {
         $directoryIterator = new DirectoryIterator($this->_path);
 
         /* Start the transport only if there are queued files to send */
         if (!$transport->isStarted()) {
             foreach ($directoryIterator as $file) {
-                if (substr($file->getRealPath(), -8) == '.message') {
+                if (substr($file->getRealPath(), -8) === '.message') {
                     $transport->start();
                     break;
                 }

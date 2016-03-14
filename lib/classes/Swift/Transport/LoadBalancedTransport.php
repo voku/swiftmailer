@@ -34,7 +34,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      *
      * @var Swift_Transport
      */
-    protected $_lastUsedTransport = null;
+    protected $_lastUsedTransport;
 
     /**
      * Set $transports to delegate to.
@@ -108,14 +108,14 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      *
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients)
     {
         $maxTransports = count($this->_transports);
         $sent = 0;
         $this->_lastUsedTransport = null;
 
         for ($i = 0; $i < $maxTransports
-            && $transport = $this->_getNextTransport(); ++$i) {
+                     && $transport = $this->_getNextTransport(); ++$i) {
             try {
                 if (!$transport->isStarted()) {
                     $transport->start();
@@ -132,10 +132,10 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
             }
         }
 
-        if (count($this->_transports) == 0) {
+        if (count($this->_transports) === 0) {
             throw new Swift_TransportException(
                 'All Transports in LoadBalancedTransport failed, or no Transports available'
-                );
+            );
         }
 
         return $sent;

@@ -33,7 +33,7 @@ class Swift_Plugins_Reporters_HitReporter implements Swift_Plugins_Reporter
      */
     public function notify(Swift_Mime_Message $message, $address, $result)
     {
-        if (self::RESULT_FAIL == $result && !isset($this->_failures_cache[$address])) {
+        if (self::RESULT_FAIL === $result && !isset($this->_failures_cache[$address])) {
             $this->_failures[] = $address;
             $this->_failures_cache[$address] = true;
         }

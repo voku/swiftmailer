@@ -1,5 +1,7 @@
 <?php
 
+use voku\helper\UTF8;
+
 /*
  * This file is part of SwiftMailer.
  * (c) 2004-2009 Chris Corbyn
@@ -56,8 +58,8 @@ class Swift_Mime_ContentEncoder_QpContentEncoder extends Swift_Encoder_QpEncoder
      * If the first line needs to be shorter, indicate the difference with
      * $firstLineOffset.
      *
-     * @param Swift_OutputByteStream $os              output stream
-     * @param Swift_InputByteStream  $is              input stream
+     * @param Swift_OutputByteStream $os output stream
+     * @param Swift_InputByteStream  $is input stream
      * @param int                    $firstLineOffset
      * @param int                    $maxLineLength
      */
@@ -96,7 +98,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoder extends Swift_Encoder_QpEncoder
 
             $enc = $this->_encodeByteSequence($bytes, $size);
 
-            $i = strpos($enc, '=0D=0A');
+            $i = UTF8::strpos($enc, '=0D=0A');
             $newLineLength = $lineLen + ($i === false ? $size : $i);
 
             if ($currentLine && $newLineLength >= $thisLineLength) {
@@ -113,7 +115,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoder extends Swift_Encoder_QpEncoder
                 $lineLen += $size;
             } else {
                 // 6 is the length of '=0D=0A'.
-                $lineLen = $size - strrpos($enc, '=0D=0A') - 6;
+                $lineLen = $size - UTF8::strrpos($enc, '=0D=0A') - 6;
             }
         }
 

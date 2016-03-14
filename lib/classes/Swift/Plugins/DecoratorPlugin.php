@@ -146,7 +146,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
             foreach ($children as $child) {
                 /* @var $child Swift_Mime_MimeEntity */
                 list($type) = sscanf($child->getContentType(), '%[^/]/%s');
-                if ('text' == $type) {
+                if ('text' === $type) {
                     $body = $child->getBody();
                     $bodyReplaced = str_replace(
                         $search, $replace, $body

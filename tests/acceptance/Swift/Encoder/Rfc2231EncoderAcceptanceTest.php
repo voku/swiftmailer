@@ -1,5 +1,7 @@
 <?php
 
+use voku\helper\UTF8;
+
 class Swift_Encoder_Rfc2231EncoderAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
     private $_samplesDir;
@@ -7,7 +9,7 @@ class Swift_Encoder_Rfc2231EncoderAcceptanceTest extends \PHPUnit_Framework_Test
 
     public function setUp()
     {
-        $this->_samplesDir = realpath(__DIR__.'/../../../_samples/charsets');
+        $this->_samplesDir = realpath(__DIR__ . '/../../../_samples/charsets');
         $this->_factory = new Swift_CharacterReaderFactory_SimpleCharacterReaderFactory();
     }
 
@@ -21,10 +23,11 @@ class Swift_Encoder_Rfc2231EncoderAcceptanceTest extends \PHPUnit_Framework_Test
 
             $encoding = $encodingDir;
             $charStream = new Swift_CharacterStream_ArrayCharacterStream(
-                $this->_factory, $encoding);
+                $this->_factory, $encoding
+            );
             $encoder = new Swift_Encoder_Rfc2231Encoder($charStream);
 
-            $sampleDir = $this->_samplesDir.'/'.$encodingDir;
+            $sampleDir = $this->_samplesDir . '/' . $encodingDir;
 
             if (is_dir($sampleDir)) {
                 $fileFp = opendir($sampleDir);
@@ -33,14 +36,14 @@ class Swift_Encoder_Rfc2231EncoderAcceptanceTest extends \PHPUnit_Framework_Test
                         continue;
                     }
 
-                    $text = file_get_contents($sampleDir.'/'.$sampleFile);
+                    $text = UTF8::file_get_contents($sampleDir . '/' . $sampleFile);
                     $encodedText = $encoder->encodeString($text);
 
                     $this->assertEquals(
-                        urldecode(implode('', explode("\r\n", $encodedText))), $text,
-                        '%s: Encoded string should decode back to original string for sample '.
-                        $sampleDir.'/'.$sampleFile
-                        );
+                        $text,
+                        UTF8::urldecode(implode('', explode("\r\n", $encodedText))),
+                        '%s: Encoded string should decode back to original string for sample ' . $sampleDir . '/' . $sampleFile
+                    );
                 }
                 closedir($fileFp);
             }

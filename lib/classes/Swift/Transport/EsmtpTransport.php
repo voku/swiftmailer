@@ -144,7 +144,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
             $encryption = strtolower($encryption);
         }
 
-        if ('tls' == $encryption) {
+        if ('tls' === $encryption) {
             $this->_params['protocol'] = 'tcp';
             $this->_params['tls'] = true;
         } else {
@@ -256,7 +256,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @return string
      */
-    public function executeCommand($command, $codes = array(), &$failures = null)
+    public function executeCommand($command, $codes = array(), &$failures)
     {
         $failures = (array)$failures;
         $stopSignal = false;
@@ -288,20 +288,21 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     public function __call($method, $args)
     {
         foreach ($this->_handlers as $handler) {
-            if (
-                in_array(
-                    strtolower($method),
-                    array_map('strtolower', (array)$handler->exposeMixinMethods()),
-                    true
-                )
-            ) {
+
+            $inArray = in_array(
+                strtolower($method),
+                array_map('strtolower', (array)$handler->exposeMixinMethods()),
+                true
+            );
+
+            if ($inArray) {
                 $return = call_user_func_array(array($handler, $method), $args);
 
                 // allow fluid method calls
                 if (
                     null === $return
                     &&
-                    substr($method, 0, 3) == 'set'
+                    substr($method, 0, 3) === 'set'
                 ) {
                     return $this;
                 } else {

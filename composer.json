@@ -23,7 +23,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "voku/email-check": "~1.0.5"
+        "voku/email-check": "~1.0.5",
+        "voku/portable-utf8": "~2.0.5"
     },
     "require-dev": {
         "mockery/mockery": "~0.9.1,<0.9.4",

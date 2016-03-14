@@ -16,7 +16,6 @@ class Swift_ByteStream_TemporaryFileByteStream extends Swift_ByteStream_FileByte
     public function __construct()
     {
         $filePath = tempnam(sys_get_temp_dir(), 'FileByteStream');
-
         if ($filePath === false) {
             throw new Swift_IoException('Failed to retrieve temporary file name.');
         }
@@ -26,7 +25,8 @@ class Swift_ByteStream_TemporaryFileByteStream extends Swift_ByteStream_FileByte
 
     public function getContent()
     {
-        if (($content = file_get_contents($this->getPath())) === false) {
+        $content = file_get_contents($this->getPath());
+        if ($content === false) {
             throw new Swift_IoException('Failed to get temporary file content.');
         }
 

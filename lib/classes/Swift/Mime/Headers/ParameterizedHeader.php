@@ -219,7 +219,7 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
         if (count($valueLines) > 1) {
             $paramLines = array();
             foreach ($valueLines as $i => $line) {
-                $paramLines[] = $name . '*' . $i . $this->_getEndOfParameterValue($line, true, $i == 0);
+                $paramLines[] = $name . '*' . $i . $this->_getEndOfParameterValue($line, true, $i === 0);
             }
 
             return implode(";\r\n ", $paramLines);

@@ -76,7 +76,7 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
      */
     public function read($length)
     {
-        if ($this->_offset == $this->_arraySize) {
+        if ($this->_offset === $this->_arraySize) {
             return false;
         }
 
@@ -102,6 +102,7 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
         foreach ($to_add as $value) {
             $this->_array[] = $value;
         }
+
         $this->_arraySize = count($this->_array);
 
         foreach ($this->_mirrors as $stream) {

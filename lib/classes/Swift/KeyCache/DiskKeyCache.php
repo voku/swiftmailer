@@ -64,7 +64,7 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
         $this->_stream = $stream;
         $this->_path = $path;
 
-        if (function_exists('get_magic_quotes_runtime') && @get_magic_quotes_runtime() == 1) {
+        if (function_exists('get_magic_quotes_runtime') && @get_magic_quotes_runtime() === 1) {
             $this->_quotes = true;
         }
     }
@@ -304,15 +304,17 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
      */
     private function _getHandle($nsKey, $itemKey, $position)
     {
+        $position = (int)$position;
+
         if (!isset($this->_keys[$nsKey][$itemKey])) {
             $openMode = $this->hasKey($nsKey, $itemKey) ? 'r+b' : 'w+b';
             $fp = fopen($this->_path . '/' . $nsKey . '/' . $itemKey, $openMode);
             $this->_keys[$nsKey][$itemKey] = $fp;
         }
 
-        if (self::POSITION_START == $position) {
+        if (self::POSITION_START === $position) {
             fseek($this->_keys[$nsKey][$itemKey], 0, SEEK_SET);
-        } elseif (self::POSITION_END == $position) {
+        } elseif (self::POSITION_END === $position) {
             fseek($this->_keys[$nsKey][$itemKey], 0, SEEK_END);
         }
 

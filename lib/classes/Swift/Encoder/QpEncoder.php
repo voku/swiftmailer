@@ -89,7 +89,7 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
         245 => '=F5', 246 => '=F6', 247 => '=F7', 248 => '=F8', 249 => '=F9',
         250 => '=FA', 251 => '=FB', 252 => '=FC', 253 => '=FD', 254 => '=FE',
         255 => '=FF',
-        );
+    );
 
     protected static $_safeMapShare = array();
 
@@ -140,8 +140,13 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
 
     protected function initSafeMap()
     {
-        foreach (array_merge(
-            array(0x09, 0x20), range(0x21, 0x3C), range(0x3E, 0x7E)) as $byte) {
+        foreach (
+            array_merge(
+                array(0x09, 0x20), 
+                range(0x21, 0x3C), 
+                range(0x3E, 0x7E)
+            ) as $byte
+        ) {
             $this->_safeMap[$byte] = chr($byte);
         }
     }
@@ -153,9 +158,9 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      * If the first line needs to be shorter, indicate the difference with
      * $firstLineOffset.
      *
-     * @param string $string           to encode
-     * @param int    $firstLineOffset, optional
-     * @param int    $maxLineLength,   optional 0 indicates the default of 76 chars
+     * @param string $string          to encode
+     * @param int    $firstLineOffset , optional
+     * @param int    $maxLineLength   ,   optional 0 indicates the default of 76 chars
      *
      * @return string
      */

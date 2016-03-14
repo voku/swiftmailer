@@ -1,8 +1,10 @@
 <?php
 
+use voku\helper\UTF8;
+
 /**
  * A CharacterStream implementation which skips over all the manual processing
- *  performed by NgCharacterStream in favour of using the mb_ extension.
+ *  performed by NgCharacterStream.
  *
  * @package Swift
  * @author  mappu
@@ -71,7 +73,7 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
 
         $readChars = min($length, $this->_strlen - $this->_strpos);
 
-        $ret = mb_substr($this->_buffer, $this->_strpos, $readChars, $this->_charset);
+        $ret = UTF8::substr($this->_buffer, $this->_strpos, $readChars, $this->_charset);
 
         $this->_strpos += $readChars;
 
@@ -126,6 +128,6 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
     public function write($chars)
     {
         $this->_buffer .= $chars;
-        $this->_strlen += mb_strlen($chars, $this->_charset);
+        $this->_strlen += UTF8::strlen($chars, $this->_charset);
     }
 }

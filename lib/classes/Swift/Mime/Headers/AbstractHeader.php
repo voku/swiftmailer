@@ -268,6 +268,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     protected function encodeWords(Swift_Mime_Header $header, $input, $usedLength = -1)
     {
         $value = '';
+        $usedLength = (int)$usedLength;
 
         $tokens = $this->getEncodableWordTokens($input);
 
@@ -283,7 +284,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
                         $token = substr($token, 1);
                 }
 
-                if (-1 == $usedLength) {
+                if (-1 === $usedLength) {
                     $usedLength = strlen($header->getFieldName() . ': ') + strlen($value);
                 }
                 $value .= $this->getTokenAsEncodedWord($token, $usedLength);
@@ -475,7 +476,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         foreach ($tokens as $i => $token) {
             // Line longer than specified maximum or token was just a new line
             if (
-                ("\r\n" == $token)
+                ("\r\n" === $token)
                 ||
                 ($i > 0 && strlen($currentLine . $token) > $this->_lineLength)
                 &&

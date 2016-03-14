@@ -1,7 +1,12 @@
 <?php
 
+use voku\helper\UTF8;
+
 class Swift_Bug206Test extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_Mime_HeaderFactory
+     */
     private $_factory;
 
     public function setUp()
@@ -27,11 +32,14 @@ class Swift_Bug206Test extends \PHPUnit_Framework_TestCase
 
     private function _testHeaderIsFullyEncoded($email, $name, $expected)
     {
-        $mailboxHeader = $this->_factory->createMailboxHeader('To', array(
-            $email => $name,
-        ));
+        $mailboxHeader = $this->_factory->createMailboxHeader(
+            'To',
+            array(
+                $email => $name,
+            )
+        );
 
-        $headerBody = substr($mailboxHeader->toString(), 3, strlen($expected));
+        $headerBody = UTF8::substr($mailboxHeader->toString(), 3, UTF8::strlen($expected));
 
         $this->assertEquals($expected, $headerBody);
     }

@@ -90,7 +90,7 @@ class Swift_Mime_Headers_PathHeader extends Swift_Mime_Headers_AbstractHeader
     {
         if (null === $address) {
             $this->_address = null;
-        } elseif ('' == $address) {
+        } elseif ('' === $address) {
             $this->_address = '';
         } else {
             $this->_assertValidAddress($address);

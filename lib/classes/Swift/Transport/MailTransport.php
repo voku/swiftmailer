@@ -102,7 +102,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
      *
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients)
     {
         $failedRecipients = (array)$failedRecipients;
 
@@ -123,7 +123,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
 
         /*
         // TODO: check if we need this check, breaks "Mockery"-Tests
-        if ($count == 0) {
+        if ($count === 0) {
             $this->_throwException(new Swift_TransportException('Cannot send message without a recipient'));
         }
         */

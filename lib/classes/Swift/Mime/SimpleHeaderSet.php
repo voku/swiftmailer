@@ -404,9 +404,9 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
             return $a > $b ? -1 : 1;
         }
 
-        if ($aPos == -1) {
+        if ($aPos === -1) {
             return 1;
-        } elseif ($bPos == -1) {
+        } elseif ($bPos === -1) {
             return -1;
         }
 

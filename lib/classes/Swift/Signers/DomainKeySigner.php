@@ -300,7 +300,7 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
      */
     public function setCanon($canon)
     {
-        if ($canon == 'nofws') {
+        if ($canon === 'nofws') {
             $this->_canon = 'nofws';
         } else {
             $this->_canon = 'simple';
@@ -463,7 +463,7 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
     {
         $len = strlen($string);
         $canon = '';
-        $nofws = ($this->_canon == 'nofws');
+        $nofws = ($this->_canon === 'nofws');
         for ($i = 0; $i < $len; ++$i) {
             if ($this->_bodyCanonIgnoreStart > 0) {
                 --$this->_bodyCanonIgnoreStart;
@@ -474,11 +474,11 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
                     $this->_bodyCanonLastChar = "\r";
                     break;
                 case "\n":
-                    if ($this->_bodyCanonLastChar == "\r") {
+                    if ($this->_bodyCanonLastChar === "\r") {
                         if ($nofws) {
                             $this->_bodyCanonSpace = false;
                         }
-                        if ($this->_bodyCanonLine == '') {
+                        if ($this->_bodyCanonLine === '') {
                             ++$this->_bodyCanonEmptyCounter;
                         } else {
                             $this->_bodyCanonLine = '';

@@ -350,7 +350,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
                 $immediateChildren = array($child);
             } else {
                 $nextLevel = $this->_getNeededChildLevel($immediateChildren[0], $compoundLevel);
-                if ($nextLevel == $level) {
+                if ($nextLevel === $level) {
                     $immediateChildren[] = $child;
                 } elseif ($level < $nextLevel) {
                     // Re-assign immediateChildren to grandchildren
@@ -834,7 +834,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      * @param Swift_Mime_MimeEntity $child
      * @param integer $compoundLevel
      *
-     * @return mixed
+     * @return int
      */
     private function _getNeededChildLevel($child, $compoundLevel)
     {
@@ -849,10 +849,10 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         $lowercaseType = Swift::strtolowerWithStaticCache($child->getContentType());
 
         if (isset($filter[$realLevel]) && isset($filter[$realLevel][$lowercaseType])) {
-            return $filter[$realLevel][$lowercaseType];
+            return (int)$filter[$realLevel][$lowercaseType];
         }
 
-        return $realLevel;
+        return (int)$realLevel;
     }
 
     /**
@@ -890,7 +890,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         $shouldSort = false;
         foreach ($this->_immediateChildren as $child) {
             // NOTE: This include alternative parts moved into a related part
-            if ($child->getNestingLevel() == self::LEVEL_ALTERNATIVE) {
+            if ($child->getNestingLevel() === self::LEVEL_ALTERNATIVE) {
                 $shouldSort = true;
                 break;
             }

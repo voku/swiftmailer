@@ -30,7 +30,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
     /**
      * Creates a new MailboxHeader with $name.
      *
-     * @param string                     $name    of Header
+     * @param string                     $name of Header
      * @param Swift_Mime_HeaderEncoder   $encoder
      * @param Swift_EmailValidatorBridge $emailValidator
      */
@@ -109,7 +109,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     public function setNameAddresses($mailboxes)
     {
-        $this->_mailboxes = $this->normalizeMailboxes((array) $mailboxes);
+        $this->_mailboxes = $this->normalizeMailboxes((array)$mailboxes);
         $this->setCachedValue(null); //Clear any cached value
     }
 
@@ -194,7 +194,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     public function setAddresses($addresses)
     {
-        $this->setNameAddresses(array_values((array) $addresses));
+        $this->setNameAddresses(array_values((array)$addresses));
     }
 
     /**
@@ -217,7 +217,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
     public function removeAddresses($addresses)
     {
         $this->setCachedValue(null);
-        foreach ((array) $addresses as $address) {
+        foreach ((array)$addresses as $address) {
             unset($this->_mailboxes[$address]);
         }
     }
@@ -283,9 +283,10 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     protected function createDisplayNameString($displayName, $shorten = false)
     {
-        return $this->createPhrase($this, $displayName,
+        return $this->createPhrase(
+            $this, $displayName,
             $this->getCharset(), $this->getEncoder(), $shorten
-            );
+        );
     }
 
     /**

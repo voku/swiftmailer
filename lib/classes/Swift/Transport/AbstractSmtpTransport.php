@@ -174,7 +174,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * @throws Exception
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_Message $message, /** @noinspection ParameterByRefWithDefaultInspection */ &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients)
     {
         $sent = 0;
         $failedRecipients = (array)$failedRecipients;
@@ -215,7 +215,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
 
         if ($evt) {
 
-            if ($sent == count($to) + count($cc) + count($bcc)) {
+            if ($sent === count($to) + count($cc) + count($bcc)) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_SUCCESS);
             } elseif ($sent > 0) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_TENTATIVE);
@@ -306,7 +306,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      *
      * @return string
      */
-    public function executeCommand($command, $codes = array(), /** @noinspection ParameterByRefWithDefaultInspection */ &$failures = null)
+    public function executeCommand($command, $codes = array(), &$failures)
     {
         $failures = (array)$failures;
         $seq = $this->_buffer->write($command);
@@ -484,7 +484,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             do {
                 $line = $this->_buffer->readLine($seq);
                 $response .= $line;
-            } while (null !== $line && false !== $line && ' ' != $line[3]);
+            } while (null !== $line && false !== $line && ' ' !== $line[3]);
         } catch (Swift_TransportException $e) {
             $this->_throwException($e);
         } catch (Swift_IoException $e) {

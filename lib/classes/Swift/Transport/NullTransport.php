@@ -60,7 +60,7 @@ class Swift_Transport_NullTransport implements Swift_Transport
      *
      * @return int The number of sent emails
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients)
     {
         $evt = $this->_eventDispatcher->createSendEvent($this, $message);
         if ($evt) {
@@ -77,9 +77,9 @@ class Swift_Transport_NullTransport implements Swift_Transport
         }
 
         $count = (
-            count((array) $message->getTo())
-            + count((array) $message->getCc())
-            + count((array) $message->getBcc())
+            count((array)$message->getTo())
+            + count((array)$message->getCc())
+            + count((array)$message->getBcc())
         );
 
         return $count;

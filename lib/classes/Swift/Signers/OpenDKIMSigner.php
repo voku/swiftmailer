@@ -100,9 +100,9 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
             $bodyLen = -1;
         }
 
-        $hash = $this->_hashAlgorithm == 'rsa-sha1' ? OpenDKIMSign::ALG_RSASHA1 : OpenDKIMSign::ALG_RSASHA256;
-        $bodyCanon = $this->_bodyCanon == 'simple' ? OpenDKIMSign::CANON_SIMPLE : OpenDKIMSign::CANON_RELAXED;
-        $headerCanon = $this->_headerCanon == 'simple' ? OpenDKIMSign::CANON_SIMPLE : OpenDKIMSign::CANON_RELAXED;
+        $hash = $this->_hashAlgorithm === 'rsa-sha1' ? OpenDKIMSign::ALG_RSASHA1 : OpenDKIMSign::ALG_RSASHA256;
+        $bodyCanon = $this->_bodyCanon === 'simple' ? OpenDKIMSign::CANON_SIMPLE : OpenDKIMSign::CANON_RELAXED;
+        $headerCanon = $this->_headerCanon === 'simple' ? OpenDKIMSign::CANON_SIMPLE : OpenDKIMSign::CANON_RELAXED;
         $this->_dkimHandler = new OpenDKIMSign($this->_privateKey, $this->_selector, $this->_domainName, $headerCanon, $bodyCanon, $hash, $bodyLen);
 
         // Hardcode signature Margin for now
@@ -233,9 +233,9 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
 
         if (false && $this->dropFirstLF === true) {
             if (
-                $string[0] == "\r"
+                $string[0] === "\r"
                 &&
-                $string[1] == "\n"
+                $string[1] === "\n"
             ) {
                 $string = substr($string, 2);
             }
