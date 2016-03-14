@@ -256,7 +256,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @return string
      */
-    public function executeCommand($command, $codes = array(), &$failures)
+    public function executeCommand($command, $codes = array(), &$failures = null)
     {
         $failures = (array)$failures;
         $stopSignal = false;
