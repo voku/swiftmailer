@@ -19,13 +19,15 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
         $reader->shouldReceive('validateByteSequence')->once()->with(array(0xD0), 1)->andReturn(1);
         $reader->shouldReceive('validateByteSequence')->once()->with(array(0xD0), 1)->andReturn(1);
 
-        $stream->importString(pack('C*',
-            0xD0, 0x94,
-            0xD0, 0xB6,
-            0xD0, 0xBE,
-            0xD1, 0x8D,
-            0xD0, 0xBB,
-            0xD0, 0xB0
+        $stream->importString(
+            pack(
+                'C*',
+                0xD0, 0x94,
+                0xD0, 0xB6,
+                0xD0, 0xBE,
+                0xD1, 0x8D,
+                0xD0, 0xBB,
+                0xD0, 0xB0
             )
         );
     }
@@ -51,12 +53,14 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
 
         $stream->importString(pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE));
 
-        $stream->write(pack('C*',
-            0xD0, 0xBB,
-            0xD1, 0x8E,
-            0xD0, 0xB1,
-            0xD1, 0x8B,
-            0xD1, 0x85
+        $stream->write(
+            pack(
+                'C*',
+                0xD0, 0xBB,
+                0xD1, 0x8E,
+                0xD0, 0xB1,
+                0xD1, 0x8B,
+                0xD1, 0x85
             )
         );
     }
@@ -84,23 +88,25 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
 
         $stream->importString(pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE));
 
-        $stream->write(pack('C*',
-            0xD0, 0xBB,
-            0xD1, 0x8E,
-            0xD0, 0xB1,
-            0xD1, 0x8B,
-            0xD1, 0x85
+        $stream->write(
+            pack(
+                'C*',
+                0xD0, 0xBB,
+                0xD1, 0x8E,
+                0xD0, 0xB1,
+                0xD1, 0x8B,
+                0xD1, 0x85
             )
         );
 
         $this->assertIdenticalBinary(pack('C*', 0xD0, 0x94), $stream->read(1));
         $this->assertIdenticalBinary(
             pack('C*', 0xD0, 0xB6, 0xD0, 0xBE), $stream->read(2)
-            );
+        );
         $this->assertIdenticalBinary(pack('C*', 0xD0, 0xBB), $stream->read(1));
         $this->assertIdenticalBinary(
             pack('C*', 0xD1, 0x8E, 0xD0, 0xB1, 0xD1, 0x8B), $stream->read(3)
-            );
+        );
         $this->assertIdenticalBinary(pack('C*', 0xD1, 0x85), $stream->read(1));
 
         $this->assertSame(false, $stream->read(1));
@@ -129,12 +135,14 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
 
         $stream->importString(pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE));
 
-        $stream->write(pack('C*',
-            0xD0, 0xBB,
-            0xD1, 0x8E,
-            0xD0, 0xB1,
-            0xD1, 0x8B,
-            0xD1, 0x85
+        $stream->write(
+            pack(
+                'C*',
+                0xD0, 0xBB,
+                0xD1, 0x8E,
+                0xD0, 0xB1,
+                0xD1, 0x8B,
+                0xD1, 0x85
             )
         );
 
@@ -143,7 +151,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
         $this->assertEquals(array(0xD0, 0xBB), $stream->readBytes(1));
         $this->assertEquals(
             array(0xD1, 0x8E, 0xD0, 0xB1, 0xD1, 0x8B), $stream->readBytes(3)
-            );
+        );
         $this->assertEquals(array(0xD1, 0x85), $stream->readBytes(1));
 
         $this->assertSame(false, $stream->readBytes(1));
@@ -165,9 +173,10 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
 
         $stream->importString(pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE));
 
-        $this->assertIdenticalBinary(pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE),
+        $this->assertIdenticalBinary(
+            pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE),
             $stream->read(100)
-            );
+        );
 
         $this->assertSame(false, $stream->read(1));
     }
@@ -188,9 +197,10 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
 
         $stream->importString(pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE));
 
-        $this->assertEquals(array(0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE),
+        $this->assertEquals(
+            array(0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE),
             $stream->readBytes(100)
-            );
+        );
 
         $this->assertSame(false, $stream->readBytes(1));
     }

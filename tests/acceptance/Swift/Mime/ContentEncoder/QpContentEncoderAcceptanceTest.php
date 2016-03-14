@@ -93,9 +93,9 @@ class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_
                     }
 
                     $this->assertEquals(
-                        str_replace("\r\n", "\n", quoted_printable_decode($encoded)), str_replace("\r\n", "\n", $text),
-                        '%s: Encoded string should decode back to original string for sample ' .
-                        $sampleDir . '/' . $sampleFile
+                        str_replace("\r\n", "\n", quoted_printable_decode($encoded)),
+                        str_replace("\r\n", "\n", $text),
+                        '%s: Encoded string should decode back to original string for sample ' . $sampleDir . '/' . $sampleFile
                     );
                 }
                 closedir($fileFp);

@@ -266,13 +266,13 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      * Conveniently 4 chars is the UTF-8 safe number since UTF-8 has up to 6
      * bytes per char and (6 * 4 * 3 = 72 chars per line) * =NN is 3 bytes.
      *
-     * TODO: need testing
+     * TODO: <-- need testing, try e.g. 1024
      *
      * @param int $size number of bytes to read
      *
      * @return integer[]
      */
-    protected function _nextSequence($size = 1024)
+    protected function _nextSequence($size = 72)
     {
         return $this->_charStream->readBytes($size);
     }
