@@ -1,7 +1,5 @@
 <?php
 
-use voku\helper\UTF8;
-
 /*
  * This file is part of SwiftMailer.
  * (c) 2004-2009 Chris Corbyn
@@ -98,7 +96,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoder extends Swift_Encoder_QpEncoder
 
             $enc = $this->_encodeByteSequence($bytes, $size);
 
-            $i = UTF8::strpos($enc, '=0D=0A');
+            $i = strpos($enc, '=0D=0A');
             $newLineLength = $lineLen + ($i === false ? $size : $i);
 
             if ($currentLine && $newLineLength >= $thisLineLength) {
@@ -115,7 +113,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoder extends Swift_Encoder_QpEncoder
                 $lineLen += $size;
             } else {
                 // 6 is the length of '=0D=0A'.
-                $lineLen = $size - UTF8::strrpos($enc, '=0D=0A') - 6;
+                $lineLen = $size - strrpos($enc, '=0D=0A') - 6;
             }
         }
 

@@ -223,9 +223,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
     {
         $read = $this->read($length);
         if ($read !== false) {
-            $ret = array_map('ord', str_split($read, 1));
-
-            return $ret;
+            return array_map('ord', str_split($read, 1));
         }
 
         return false;
@@ -260,7 +258,10 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
         $ignored = '';
         $this->_datas .= $chars;
         $this->_charCount += $this->_charReader->getCharPositions(
-            substr($this->_datas, $this->_datasSize), $this->_datasSize, $this->_map, $ignored
+            substr($this->_datas, $this->_datasSize),
+            $this->_datasSize,
+            $this->_map,
+            $ignored
         );
 
         if ($ignored !== false) {

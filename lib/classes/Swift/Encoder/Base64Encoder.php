@@ -40,8 +40,8 @@ class Swift_Encoder_Base64Encoder implements Swift_Encoder
         $firstLine = '';
 
         if (0 != $firstLineOffset) {
-            $firstLine = UTF8::substr($encodedString, 0, $maxLineLength - $firstLineOffset) . "\r\n";
-            $encodedString = UTF8::substr($encodedString, $maxLineLength - $firstLineOffset);
+            $firstLine = substr($encodedString, 0, $maxLineLength - $firstLineOffset) . "\r\n";
+            $encodedString = substr($encodedString, $maxLineLength - $firstLineOffset);
         }
 
         return $firstLine . trim(chunk_split($encodedString, $maxLineLength, "\r\n"));
