@@ -138,7 +138,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
      *
      * @return int The number of sent e-mail's
      */
-    public function flushQueue(Swift_Transport $transport, &$failedRecipients)
+    public function flushQueue(Swift_Transport $transport, &$failedRecipients = null)
     {
         $directoryIterator = new DirectoryIterator($this->_path);
 

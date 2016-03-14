@@ -49,5 +49,5 @@ interface Swift_Spool
      *
      * @return int The number of sent emails
      */
-    public function flushQueue(Swift_Transport $transport, &$failedRecipients);
+    public function flushQueue(Swift_Transport $transport, &$failedRecipients = null);
 }

@@ -102,7 +102,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
      *
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients)
+    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $failedRecipients = (array)$failedRecipients;
 

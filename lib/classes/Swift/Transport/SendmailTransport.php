@@ -97,7 +97,7 @@ class Swift_Transport_SendmailTransport extends Swift_Transport_AbstractSmtpTran
      *
      * @return int
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients)
+    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $failedRecipients = (array)$failedRecipients;
         $command = $this->getCommand();

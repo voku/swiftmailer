@@ -174,7 +174,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * @throws Exception
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients)
+    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $sent = 0;
         $failedRecipients = (array)$failedRecipients;
@@ -519,7 +519,10 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
                 ++$sent;
             } catch (Swift_TransportException $e) {
                 $failedRecipients[] = $forwardPath;
-                //throw $e; // TODO: check this https://github.com/michaelhogg/swiftmailer/commit/b824cba068d10c46291018947e463cb201a3e572
+
+                // throw $e;
+                // <-- TODO: check this
+                // <-- https://github.com/michaelhogg/swiftmailer/commit/b824cba068d10c46291018947e463cb201a3e572
             }
         }
 
