@@ -1,6 +1,5 @@
 <?php
 
-use voku\helper\UTF8;
 
 /*
  * This file is part of SwiftMailer.
