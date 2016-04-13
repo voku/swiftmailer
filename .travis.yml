@@ -18,7 +18,8 @@ before_script:
     - composer dump-autoload -o
     - cp tests/acceptance.conf.php.default tests/acceptance.conf.php
     - cp tests/smoke.conf.php.default tests/smoke.conf.php
-    - gem install mailcatcher
+    - gem install mime-types --version "< 3"
+    - gem install --conservative mailcatcher > /dev/null 2>&1
     - mailcatcher --smtp-port 4456
 
 script:
