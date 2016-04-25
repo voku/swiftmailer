@@ -645,10 +645,10 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
 
     /**
      * Hex2bin replacement for < PHP 5.4.
-     * 
+     *
      * TODO: use the next code, when the bug-fix, is tagged
      * -> https://github.com/symfony/polyfill/commit/ad8296bf38a40b0b3e8cdfc31e0a04f025f0d99a
-     * 
+     *
      * if (function_exists('hex2bin')) {
      *   return hex2bin($hex);
      * } else {
