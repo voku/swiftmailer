@@ -22,9 +22,7 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
      */
     private $_currentTransport;
 
-    /**
-     * Creates a new FailoverTransport.
-     */
+    // needed as __construct is called from elsewhere explicitly
     public function __construct()
     {
         parent::__construct();

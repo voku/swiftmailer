@@ -36,9 +36,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      */
     protected $_lastUsedTransport;
 
-    /**
-     * Creates a new LoadBalancedTransport.
-     */
+    // needed as __construct is called from elsewhere explicitly
     public function __construct()
     {
     }
