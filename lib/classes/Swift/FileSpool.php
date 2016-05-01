@@ -37,10 +37,14 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     {
         $this->_path = $path;
 
-        if (!file_exists($this->_path)) {
-            if (!mkdir($this->_path, 0777, true)) {
-                throw new Swift_IoException(sprintf('Unable to create a file for enqueuing Message, Path:%s', $this->_path));
-            }
+        if (
+            !file_exists($this->_path)
+            &&
+            !@mkdir($this->_path, 0777, true)
+            &&
+            !is_dir($this->_path)
+        ) {
+            throw new Swift_IoException(sprintf('Unable to create a file for enqueuing Message, Path:%s', $this->_path));
         }
     }
 
@@ -152,7 +156,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
             }
         }
 
-        $failedRecipients = (array) $failedRecipients;
+        $failedRecipients = (array)$failedRecipients;
         $count = 0;
         $time = time();
         foreach ($directoryIterator as $file) {
@@ -200,7 +204,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         $ret = '';
         $strlen = strlen($base);
         for ($i = 0; $i < $count; ++$i) {
-            $ret .= $base[((int) mt_rand(0, $strlen - 1))];
+            $ret .= $base[((int)mt_rand(0, $strlen - 1))];
         }
 
         return $ret;
