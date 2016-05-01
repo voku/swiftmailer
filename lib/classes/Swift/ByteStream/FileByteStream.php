@@ -174,7 +174,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _getReadHandle()
     {
         if (!isset($this->_reader)) {
-            $pointer = fopen($this->_path, 'rb');
+            $pointer = @fopen($this->_path, 'rb');
 
             if (!$pointer) {
                 throw new Swift_IoException(
@@ -197,7 +197,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _getWriteHandle()
     {
         if (!isset($this->_writer)) {
-            $pointer = fopen($this->_path, $this->_mode);
+            $pointer = @fopen($this->_path, $this->_mode);
 
             if (!$pointer) {
                 throw new Swift_IoException(
@@ -268,7 +268,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
 
         fclose($this->_reader);
 
-        $source = fopen($this->_path, 'rb');
+        $source = @fopen($this->_path, 'rb');
         if (!$source) {
             throw new Swift_IoException('Unable to open file for copying [' . $this->_path . ']');
         }
