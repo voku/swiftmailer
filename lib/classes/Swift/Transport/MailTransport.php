@@ -289,7 +289,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
      * @param $extraParams
      * @param $reversePath
      *
-     * @return mixed <string|null>
+     * @return mixed string|null
      */
     private function _formatExtraParams($extraParams, $reversePath)
     {
