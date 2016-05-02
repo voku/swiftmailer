@@ -25,7 +25,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     /**
      * ESMTP capabilities.
      *
-     * @var array
+     * @var string[]
      */
     private $_capabilities = array();
 
