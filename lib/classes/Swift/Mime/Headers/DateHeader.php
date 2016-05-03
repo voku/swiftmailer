@@ -114,10 +114,12 @@ class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
      */
     public function getFieldBody()
     {
-        if (!$this->getCachedValue()) {
-            if (isset($this->_timestamp)) {
-                $this->setCachedValue(date('r', $this->_timestamp));
-            }
+        if (
+            !$this->getCachedValue()
+            &&
+            isset($this->_timestamp)
+        ) {
+            $this->setCachedValue(date('r', $this->_timestamp));
         }
 
         return $this->getCachedValue();

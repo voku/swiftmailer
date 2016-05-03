@@ -17,17 +17,29 @@ use voku\helper\UTF8;
  */
 class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
 {
-    /** The format parameter last specified by the user */
+    /**
+     * The format parameter last specified by the user
+     */
     protected $_userFormat;
 
-    /** The charset last specified by the user */
+    /**
+     * The charset last specified by the user
+     *
+     * @var string
+     */
     protected $_userCharset;
 
-    /** The delsp parameter last specified by the user */
+    /**
+     * The delsp parameter last specified by the user
+     */
     protected $_userDelSp;
 
-    /** The nesting level of this MimePart */
-    private $_nestingLevel = self::LEVEL_ALTERNATIVE;
+    /**
+     * The nesting level of this MimePart
+     *
+     * @var int
+     */
+    private $_nestingLevel;
 
     /**
      * Create a new MimePart with $headers, $encoder and $cache.
@@ -41,7 +53,11 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
     public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_EmailValidatorBridge $emailValidator, $charset = null)
     {
         parent::__construct($headers, $encoder, $cache, $emailValidator);
+
+        $this->_setNestingLevel(self::LEVEL_ALTERNATIVE);
+
         $this->setContentType('text/plain');
+
         if (null !== $charset) {
             $this->setCharset($charset);
         }

@@ -18,7 +18,14 @@ abstract class Swift
 {
     const VERSION = '5.x';
 
+    /**
+     * @var bool
+     */
     public static $initialized = false;
+
+    /**
+     * @var array
+     */
     public static $inits = array();
 
     /**
@@ -52,6 +59,7 @@ abstract class Swift
             return;
         }
 
+        /** @noinspection PhpIncludeInspection */
         require $path;
 
         if (self::$inits && !self::$initialized) {

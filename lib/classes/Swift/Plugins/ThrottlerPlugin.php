@@ -179,7 +179,7 @@ class Swift_Plugins_ThrottlerPlugin extends Swift_Plugins_BandwidthMonitorPlugin
      */
     private function _throttleMessagesPerSecond($timePassed)
     {
-        $expectedDuration = $this->_messages / ($this->_rate);
+        $expectedDuration = $this->_messages / $this->_rate;
 
         return (int) ceil($expectedDuration - $timePassed);
     }

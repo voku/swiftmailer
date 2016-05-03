@@ -116,12 +116,14 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
         if ($fp && !feof($fp)) {
 
             if ($this->_quotes) {
+                /** @noinspection DeprecatedIniOptionsInspection */
                 ini_set('magic_quotes_runtime', 0);
             }
 
             $bytes = fread($fp, $length);
 
             if ($this->_quotes) {
+                /** @noinspection DeprecatedIniOptionsInspection */
                 ini_set('magic_quotes_runtime', 1);
             }
 
@@ -158,7 +160,13 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
         $this->_offset = $byteOffset;
     }
 
-    /** Just write the bytes to the file */
+    /**
+     * Just write the bytes to the file
+     * 
+     * @param string $bytes
+     *
+     * @throws Swift_IoException
+     */
     protected function _commit($bytes)
     {
         fwrite($this->_getWriteHandle(), $bytes);
@@ -256,6 +264,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _copyReadStream()
     {
         $tmpFile = fopen('php://temp/maxmemory:4096', 'w+b');
+
         if ($tmpFile) {
             /* We have opened a php:// Stream Should work without problem */
         } elseif (function_exists('sys_get_temp_dir') && is_writable(sys_get_temp_dir()) && ($tmpFile = tmpfile())) {

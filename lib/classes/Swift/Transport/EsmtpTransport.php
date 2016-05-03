@@ -300,7 +300,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
                 if (
                     null === $return
                     &&
-                    substr($method, 0, 3) === 'set'
+                    0 === strpos($method, 'set')
                 ) {
                     return $this;
                 } else {

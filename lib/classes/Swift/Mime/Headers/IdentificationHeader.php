@@ -25,6 +25,11 @@ class Swift_Mime_Headers_IdentificationHeader extends Swift_Mime_Headers_Abstrac
     private $_ids = array();
 
     /**
+     * @var Swift_EmailValidatorBridge
+     */
+    private $_emailValidator;
+
+    /**
      * Creates a new IdentificationHeader with the given $name and $id.
      *
      * @param string                     $name

@@ -124,6 +124,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     private $_cacheKey;
 
+    /**
+     * @var string
+     */
     protected $_userContentType;
 
     /**

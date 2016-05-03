@@ -15,31 +15,67 @@
  */
 class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeListener, Swift_Plugins_Pop_Pop3Connection
 {
-    /** A delegate connection to use (mostly a test hook) */
+    /**
+     * A delegate connection to use (mostly a test hook)
+     *
+     * @var Swift_Plugins_Pop_Pop3Connection
+     */
     private $_connection;
 
-    /** Hostname of the POP3 server */
+    /**
+     * Hostname of the POP3 server
+     *
+     * @var string
+     */
     private $_host;
 
-    /** Port number to connect on */
+    /**
+     * Port number to connect on
+     *
+     * @var int
+     */
     private $_port;
 
-    /** Encryption type to use (if any) */
+    /**
+     * Encryption type to use (if any)
+     *
+     * @var null|string
+     */
     private $_crypto;
 
-    /** Username to use (if any) */
+    /**
+     * Username to use (if any)
+     *
+     * @var string
+     */
     private $_username;
 
-    /** Password to use (if any) */
+    /**
+     * Password to use (if any)
+     *
+     * @var string
+     */
     private $_password;
 
-    /** Established connection via TCP socket */
+    /**
+     * Established connection via TCP socket
+     *
+     * @var resource
+     */
     private $_socket;
 
-    /** Connect timeout in seconds */
+    /**
+     * Connect timeout in seconds
+     *
+     * @var int
+     */
     private $_timeout = 10;
 
-    /** SMTP Transport to bind to */
+    /**
+     * SMTP Transport to bind to
+     * 
+     * @var Swift_Transport
+     */
     private $_transport;
 
     /**
@@ -103,7 +139,7 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
      */
     public function setTimeout($timeout)
     {
-        $this->_timeout = (int) $timeout;
+        $this->_timeout = (int)$timeout;
 
         return $this;
     }
@@ -148,7 +184,9 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
         } else {
             if (!isset($this->_socket)) {
                 if (!$socket = fsockopen(
-                    $this->_getHostString(), $this->_port, $errno, $errstr, $this->_timeout)) {
+                    $this->_getHostString(), $this->_port, $errno, $errstr, $this->_timeout
+                )
+                ) {
                     throw new Swift_Plugins_Pop_Pop3Exception(
                         sprintf('Failed to connect to POP3 host [%s]: %s', $this->_host, $errstr)
                     );
@@ -196,10 +234,12 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
      */
     public function beforeTransportStarted(Swift_Events_TransportChangeEvent $evt)
     {
-        if (isset($this->_transport)) {
-            if ($this->_transport !== $evt->getTransport()) {
-                return;
-            }
+        if (
+            isset($this->_transport)
+            &&
+            $this->_transport !== $evt->getTransport()
+        ) {
+            return;
         }
 
         $this->connect();
@@ -208,6 +248,8 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
 
     /**
      * Not used.
+     *
+     * @param Swift_Events_TransportChangeEvent $evt
      */
     public function transportStarted(Swift_Events_TransportChangeEvent $evt)
     {
@@ -215,6 +257,8 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
 
     /**
      * Not used.
+     *
+     * @param Swift_Events_TransportChangeEvent $evt
      */
     public function beforeTransportStopped(Swift_Events_TransportChangeEvent $evt)
     {
@@ -222,6 +266,8 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
 
     /**
      * Not used.
+     *
+     * @param Swift_Events_TransportChangeEvent $evt
      */
     public function transportStopped(Swift_Events_TransportChangeEvent $evt)
     {
@@ -248,7 +294,7 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
 
     private function _assertOk($response)
     {
-        if (substr($response, 0, 3) != '+OK') {
+        if (0 !== strpos($response, '+OK')) {
             throw new Swift_Plugins_Pop_Pop3Exception(
                 sprintf('POP3 command failed [%s]', trim($response))
             );
