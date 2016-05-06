@@ -17,7 +17,7 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 {
     /**
      * Recognized MIME types
-     * 
+     *
      * @var array
      */
     private $_mimeTypes = array();

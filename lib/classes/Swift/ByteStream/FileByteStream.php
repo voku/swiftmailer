@@ -162,7 +162,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
 
     /**
      * Just write the bytes to the file
-     * 
+     *
      * @param string $bytes
      *
      * @throws Swift_IoException
