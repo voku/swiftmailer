@@ -128,7 +128,7 @@ class Swift_Mime_Headers_OpenDKIMHeader implements Swift_Mime_Header
 
     /**
      * Ignored.
-     * 
+     *
      * @param string $charset
      */
     public function setCharset($charset)
