@@ -73,7 +73,7 @@ class Swift_Plugins_PopBeforeSmtpPlugin implements Swift_Events_TransportChangeL
 
     /**
      * SMTP Transport to bind to
-     * 
+     *
      * @var Swift_Transport
      */
     private $_transport;
