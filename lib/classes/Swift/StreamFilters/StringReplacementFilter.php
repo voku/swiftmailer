@@ -43,8 +43,16 @@ class Swift_StreamFilters_StringReplacementFilter implements Swift_StreamFilter
     public function shouldBuffer($buffer)
     {
         $endOfBuffer = substr($buffer, -1);
-        foreach ((array) $this->_search as $needle) {
-            if (false !== strpos($needle, $endOfBuffer)) {
+        if (!$endOfBuffer) {
+            return false;
+        }
+
+        foreach ((array)$this->_search as $needle) {
+            if (
+                $needle
+                &&
+                false !== strpos($needle, $endOfBuffer)
+            ) {
                 return true;
             }
         }

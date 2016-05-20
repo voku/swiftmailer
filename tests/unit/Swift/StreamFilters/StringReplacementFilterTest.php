@@ -14,7 +14,7 @@ class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit_Framework
         $this->assertTrue($filter->shouldBuffer('XfooYf'),
             '%s: Filter should buffer since "foo" is the needle and the ending '.
             '"f" could be from "foo"'
-            );
+        );
     }
 
     public function testFilterCanMakeMultipleReplacements()
@@ -29,12 +29,36 @@ class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit_Framework
         $this->assertEquals('XfooYzipZ', $filter->filter('XaYbZ'));
     }
 
+    public function testShouldBufferReturnsFalseOnEmptySearch()
+    {
+        $filter = $this->_createFilter(array(), "\n");
+        $this->assertFalse($filter->shouldBuffer("foo\r\nbar"));
+    }
+
+    public function testShouldBufferReturnsFalseOnEmptySearchAndReplacer()
+    {
+        $filter = $this->_createFilter(array(), "");
+        $this->assertFalse($filter->shouldBuffer("foo\r\nbar"));
+
+        $filter = $this->_createFilter(array(), "");
+        $this->assertFalse($filter->shouldBuffer(""));
+    }
+
+    public function testShouldBufferReturnsFalseOnEmptyReplacer()
+    {
+        $filter = $this->_createFilter(array('foo'), "");
+        $this->assertFalse($filter->shouldBuffer("foo\r\nbar"));
+
+        $filter = $this->_createFilter(array('foo'), "");
+        $this->assertFalse($filter->shouldBuffer(""));
+    }
+
     public function testShouldBufferReturnsFalseIfPartialMatchNotAtEndOfString()
     {
         $filter = $this->_createFilter("\r\n", "\n");
         $this->assertFalse($filter->shouldBuffer("foo\r\nbar"),
             '%s: Filter should not buffer since x0Dx0A is the needle and is not at EOF'
-            );
+        );
     }
 
     public function testShouldBufferReturnsTrueIfAnyOfMultipleMatchesAtEndOfString()
@@ -43,7 +67,7 @@ class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit_Framework
         $this->assertTrue($filter->shouldBuffer('XfooYzi'),
             '%s: Filter should buffer since "zip" is a needle and the ending '.
             '"zi" could be from "zip"'
-            );
+        );
     }
 
     // -- Creation methods
