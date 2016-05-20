@@ -87,7 +87,7 @@ class Swift_Events_SimpleEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $evt = $this->_dispatcher->createSendEvent($transport, $message);
 
         $targetListener = $this->getMock('Swift_Events_SendListener');
-        $otherListener = $this->getMock('Swift_Events_TransportChangeListener');
+        $otherListener = $this->getMock('Swift_Events_DummyListener');
 
         $this->_dispatcher->bindEventListener($targetListener);
         $this->_dispatcher->bindEventListener($otherListener);
@@ -117,9 +117,11 @@ class Swift_Events_SimpleEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $listenerA->expects($this->once())
                   ->method('sendPerformed')
                   ->with($evt)
-                  ->will($this->returnCallback(function ($object) {
-                      $object->cancelBubble(true);
-                  }));
+                  ->will($this->returnCallback(
+                      function ($object) {
+                        $object->cancelBubble(true);
+                      }
+                  ));
         $listenerB->expects($this->never())
                   ->method('sendPerformed');
 

@@ -217,7 +217,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
      *
      * @param int $length
      *
-     * @return integer[]|false false on error
+     * @return int[]|false false on error
      */
     public function readBytes($length)
     {
