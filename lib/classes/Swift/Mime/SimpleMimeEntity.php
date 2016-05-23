@@ -671,6 +671,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      * Get the parameter value of $parameter on $field header.
      * @param string $field
      * @param string $parameter
+     *
+     * @return string
      */
     protected function _getHeaderParameter($field, $parameter)
     {
@@ -747,7 +749,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     protected function getRandomId()
     {
-        $idLeft = md5(getmypid() . '.' . time() . '.' . uniqid(mt_rand(), true));
+        $idLeft = $this->_generateNewCacheKey();
         $idRight = !empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'swift.generated';
         $id = $idLeft . '@' . $idRight;
 
@@ -767,7 +769,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     private function _generateNewCacheKey()
     {
-        return md5(uniqid(getmypid() . mt_rand(), true));
+        return md5(getmypid() . '.' . time() . '.' . uniqid(mt_rand(), true));
     }
 
     private function _readStream(Swift_OutputByteStream $os)
@@ -928,8 +930,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
         return $typePrefs[0] >= $typePrefs[1] ? 1 : -1;
     }
-
-    // -- Destructor
 
     /**
      * Empties it's own contents from the cache.
