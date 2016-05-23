@@ -25,9 +25,10 @@ class Swift_Bug206Test extends \PHPUnit_Framework_TestCase
     public function testMailboxHeaderEncoding()
     {
         $this->_testHeaderIsFullyEncoded('email@example.org', 'Family Name, Name', ' "Family Name, Name" <email@example.org>');
-        $this->_testHeaderIsFullyEncoded('email@example.org', 'Family Namé, Name', ' Family =?utf-8?Q?Nam=C3=A9=2C?= Name');
-        $this->_testHeaderIsFullyEncoded('email@example.org', 'Family Namé , Name', ' Family =?utf-8?Q?Nam=C3=A9_=2C?= Name');
-        $this->_testHeaderIsFullyEncoded('email@example.org', 'Family Namé ;Name', ' Family =?utf-8?Q?Nam=C3=A9_=3BName?= ');
+        $this->_testHeaderIsFullyEncoded('email@example.org', 'Family Namé, Name', ' "Family =?utf-8?Q?Nam=C3=A9=2C?= Name"');
+        $this->_testHeaderIsFullyEncoded('email@example.org', 'Family Namé , Name', ' "Family =?utf-8?Q?Nam=C3=A9_=2C?= Name"');
+        $this->_testHeaderIsFullyEncoded('email@example.org', 'Family Namé ;Name', ' "Family =?utf-8?Q?Nam=C3=A9_=3BName?="');
+        $this->_testHeaderIsFullyEncoded('email@example.org', ':Test with unicode ÖÄÜ', ' ":Test with unicode =?utf-8?Q?=C3=96=C3=84=C3=9C?="');
     }
 
     private function _testHeaderIsFullyEncoded($email, $name, $expected)
