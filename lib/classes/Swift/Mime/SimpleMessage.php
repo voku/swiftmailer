@@ -27,24 +27,26 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
     public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_EmailValidatorBridge  $emailValidator, $charset = null)
     {
         parent::__construct($headers, $encoder, $cache, $emailValidator, $charset);
-        $this->getHeaders()->defineOrdering(array(
-            'Return-Path',
-            'Received',
-            'DKIM-Signature',
-            'DomainKey-Signature',
-            'Sender',
-            'Message-ID',
-            'Date',
-            'Subject',
-            'From',
-            'Reply-To',
-            'To',
-            'Cc',
-            'Bcc',
-            'MIME-Version',
-            'Content-Type',
-            'Content-Transfer-Encoding',
-            ));
+        $this->getHeaders()->defineOrdering(
+            array(
+                'Return-Path',
+                'Received',
+                'DKIM-Signature',
+                'DomainKey-Signature',
+                'Sender',
+                'Message-ID',
+                'Date',
+                'Subject',
+                'From',
+                'Reply-To',
+                'To',
+                'Cc',
+                'Bcc',
+                'MIME-Version',
+                'Content-Type',
+                'Content-Transfer-Encoding',
+            )
+        );
         $this->getHeaders()->setAlwaysDisplayed(array('Date', 'Message-ID', 'From'));
         $this->getHeaders()->addTextHeader('MIME-Version', '1.0');
         $this->setDate(time());

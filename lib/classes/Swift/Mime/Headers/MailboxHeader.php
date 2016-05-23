@@ -236,10 +236,14 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     public function getFieldBody()
     {
+        $cachedValue = $this->getCachedValue();
+
         // Compute the string value of the header only if needed
-        if (null === $this->getCachedValue()) {
-            $this->setCachedValue($this->createMailboxListString($this->_mailboxes));
+        if (null !== $cachedValue) {
+            return $cachedValue;
         }
+
+        $this->setCachedValue($this->createMailboxListString($this->_mailboxes));
 
         return $this->getCachedValue();
     }
@@ -258,16 +262,18 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
         $actualMailboxes = array();
 
         foreach ($mailboxes as $key => $value) {
+
+            // key is string, so we think it's a "email address"
             if (is_string($key)) {
-                // key is email addr
-                $address = $key;
+                $emailAddress = $key;
                 $name = $value;
             } else {
-                $address = $value;
+                $emailAddress = $value;
                 $name = null;
             }
-            $this->_assertValidAddress($address);
-            $actualMailboxes[$address] = $name;
+
+            $this->_assertValidAddress($emailAddress);
+            $actualMailboxes[$emailAddress] = $name;
         }
 
         return $actualMailboxes;
@@ -277,15 +283,16 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      * Produces a compliant, formatted display-name based on the string given.
      *
      * @param string $displayName as displayed
-     * @param bool   $shorten     the first line to make remove for header name
      *
      * @return string
      */
-    protected function createDisplayNameString($displayName, $shorten = false)
+    protected function createDisplayNameString($displayName)
     {
         return $this->createPhrase(
-            $this, $displayName,
-            $this->getCharset(), $this->getEncoder(), $shorten
+            $this,
+            $displayName,
+            $this->getCharset(),
+            $this->getEncoder()
         );
     }
 

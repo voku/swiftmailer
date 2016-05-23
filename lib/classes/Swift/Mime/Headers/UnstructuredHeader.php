@@ -32,6 +32,7 @@ class Swift_Mime_Headers_UnstructuredHeader extends Swift_Mime_Headers_AbstractH
     {
         $this->setFieldName($name);
         $this->setEncoder($encoder);
+
         parent::__construct();
     }
 
@@ -103,7 +104,7 @@ class Swift_Mime_Headers_UnstructuredHeader extends Swift_Mime_Headers_AbstractH
         if (!$this->getCachedValue()) {
             $this->setCachedValue(
                 $this->encodeWords($this, $this->_value)
-                );
+            );
         }
 
         return $this->getCachedValue();

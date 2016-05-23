@@ -207,33 +207,27 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      *
      * @param Swift_Mime_Header        $header
      * @param string                   $string  as displayed
-     * @param string                   $charset of the text
-     * @param Swift_Mime_HeaderEncoder $encoder
-     * @param bool                     $shorten the first line to make remove for header name
      *
      * @return string
      */
-    protected function createPhrase(Swift_Mime_Header $header, $string, $charset, Swift_Mime_HeaderEncoder $encoder = null, $shorten = false)
+    protected function createPhrase(Swift_Mime_Header $header, $string)
     {
         // Treat token as exactly what was given
         $phraseStr = $string;
+
         // If it's not valid
         if (!preg_match('/^' . self::PHRASE_PATTERN . '$/D', $phraseStr)) {
-            // .. but it is just ascii text, try escaping some characters
-            // and make it a quoted-string
+
             if (preg_match('/^[\x00-\x08\x0B\x0C\x0E-\x7F]*$/D', $phraseStr)) {
+                // .. but it is just ascii text, try escaping some characters
                 $phraseStr = $this->escapeSpecials($phraseStr, array('"'));
-                $phraseStr = '"' . $phraseStr . '"';
             } else {
                 // ... otherwise it needs encoding
-                // Determine space remaining on line if first line
-                if ($shorten) {
-                    $usedLength = strlen($header->getFieldName() . ': ');
-                } else {
-                    $usedLength = 0;
-                }
-                $phraseStr = $this->encodeWords($header, $string, $usedLength);
+                $phraseStr = $this->encodeWords($header, $string);
             }
+
+            // and make it a quoted-string
+            $phraseStr = '"' . $phraseStr . '"';
         }
 
         return $phraseStr;
@@ -261,14 +255,12 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      *
      * @param Swift_Mime_Header|Swift_Mime_Headers_AbstractHeader $header
      * @param string                                              $input
-     * @param integer                                             $usedLength optional
      *
      * @return string
      */
-    protected function encodeWords(Swift_Mime_Header $header, $input, $usedLength = -1)
+    protected function encodeWords(Swift_Mime_Header $header, $input)
     {
         $value = '';
-        $usedLength = (int)$usedLength;
 
         $tokens = $this->getEncodableWordTokens($input);
 
@@ -284,9 +276,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
                         $token = substr($token, 1);
                 }
 
-                if (-1 === $usedLength) {
-                    $usedLength = strlen($header->getFieldName() . ': ') + strlen($value);
-                }
+                $usedLength = strlen($header->getFieldName() . ': ') + strlen($value);
                 $value .= $this->getTokenAsEncodedWord($token, $usedLength);
 
                 $header->setMaxLineLength(76); // Forcefully override
