@@ -237,7 +237,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
         $buffer = array(0);
         $buf_pos = 1;
         $buf_len = 1;
-        $has_datas = true;
+        $has_data = true;
         do {
             $bytes = array();
             // Buffer Filing
@@ -249,7 +249,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                     $buf_len = count($buffer);
                     $buf_pos = 0;
                 } else {
-                    $has_datas = false;
+                    $has_data = false;
                 }
             }
             if ($buf_len - $buf_pos > 0) {
@@ -277,7 +277,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                 $this->_array[] = $bytes;
                 ++$this->_array_size;
             }
-        } while ($has_datas);
+        } while ($has_data);
 
         fclose($fp);
     }

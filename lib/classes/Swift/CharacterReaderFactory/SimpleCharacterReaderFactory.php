@@ -98,8 +98,8 @@ class Swift_CharacterReaderFactory_SimpleCharacterReaderFactory implements Swift
      * Returns a CharacterReader suitable for the charset applied.
      *
      * @param string $charset
-     *
-     * @return Swift_CharacterReader
+     * 
+     * @return Swift_CharacterReaderFactory
      */
     public function getReaderFor($charset)
     {

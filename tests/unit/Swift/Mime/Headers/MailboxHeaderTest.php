@@ -77,7 +77,10 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('From', $this->_getEncoder('Q', true));
         $header->setAddresses(array('chris@swiftmailer.org', 'mark@swiftmailer.org',));
         $this->assertEquals(
-            array('chris@swiftmailer.org' => null, 'mark@swiftmailer.org' => null),
+            array(
+                'chris@swiftmailer.org' => null, 
+                'mark@swiftmailer.org' => null
+            ), 
             $header->getNameAddresses()
         );
     }
@@ -86,10 +89,7 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
     {
         $header = $this->_getHeader('From', $this->_getEncoder('Q', true));
         $header->setAddresses(array('chris@swiftmailer.org', 'mark@swiftmailer.org',));
-        $this->assertEquals(
-            array('chris@swiftmailer.org', 'mark@swiftmailer.org'),
-            $header->getNameAddressStrings()
-        );
+        $this->assertEquals(array('chris@swiftmailer.org', 'mark@swiftmailer.org'), $header->getNameAddressStrings());
     }
 
     public function testMultipleNamedMailboxesReturnsMultipleAddresses()
@@ -231,14 +231,16 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
     public function testGetValueReturnsMailboxStringValueForMultipleMailboxes()
     {
         $header = $this->_getHeader('From', $this->_getEncoder('Q', true));
-        $header->setNameAddresses(array(
-            'chris@swiftmailer.org' => 'Chris Corbyn',
-            'mark@swiftmailer.org' => 'Mark Corbyn',
-            ));
+        $header->setNameAddresses(
+            array(
+                'chris@swiftmailer.org' => 'Chris Corbyn',
+                'mark@swiftmailer.org' => 'Mark Corbyn',
+            )
+        );
         $this->assertEquals(
             'Chris Corbyn <chris@swiftmailer.org>, Mark Corbyn <mark@swiftmailer.org>',
             $header->getFieldBody()
-            );
+        );
     }
 
     public function testRemoveAddressesWithSingleValue()
@@ -246,8 +248,8 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('From', $this->_getEncoder('Q', true));
         $header->setNameAddresses(
             array(
-            'chris@swiftmailer.org' => 'Chris Corbyn',
-            'mark@swiftmailer.org' => 'Mark Corbyn',
+                'chris@swiftmailer.org' => 'Chris Corbyn',
+                'mark@swiftmailer.org' => 'Mark Corbyn',
             )
         );
         $header->removeAddresses('chris@swiftmailer.org');
