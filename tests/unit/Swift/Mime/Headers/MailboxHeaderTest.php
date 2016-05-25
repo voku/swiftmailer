@@ -78,9 +78,9 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
         $header->setAddresses(array('chris@swiftmailer.org', 'mark@swiftmailer.org',));
         $this->assertEquals(
             array(
-                'chris@swiftmailer.org' => null, 
+                'chris@swiftmailer.org' => null,
                 'mark@swiftmailer.org' => null
-            ), 
+            ),
             $header->getNameAddresses()
         );
     }

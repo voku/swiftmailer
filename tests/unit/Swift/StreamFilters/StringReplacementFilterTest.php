@@ -37,20 +37,20 @@ class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit_Framework
 
     public function testShouldBufferReturnsFalseOnEmptySearchAndReplacer()
     {
-        $filter = $this->_createFilter(array(), "");
+        $filter = $this->_createFilter(array(), '');
         $this->assertFalse($filter->shouldBuffer("foo\r\nbar"));
 
-        $filter = $this->_createFilter(array(), "");
-        $this->assertFalse($filter->shouldBuffer(""));
+        $filter = $this->_createFilter(array(), '');
+        $this->assertFalse($filter->shouldBuffer(''));
     }
 
     public function testShouldBufferReturnsFalseOnEmptyReplacer()
     {
-        $filter = $this->_createFilter(array('foo'), "");
+        $filter = $this->_createFilter(array('foo'), '');
         $this->assertFalse($filter->shouldBuffer("foo\r\nbar"));
 
-        $filter = $this->_createFilter(array('foo'), "");
-        $this->assertFalse($filter->shouldBuffer(""));
+        $filter = $this->_createFilter(array('foo'), '');
+        $this->assertFalse($filter->shouldBuffer(''));
     }
 
     public function testShouldBufferReturnsFalseIfPartialMatchNotAtEndOfString()
