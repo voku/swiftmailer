@@ -379,7 +379,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
                 }
             }
 
-            // Put any grandchildren in a subpart
+            // Put any grandchildren in a sub-part
             if (!empty($grandchildren)) {
                 $subentity = $this->_createChild();
                 $subentity->_setNestingLevel($lowestLevel);
@@ -535,7 +535,11 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     {
         $string = '';
 
-        if (isset($this->_body) && empty($this->_immediateChildren)) {
+        if (
+            isset($this->_body) 
+            && 
+            empty($this->_immediateChildren)
+        ) {
             if ($this->_cache->hasKey($this->_cacheKey, 'body')) {
                 $body = $this->_cache->getString($this->_cacheKey, 'body');
             } else {
@@ -851,7 +855,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         $realLevel = $child->getNestingLevel();
         $lowercaseType = Swift::strtolowerWithStaticCache($child->getContentType());
 
-        if (isset($filter[$realLevel]) && isset($filter[$realLevel][$lowercaseType])) {
+        if (isset($filter[$realLevel], $filter[$realLevel][$lowercaseType])) {
             return (int)$filter[$realLevel][$lowercaseType];
         }
 

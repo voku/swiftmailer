@@ -485,6 +485,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
      */
     public function getPriority()
     {
+        /** @noinspection PrintfScanfArgumentsInspection */
         list($priority) = sscanf($this->_getHeaderFieldModel('X-Priority'), '%[1-5]');
 
         return isset($priority) ? $priority : 3;
@@ -572,7 +573,13 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
      */
     public function toString()
     {
-        if (count($children = $this->getChildren()) > 0 && $this->getBody() != '') {
+        $children = $this->getChildren();
+
+        if (
+            count($children) > 0
+            &&
+            $this->getBody() != ''
+        ) {
             $this->setChildren(array_merge(array($this->_becomeMimePart()), $children));
             $string = parent::toString();
             $this->setChildren($children);
@@ -602,7 +609,13 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
      */
     public function toByteStream(Swift_InputByteStream $is)
     {
-        if (count($children = $this->getChildren()) > 0 && $this->getBody() != '') {
+        $children = $this->getChildren();
+
+        if (
+            count($children) > 0
+            &&
+            $this->getBody() != ''
+        ) {
             $this->setChildren(array_merge(array($this->_becomeMimePart()), $children));
             parent::toByteStream($is);
             $this->setChildren($children);

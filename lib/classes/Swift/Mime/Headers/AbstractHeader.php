@@ -100,7 +100,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     public function setLanguage($lang)
     {
-        $this->clearCachedValueIf($this->_lang != $lang);
+        $this->clearCachedValueIf($this->_lang !== $lang);
         $this->_lang = $lang;
     }
 
@@ -466,16 +466,22 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             if (
                 ("\r\n" === $token)
                 ||
-                ($i > 0 && strlen($currentLine . $token) > $this->_lineLength)
-                &&
-                0 < strlen($currentLine)
+                (
+                    strlen($currentLine) > 0
+                    &&
+                    (
+                        $i > 0
+                        &&
+                        strlen($currentLine . $token) > $this->_lineLength
+                    )
+                )
             ) {
                 $headerLines[] = '';
                 $currentLine = &$headerLines[$lineCount++];
             }
 
             // Append token to the line
-            if ("\r\n" != $token) {
+            if ("\r\n" !== $token) {
                 $currentLine .= $token;
             }
         }

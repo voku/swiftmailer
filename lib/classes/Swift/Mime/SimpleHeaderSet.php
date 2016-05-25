@@ -155,11 +155,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
     {
         $lowerName = strtolower($name);
 
-        if (
-            isset($this->_headers[$lowerName])
-            &&
-            isset($this->_headers[$lowerName][$index])
-        ) {
+        if (isset($this->_headers[$lowerName], $this->_headers[$lowerName][$index])) {
             return true;
         } else {
             return false;
