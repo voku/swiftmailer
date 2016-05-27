@@ -450,6 +450,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     {
         /** @noinspection PrintfScanfArgumentsInspection */
         list($code) = sscanf($response, '%3d');
+
         /** @noinspection TypeUnsafeArraySearchInspection */
         $valid = (empty($wanted) || in_array($code, $wanted));
 
@@ -581,7 +582,11 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
         return $sent;
     }
 
-    /** Try to determine the hostname of the server this is run on */
+    /**
+     * Try to determine the hostname of the server this is run on
+     *
+     * @return bool
+     */
     private function _lookupHostname()
     {
         if (
@@ -590,7 +595,11 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             $this->_isFqdn($_SERVER['SERVER_NAME'])
         ) {
             $this->_domain = $_SERVER['SERVER_NAME'];
-        } elseif (!empty($_SERVER['SERVER_ADDR'])) {
+
+            return true;
+        }
+
+        if (!empty($_SERVER['SERVER_ADDR'])) {
 
             // Set the address literal tag (See RFC 5321, section: 4.1.3)
             if (false === strpos($_SERVER['SERVER_ADDR'], ':')) {
@@ -600,7 +609,11 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             }
 
             $this->_domain = sprintf('[%s%s]', $prefix, $_SERVER['SERVER_ADDR']);
+
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -613,11 +626,13 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     private function _isFqdn($hostname)
     {
         // We could do a really thorough check, but there's really no point.
-        if (false !== $dotPos = strpos($hostname, '.')) {
-            return ($dotPos > 0) && ($dotPos != strlen($hostname) - 1);
+        $dotPos = strpos($hostname, '.');
+
+        if (false === $dotPos) {
+            return false;
         }
 
-        return false;
+        return ($dotPos > 0) && ($dotPos !== strlen($hostname) - 1);
     }
 
     /**
