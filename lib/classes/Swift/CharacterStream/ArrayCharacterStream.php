@@ -91,8 +91,12 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
      */
     public function setCharacterSet($charset)
     {
-        $this->_charset = $charset;
-        $this->_charReader = null;
+        if ($charset) {
+            $this->_charset = $charset;
+
+            $this->_charReader = null;
+            $this->setCharReaderForCurrentCharset();
+        }
     }
 
     /**
@@ -106,15 +110,23 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     }
 
     /**
+     * Set the char-reader for the current charset.
+     */
+    private function setCharReaderForCurrentCharset()
+    {
+        if (null === $this->_charReader) {
+            $this->_charReader = $this->_charReaderFactory->getReaderFor($this->_charset);
+        }
+    }
+
+    /**
      * Overwrite this character stream using the byte sequence in the byte stream.
      *
      * @param Swift_OutputByteStream $os output stream to read from
      */
     public function importByteStream(Swift_OutputByteStream $os)
     {
-        if (!isset($this->_charReader)) {
-            $this->_charReader = $this->_charReaderFactory->getReaderFor($this->_charset);
-        }
+        $this->setCharReaderForCurrentCharset();
 
         $startLength = $this->_charReader->getInitialByteSize();
         while (false !== $bytes = $os->read($startLength)) {
@@ -127,14 +139,18 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
             $size = count($c);
             $need = $this->_charReader->validateByteSequence($c, $size);
-            if ($need > 0) {
-                $bytes = $os->read($need);
-                if (false !== $bytes) {
-                    $len = strlen($bytes);
-                    for ($i = 0; $i < $len; ++$i) {
-                        $c[] = self::$_byteMap[$bytes[$i]];
-                    }
+
+            if (
+                $need > 0
+                &&
+                false !== $bytes = $os->read($need)
+            ) {
+
+                $len = strlen($bytes);
+                for ($i = 0; $i < $len; ++$i) {
+                    $c[] = self::$_byteMap[$bytes[$i]];
                 }
+
             }
 
             $this->_array[] = $c;
@@ -223,9 +239,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
      */
     public function write($chars)
     {
-        if (!isset($this->_charReader)) {
-            $this->_charReader = $this->_charReaderFactory->getReaderFor($this->_charset);
-        }
+        $this->setCharReaderForCurrentCharset();
 
         $startLength = $this->_charReader->getInitialByteSize();
 
@@ -240,10 +254,12 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
         $has_data = true;
         do {
             $bytes = array();
+
             // Buffer Filing
             if ($buf_len - $buf_pos < $startLength) {
                 $buf = array_splice($buffer, $buf_pos);
                 $new = $this->_reloadBuffer($fp, 100);
+
                 if ($new) {
                     $buffer = array_merge($buf, $new);
                     $buf_len = count($buffer);
@@ -252,15 +268,16 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                     $has_data = false;
                 }
             }
+
             if ($buf_len - $buf_pos > 0) {
+
                 $size = 0;
                 for ($i = 0; $i < $startLength && isset($buffer[$buf_pos]); ++$i) {
                     ++$size;
                     $bytes[] = $buffer[$buf_pos++];
                 }
-                $need = $this->_charReader->validateByteSequence(
-                    $bytes, $size
-                );
+                $need = $this->_charReader->validateByteSequence($bytes, $size);
+
                 if ($need > 0) {
                     if ($buf_len - $buf_pos < $need) {
                         $new = $this->_reloadBuffer($fp, $need);
@@ -270,10 +287,12 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                             $buf_len = count($buffer);
                         }
                     }
+
                     for ($i = 0; $i < $need && isset($buffer[$buf_pos]); ++$i) {
                         $bytes[] = $buffer[$buf_pos++];
                     }
                 }
+
                 $this->_array[] = $bytes;
                 ++$this->_array_size;
             }
@@ -294,6 +313,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
         } elseif ($charOffset < 0) {
             $charOffset = 0;
         }
+
         $this->_offset = $charOffset;
     }
 
@@ -317,9 +337,11 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     {
         if (!feof($fp)) {
             $bytes = fread($fp, $len);
+
             if ($bytes !== false) {
                 $buf = array();
                 $len = strlen($bytes);
+
                 for ($i = 0; $i < $len; ++$i) {
                     $buf[] = self::$_byteMap[$bytes[$i]];
                 }
@@ -335,9 +357,11 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     {
         if (!isset(self::$_charMap)) {
             self::$_charMap = array();
+
             for ($byte = 0; $byte < 256; ++$byte) {
                 self::$_charMap[$byte] = chr($byte);
             }
+
             self::$_byteMap = array_flip(self::$_charMap);
         }
     }

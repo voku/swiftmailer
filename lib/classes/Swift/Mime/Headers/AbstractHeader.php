@@ -41,7 +41,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     /**
      * The language used in this Header.
      *
-     * @var string
+     * @var string|null
      */
     private $_lang;
 
@@ -55,9 +55,9 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     /**
      * The value of this Header, cached.
      *
-     * @var string
+     * @var string|null
      */
-    private $_cachedValue = null;
+    private $_cachedValue;
 
     /**
      * Creates a new Header.
@@ -73,10 +73,14 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     public function setCharset($charset)
     {
-        $this->clearCachedValueIf($charset != $this->_charset);
-        $this->_charset = $charset;
-        if (isset($this->_encoder)) {
-            $this->_encoder->charsetChanged($charset);
+        if ($charset && $charset !== $this->_charset) {
+            $this->clearCachedValue();
+
+            $this->_charset = $charset;
+
+            if ($this->_encoder) {
+                $this->_encoder->charsetChanged($charset);
+            }
         }
     }
 
@@ -100,8 +104,10 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     public function setLanguage($lang)
     {
-        $this->clearCachedValueIf($this->_lang !== $lang);
-        $this->_lang = $lang;
+        if ($lang && $this->_lang !== $lang) {
+            $this->clearCachedValue();
+            $this->_lang = (string)$lang;
+        }
     }
 
     /**
@@ -151,11 +157,20 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      * Set the maximum length of lines in the header (excluding EOL).
      *
      * @param int $lineLength
+     *
+     * @return bool
      */
     public function setMaxLineLength($lineLength)
     {
-        $this->clearCachedValueIf($this->_lineLength != $lineLength);
-        $this->_lineLength = $lineLength;
+        if ($lineLength && $this->_lineLength !== $lineLength) {
+            $this->clearCachedValue();
+
+            $this->_lineLength = (int)$lineLength;
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -210,21 +225,21 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     protected function createPhrase(Swift_Mime_Header $header, $string)
     {
-        // Treat token as exactly what was given
+        // Treat token as exactly what was given.
         $phraseStr = $string;
 
-        // If it's not valid
+        // If it's not valid ...
         if (!preg_match('/^' . self::PHRASE_PATTERN . '$/D', $phraseStr)) {
 
             if (preg_match('/^[\x00-\x08\x0B\x0C\x0E-\x7F]*$/D', $phraseStr)) {
-                // .. but it is just ascii text, try escaping some characters
+                // ... but it is just ascii text, try escaping some characters
                 $phraseStr = $this->escapeSpecials($phraseStr, array('"'));
             } else {
                 // ... otherwise it needs encoding
                 $phraseStr = $this->encodeWords($header, $string);
             }
 
-            // and make it a quoted-string
+            // ... and make it a quoted-string.
             $phraseStr = '"' . $phraseStr . '"';
         }
 
@@ -348,7 +363,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
 
         $charsetDecl = $this->_charset;
 
-        if (isset($this->_lang)) {
+        if ($this->_lang) {
             $charsetDecl .= '*' . $this->_lang;
         }
 
@@ -407,6 +422,11 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         return $this->_cachedValue;
     }
 
+    private function clearCachedValue()
+    {
+        $this->setCachedValue(null);
+    }
+
     /**
      * Clear the cached value if $condition is met.
      *
@@ -414,8 +434,8 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
      */
     protected function clearCachedValueIf($condition)
     {
-        if ($condition) {
-            $this->setCachedValue(null);
+        if (true === $condition) {
+            $this->clearCachedValue();
         }
     }
 

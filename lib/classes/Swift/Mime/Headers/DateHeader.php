@@ -18,7 +18,7 @@ class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
     /**
      * The UNIX timestamp value of this Header.
      *
-     * @var int
+     * @var int|null
      */
     private $_timestamp;
 

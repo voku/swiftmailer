@@ -349,16 +349,16 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         foreach ($children as $child) {
             $level = $this->_getNeededChildLevel($child, $compoundLevel);
             if (empty($immediateChildren)) {
-                //first iteration
+                // first iteration
                 $immediateChildren = array($child);
             } else {
                 $nextLevel = $this->_getNeededChildLevel($immediateChildren[0], $compoundLevel);
                 if ($nextLevel === $level) {
                     $immediateChildren[] = $child;
                 } elseif ($level < $nextLevel) {
-                    // Re-assign immediateChildren to grandchildren
+                    // re-assign immediateChildren to grandchildren
                     $grandchildren = array_merge($grandchildren, $immediateChildren);
-                    // Set new children
+                    // set new children
                     $immediateChildren = array($child);
                 } else {
                     $grandchildren[] = $child;
@@ -369,8 +369,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         if ($immediateChildren) {
             $lowestLevel = $this->_getNeededChildLevel($immediateChildren[0], $compoundLevel);
 
-            // Determine which composite media type is needed to accommodate the
-            // immediate children
+            // Determine which composite media type is needed to accommodate the immediate children.
             foreach ($this->_compositeRanges as $mediaType => $range) {
                 if ($lowestLevel > $range[0] && $lowestLevel <= $range[1]) {
                     $newContentType = $mediaType;
@@ -379,7 +378,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
                 }
             }
 
-            // Put any grandchildren in a sub-part
+            // Put any grandchildren in a sub-part.
             if (!empty($grandchildren)) {
                 $subentity = $this->_createChild();
                 $subentity->_setNestingLevel($lowestLevel);
@@ -689,7 +688,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      * Set the parameter value of $parameter on $field header.
      * @param string $field
      * @param string $parameter
-     * @param        $value
+     * @param mixed  $value
      *
      * @return bool
      */

@@ -69,9 +69,11 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function setCharset($charset)
     {
-        $this->_charset = $charset;
-        $this->_factory->charsetChanged($charset);
-        $this->_notifyHeadersOfCharset($charset);
+        if ($charset) {
+            $this->_charset = $charset;
+            $this->_factory->charsetChanged($charset);
+            $this->_notifyHeadersOfCharset($charset);
+        }
     }
 
     /**

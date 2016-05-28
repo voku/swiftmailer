@@ -53,25 +53,25 @@ class Swift_CharacterReaderFactory_SimpleCharacterReaderFactory implements Swift
         $singleByte = array(
             'class' => $prefix . 'GenericFixedWidthReader',
             'constructor' => array(1),
-            );
+        );
 
         $doubleByte = array(
             'class' => $prefix . 'GenericFixedWidthReader',
             'constructor' => array(2),
-            );
+        );
 
         $fourBytes = array(
             'class' => $prefix . 'GenericFixedWidthReader',
             'constructor' => array(4),
-            );
+        );
 
-        // Utf-8
+        // UTF-8
         self::$_map['utf-?8'] = array(
             'class' => $prefix . 'Utf8Reader',
             'constructor' => array(),
-            );
+        );
 
-        //7-8 bit charsets
+        // 7-8 bit charsets
         self::$_map['(us-)?ascii'] = $singleByte;
         self::$_map['(iso|iec)-?8859-?[0-9]+'] = $singleByte;
         self::$_map['windows-?125[0-9]'] = $singleByte;
@@ -84,10 +84,10 @@ class Swift_CharacterReaderFactory_SimpleCharacterReaderFactory implements Swift
         self::$_map['(cork|t1)'] = $singleByte;
         self::$_map['v?iscii'] = $singleByte;
 
-        //16 bits
+        // 16 bits
         self::$_map['(ucs-?2|utf-?16)'] = $doubleByte;
 
-        //32 bits
+        // 32 bits
         self::$_map['(ucs-?4|utf-?32)'] = $fourBytes;
 
         // Fallback

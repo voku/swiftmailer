@@ -16,7 +16,7 @@
 class Swift_Preferences
 {
     /** Singleton instance */
-    private static $_instance = null;
+    private static $_instance;
 
     /** Constructor not to be used */
     private function __construct()
@@ -92,6 +92,7 @@ class Swift_Preferences
     public function setQPDotEscape($dotEscape)
     {
         $dotEscape = !empty($dotEscape);
+
         Swift_DependencyContainer::getInstance()
             ->register('mime.qpcontentencoder')
             ->asNewInstanceOf('Swift_Mime_ContentEncoder_QpContentEncoder')

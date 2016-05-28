@@ -99,9 +99,13 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
      */
     public function setCharacterSet($charset)
     {
-        $this->_charset = $charset;
-        $this->_charReader = null;
-        $this->_mapType = 0;
+        if ($charset) {
+            $this->_charset = $charset;
+            $this->_charReader = null;
+            $this->_mapType = 0;
+
+            $this->setCharReaderForCurrentCharset();
+        }
     }
 
     /**
@@ -136,6 +140,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
         $this->flushContents();
         $blocks = 512;
         $os->setReadPointer(0);
+        
         while (false !== ($read = $os->read($blocks))) {
             $this->write($read);
         }
@@ -197,7 +202,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
 
                 $to = $start;
                 for (; $this->_currentPos < $end; ++$this->_currentPos) {
-                    if (isset($this->_map['i'][$this->_currentPos])) {
+                    if (isset($this->_map['i'], $this->_map['i'][$this->_currentPos])) {
                         $ret .= substr($this->_datas, $start, $to - $start) . '?';
                         $start = $this->_map['p'][$this->_currentPos];
                     } else {
@@ -243,17 +248,25 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
     }
 
     /**
+     * Set the char-reader for the current charset.
+     */
+    private function setCharReaderForCurrentCharset()
+    {
+        if (null === $this->_charReader) {
+            $this->_charReader = $this->_charReaderFactory->getReaderFor($this->_charset);
+            $this->_map = array();
+            $this->_mapType = $this->_charReader->getMapType();
+        }
+    }
+
+    /**
      * @see Swift_CharacterStream::write()
      *
      * @param string $chars
      */
     public function write($chars)
     {
-        if (!isset($this->_charReader)) {
-            $this->_charReader = $this->_charReaderFactory->getReaderFor($this->_charset);
-            $this->_map = array();
-            $this->_mapType = $this->_charReader->getMapType();
-        }
+        $this->setCharReaderForCurrentCharset();
 
         $ignored = '';
         $this->_datas .= $chars;

@@ -75,9 +75,10 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      */
     public function setBody($body, $contentType = null, $charset = null)
     {
-        if (isset($charset)) {
+        if ($charset) {
             $this->setCharset($charset);
         }
+        
         $body = $this->_convertString($body);
 
         parent::setBody($body, $contentType);
@@ -105,11 +106,14 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
     public function setCharset($charset)
     {
         $this->_setHeaderParameter('Content-Type', 'charset', $charset);
+        
         if ($charset !== $this->_userCharset) {
             $this->_clearCache();
+
+            $this->_userCharset = $charset;
+
+            parent::charsetChanged($charset);
         }
-        $this->_userCharset = $charset;
-        parent::charsetChanged($charset);
 
         return $this;
     }
@@ -146,7 +150,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      */
     public function getDelSp()
     {
-        return 'yes' === $this->_getHeaderParameter('Content-Type', 'delsp') ? true : false;
+        return 'yes' === $this->_getHeaderParameter('Content-Type', 'delsp');
     }
 
     /**
@@ -215,7 +219,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
     }
 
     /**
-     * Encode charset when charset is not utf-8
+     * Encode charset
      *
      * @param $string
      *
@@ -224,14 +228,6 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      */
     protected function _convertString($string)
     {
-        $charset = Swift::strtolowerWithStaticCache($this->getCharset());
-
-        if (!in_array($charset, array('utf-8', 'iso-8859-1', 'iso-8859-15', ''), true)) {
-            UTF8::checkForSupport();
-
-            return mb_convert_encoding($string, $charset, 'utf-8');
-        }
-
-        return $string;
+        return UTF8::encode($this->getCharset(),$string, false);
     }
 }

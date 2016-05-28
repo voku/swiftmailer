@@ -56,7 +56,8 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
         $this->_encoder = $encoder;
         $this->_paramEncoder = $paramEncoder;
         $this->_emailValidator = $emailValidator;
-        $this->_charset = $charset;
+
+        $this->charsetChanged($charset);
     }
 
     /**
@@ -70,9 +71,11 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     public function createMailboxHeader($name, $addresses = null)
     {
         $header = new Swift_Mime_Headers_MailboxHeader($name, $this->_encoder, $this->_emailValidator);
-        if (isset($addresses)) {
+        
+        if ($addresses) {
             $header->setFieldBodyModel($addresses);
         }
+        
         $this->_setHeaderCharset($header);
 
         return $header;
@@ -89,9 +92,11 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     public function createDateHeader($name, $timestamp = null)
     {
         $header = new Swift_Mime_Headers_DateHeader($name);
-        if (isset($timestamp)) {
+        
+        if ($timestamp) {
             $header->setFieldBodyModel($timestamp);
         }
+        
         $this->_setHeaderCharset($header);
 
         return $header;
@@ -108,9 +113,11 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     public function createTextHeader($name, $value = null)
     {
         $header = new Swift_Mime_Headers_UnstructuredHeader($name, $this->_encoder);
-        if (isset($value)) {
+        
+        if ($value) {
             $header->setFieldBodyModel($value);
         }
+        
         $this->_setHeaderCharset($header);
 
         return $header;
@@ -127,15 +134,14 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
      */
     public function createParameterizedHeader($name, $value = null, $params = array())
     {
+        $parameterEncoding = null;
         if (strtolower($name) === 'content-disposition') {
             $parameterEncoding = $this->_paramEncoder;
-        } else {
-            $parameterEncoding = null;
         }
 
         $header = new Swift_Mime_Headers_ParameterizedHeader($name, $this->_encoder, $parameterEncoding);
 
-        if (isset($value)) {
+        if ($value) {
             $header->setFieldBodyModel($value);
         }
 
@@ -151,8 +157,8 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     /**
      * Create a new ID header for Message-ID or Content-ID.
      *
-     * @param string       $name
-     * @param string|array $ids
+     * @param string            $name
+     * @param string|array|null $ids
      *
      * @return Swift_Mime_Header
      */
@@ -160,7 +166,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     {
         $header = new Swift_Mime_Headers_IdentificationHeader($name, $this->_emailValidator);
 
-        if (isset($ids)) {
+        if (!empty($ids)) {
             $header->setFieldBodyModel($ids);
         }
 
@@ -180,9 +186,11 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     public function createPathHeader($name, $path = null)
     {
         $header = new Swift_Mime_Headers_PathHeader($name, $this->_emailValidator);
-        if (isset($path)) {
+        
+        if ($path) {
             $header->setFieldBodyModel($path);
         }
+        
         $this->_setHeaderCharset($header);
 
         return $header;
@@ -192,12 +200,20 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
      * Notify this observer that the entity's charset has changed.
      *
      * @param string $charset
+     * 
+     * @return bool
      */
     public function charsetChanged($charset)
     {
-        $this->_charset = $charset;
-        $this->_encoder->charsetChanged($charset);
-        $this->_paramEncoder->charsetChanged($charset);
+        if ($charset) {
+            $this->_charset = $charset;
+            $this->_encoder->charsetChanged($charset);
+            $this->_paramEncoder->charsetChanged($charset);
+            
+            return true;
+        }
+        
+        return false;
     }
 
     /**
@@ -216,7 +232,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
      */
     private function _setHeaderCharset(Swift_Mime_Header $header)
     {
-        if (isset($this->_charset)) {
+        if (null !== $this->_charset) {
             $header->setCharset($this->_charset);
         }
     }

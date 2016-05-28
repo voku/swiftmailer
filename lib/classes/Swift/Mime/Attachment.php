@@ -107,7 +107,7 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
     /**
      * Get the file size of this attachment.
      *
-     * @return int
+     * @return string
      */
     public function getSize()
     {
