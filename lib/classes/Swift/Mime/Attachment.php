@@ -141,9 +141,8 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
         $this->setFilename(basename($file->getPath()));
         $this->setBody($file, $contentType);
         if (!isset($contentType)) {
-            $extension = Swift::strtolowerWithStaticCache(
-                substr($file->getPath(), strrpos($file->getPath(), '.') + 1)
-            );
+
+            $extension = $this->getFileExtension($file->getPath());
 
             if (isset($this->_mimeTypes[$extension])) {
                 $this->setContentType($this->_mimeTypes[$extension]);
@@ -151,5 +150,23 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
         }
 
         return $this;
+    }
+
+    /**
+     * get the file-extension e.g. from "http://foo.bar/image.jpg?md5=123456"
+     *
+     * @param $str
+     *
+     * @return string
+     */
+    private function getFileExtension($str)
+    {
+        $extension = substr($str, strrpos($str, '.') + 1);
+        if (strpos($extension, '?') !== false) {
+            $extension = preg_replace("/(\?.*)/", '', $extension);
+        }
+        $extension = Swift::strtolowerWithStaticCache($extension);
+
+        return (string)$extension;
     }
 }

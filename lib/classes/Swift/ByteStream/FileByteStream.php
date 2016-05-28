@@ -178,7 +178,12 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     {
     }
 
-    /** Get the resource for reading */
+    /**
+     * Get the resource for reading
+     *
+     * @return resource
+     * @throws Swift_IoException
+     */
     private function _getReadHandle()
     {
         if (!isset($this->_reader)) {
