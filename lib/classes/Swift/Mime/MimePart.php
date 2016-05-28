@@ -78,8 +78,10 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
         if ($charset) {
             $this->setCharset($charset);
         }
-        
-        $body = $this->_convertString($body);
+
+        if (is_string($body)) {
+            $body = $this->_convertString($body);
+        }
 
         parent::setBody($body, $contentType);
 
@@ -224,10 +226,9 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      * @param $string
      *
      * @return string
-     * @throws Swift_SwiftException
      */
     protected function _convertString($string)
     {
-        return UTF8::encode($this->getCharset(),$string, false);
+        return UTF8::encode($this->getCharset(), $string, false);
     }
 }

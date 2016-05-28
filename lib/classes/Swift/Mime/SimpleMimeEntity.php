@@ -410,8 +410,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      * Set the body of this entity, either as a string, or as an instance of
      * {@link Swift_OutputByteStream}.
      *
-     * @param mixed  $body
-     * @param string $contentType optional
+     * @param mixed       $body
+     * @param string|null $contentType optional
      *
      * @return Swift_Mime_SimpleMimeEntity
      */
@@ -422,7 +422,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         }
 
         $this->_body = $body;
-        if (isset($contentType)) {
+
+        if ($contentType) {
             $this->setContentType($contentType);
         }
 
@@ -675,12 +676,14 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      * @param string $field
      * @param string $parameter
      *
-     * @return string
+     * @return string|false
      */
     protected function _getHeaderParameter($field, $parameter)
     {
         if ($this->_headers->has($field)) {
             return $this->_headers->get($field)->getParameter($parameter);
+        } else {
+            return false;
         }
     }
 
