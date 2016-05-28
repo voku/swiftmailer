@@ -138,7 +138,7 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
      */
     public function setFile(Swift_FileStream $file, $contentType = null)
     {
-        $this->setFilename(basename($file->getPath()));
+        $this->setFilename(basename(parse_url($file->getPath(), PHP_URL_PATH)));
         $this->setBody($file, $contentType);
         if (!isset($contentType)) {
 
