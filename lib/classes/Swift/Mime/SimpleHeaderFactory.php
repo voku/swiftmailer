@@ -135,7 +135,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     public function createParameterizedHeader($name, $value = null, $params = array())
     {
         $parameterEncoding = null;
-        if (strtolower($name) === 'content-disposition') {
+        if (Swift::strtolowerWithStaticCache($name) === 'content-disposition') {
             $parameterEncoding = $this->_paramEncoder;
         }
 

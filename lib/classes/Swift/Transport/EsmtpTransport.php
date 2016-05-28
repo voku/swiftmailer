@@ -140,7 +140,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      */
     public function setEncryption($encryption)
     {
-        $encryption = strtolower($encryption);
+        $encryption = Swift::strtolowerWithStaticCache($encryption);
 
         if ('tls' === $encryption) {
             $this->_params['protocol'] = 'tcp';
@@ -286,8 +286,8 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         foreach ($this->_handlers as $handler) {
 
             $inArray = in_array(
-                strtolower($method),
-                array_map('strtolower', (array)$handler->exposeMixinMethods()),
+                Swift::strtolowerWithStaticCache($method),
+                array_map(array('Swift', 'strtolowerWithStaticCache'), (array)$handler->exposeMixinMethods()),
                 true
             );
 

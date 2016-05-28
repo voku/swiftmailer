@@ -164,6 +164,8 @@ class Swift_Transport_Esmtp_AuthHandler implements Swift_Transport_EsmtpHandler
      * Runs immediately after a EHLO has been issued.
      *
      * @param Swift_Transport_SmtpAgent $agent to read/write
+     *                                         
+     * @throws Swift_TransportException
      */
     public function afterEhlo(Swift_Transport_SmtpAgent $agent)
     {
@@ -171,8 +173,8 @@ class Swift_Transport_Esmtp_AuthHandler implements Swift_Transport_EsmtpHandler
             $count = 0;
             foreach ($this->_getAuthenticatorsForAgent() as $authenticator) {
                 if (in_array(
-                    strtolower($authenticator->getAuthKeyword()),
-                    array_map('strtolower', $this->_esmtpParams),
+                    Swift::strtolowerWithStaticCache($authenticator->getAuthKeyword()),
+                    array_map(array('Swift', 'strtolowerWithStaticCache'), $this->_esmtpParams),
                     true
                 )) {
                     ++$count;
@@ -181,10 +183,11 @@ class Swift_Transport_Esmtp_AuthHandler implements Swift_Transport_EsmtpHandler
                     }
                 }
             }
+            
             throw new Swift_TransportException(
                 'Failed to authenticate on SMTP server with username "' .
                 $this->_username . '" using ' . $count . ' possible authenticators'
-                );
+            );
         }
     }
 
@@ -250,12 +253,12 @@ class Swift_Transport_Esmtp_AuthHandler implements Swift_Transport_EsmtpHandler
      */
     protected function _getAuthenticatorsForAgent()
     {
-        if (!$mode = strtolower($this->_auth_mode)) {
+        if (!$mode = Swift::strtolowerWithStaticCache($this->_auth_mode)) {
             return $this->_authenticators;
         }
 
         foreach ($this->_authenticators as $authenticator) {
-            if (strtolower($authenticator->getAuthKeyword()) === $mode) {
+            if (Swift::strtolowerWithStaticCache($authenticator->getAuthKeyword()) === $mode) {
                 return array($authenticator);
             }
         }
