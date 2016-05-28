@@ -268,6 +268,8 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Establishes a connection to a remote server.
+     *
+     * @throws Swift_TransportException
      */
     private function _establishSocketConnection()
     {
@@ -289,7 +291,11 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
             $options['socket']['bindto'] = $this->_params['sourceIp'] . ':0';
         }
 
-        if (isset($this->_params['stream_context_options'])) {
+        if (!empty($this->_params['verifySsl'])) {
+            $options = array_merge($options, $this->_params['verifySsl']);
+        }
+
+        if (!empty($this->_params['stream_context_options'])) {
             $options = array_merge($options, $this->_params['stream_context_options']);
         }
 

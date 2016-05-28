@@ -43,6 +43,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         'tls'                    => false,
         'type'                   => Swift_Transport_IoBuffer::TYPE_SOCKET,
         'stream_context_options' => array(),
+        'verifySsl'              => array(),
     );
 
     /**
@@ -161,6 +162,23 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     public function getEncryption()
     {
         return $this->_params['tls'] ? 'tls' : $this->_params['protocol'];
+    }
+
+    /**
+     * Disable SSL-Verify to prevent error like "SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"
+     *
+     * @param bool $bool
+     *
+     * @return Swift_Transport_EsmtpTransport
+     */
+    public function setVerifySsl($bool = false)
+    {
+        $options['ssl']['verify_peer'] = $bool;
+        $options['ssl']['verify_peer_name'] = $bool;
+
+        $this->_params['verifySsl'] = $options;
+
+        return $this;
     }
 
     /**
