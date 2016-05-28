@@ -293,7 +293,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function defineOrdering(array $sequence)
     {
-        $this->_order = array_flip(array_map(array('Swift' => 'strtolowerWithStaticCache'), $sequence));
+        $this->_order = array_flip(array_map(array('Swift', 'strtolowerWithStaticCache'), $sequence));
     }
 
     /**
@@ -305,7 +305,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      */
     public function setAlwaysDisplayed(array $names)
     {
-        $this->_required = array_flip(array_map(array('Swift' => 'strtolowerWithStaticCache'), $names));
+        $this->_required = array_flip(array_map(array('Swift', 'strtolowerWithStaticCache'), $names));
     }
 
     /**
