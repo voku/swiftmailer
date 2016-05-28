@@ -202,7 +202,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      *
      * @see getNameAddresses()
      *
-     * @return integer[]
+     * @return string[]
      */
     public function getAddresses()
     {
@@ -271,7 +271,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
             }
 
             $this->_assertValidAddress($emailAddress);
-            $actualMailboxes[$emailAddress] = $name;
+            $actualMailboxes[trim($emailAddress)] = $name;
         }
 
         return $actualMailboxes;
