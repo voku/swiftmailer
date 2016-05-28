@@ -72,7 +72,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     {
         $header = new Swift_Mime_Headers_MailboxHeader($name, $this->_encoder, $this->_emailValidator);
         
-        if ($addresses) {
+        if ($addresses !== null) {
             $header->setFieldBodyModel($addresses);
         }
         
@@ -93,7 +93,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     {
         $header = new Swift_Mime_Headers_DateHeader($name);
         
-        if ($timestamp) {
+        if ($timestamp !== null) {
             $header->setFieldBodyModel($timestamp);
         }
         
@@ -114,7 +114,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     {
         $header = new Swift_Mime_Headers_UnstructuredHeader($name, $this->_encoder);
         
-        if ($value) {
+        if ($value !== null) {
             $header->setFieldBodyModel($value);
         }
         
@@ -141,7 +141,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
 
         $header = new Swift_Mime_Headers_ParameterizedHeader($name, $this->_encoder, $parameterEncoding);
 
-        if ($value) {
+        if ($value !== null) {
             $header->setFieldBodyModel($value);
         }
 
@@ -187,7 +187,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     {
         $header = new Swift_Mime_Headers_PathHeader($name, $this->_emailValidator);
         
-        if ($path) {
+        if ($path !== null) {
             $header->setFieldBodyModel($path);
         }
         
