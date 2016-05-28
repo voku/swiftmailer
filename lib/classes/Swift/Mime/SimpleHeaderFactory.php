@@ -200,7 +200,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
      * Notify this observer that the entity's charset has changed.
      *
      * @param string $charset
-     * 
+     *
      * @return bool
      */
     public function charsetChanged($charset)
