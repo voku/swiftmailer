@@ -292,11 +292,11 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         }
 
         if (!empty($this->_params['verifySsl'])) {
-            $options = array_merge($options, $this->_params['verifySsl']);
+            $options = array_merge_recursive($options, $this->_params['verifySsl']);
         }
 
         if (!empty($this->_params['stream_context_options'])) {
-            $options = array_merge($options, $this->_params['stream_context_options']);
+            $options = array_merge_recursive($options, $this->_params['stream_context_options']);
         }
 
         $streamContext = stream_context_create($options);
