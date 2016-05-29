@@ -267,47 +267,6 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     }
 
     /**
-     * Check if this Transport mechanism is alive.
-     *
-     * If a Transport mechanism session is no longer functional, the method
-     * returns FALSE. It is the responsibility of the developer to handle this
-     * case and restart the Transport mechanism manually.
-     *
-     * @example
-     *
-     *   if (!$transport->ping()) {
-     *      $transport->stop();
-     *      $transport->start();
-     *   }
-     *
-     * The Transport mechanism will be started, if it is not already.
-     *
-     * It is undefined if the Transport mechanism attempts to restart as long as
-     * the return value reflects whether the mechanism is now functional.
-     *
-     * @return bool TRUE if the transport is alive
-     */
-    public function ping()
-    {
-        try {
-            if (!$this->isStarted()) {
-                $this->start();
-            }
-
-            $this->executeCommand("NOOP\r\n", array(250));
-        } catch (Swift_TransportException $e) {
-            try {
-                $this->stop();
-            } catch (Swift_TransportException $e) {
-            }
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Register a plugin.
      *
      * @param Swift_Events_EventListener $plugin
@@ -549,6 +508,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * @param array              $failedRecipients
      *
      * @return int
+     *
+     * @throws Swift_TransportException
      */
     private function _doMailTransaction($message, $reversePath, array $recipients, array &$failedRecipients)
     {
@@ -562,10 +523,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             } catch (Swift_TransportException $e) {
                 $failedRecipients[] = $forwardPath;
 
-
-                // throw $e;
-                // <-- TODO: check this
-                // <-- https://github.com/michaelhogg/swiftmailer/commit/b824cba068d10c46291018947e463cb201a3e572
+                $this->_throwException($e);
             }
         }
 
@@ -588,6 +546,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * @param array              $failedRecipients
      *
      * @return int
+     *
+     * @throws Swift_TransportException
      */
     private function _sendTo(Swift_Mime_Message $message, $reversePath, array $to, array &$failedRecipients)
     {
@@ -607,6 +567,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * @param array              $failedRecipients
      *
      * @return int
+     *
+     * @throws Swift_TransportException
      */
     private function _sendBcc(Swift_Mime_Message $message, $reversePath, array $bcc, array &$failedRecipients)
     {

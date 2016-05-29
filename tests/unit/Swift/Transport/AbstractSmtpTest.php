@@ -1181,48 +1181,6 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
         $smtp->send($message);
     }
 
-    public function testPing()
-    {
-        $buf = $this->_getBuffer();
-        $smtp = $this->_getTransport($buf);
-        $buf->shouldReceive('initialize')
-            ->once();
-        $buf->shouldReceive('readLine')
-            ->once()
-            ->with(0)
-            ->andReturn("220 some.server.tld bleh\r\n");
-        $buf->shouldReceive('write')
-            ->once()
-            ->with('~^NOOP\r\n$~D')
-            ->andReturn(1);
-        $buf->shouldReceive('readLine')
-            ->once()
-            ->with(1)
-            ->andReturn('250 OK'."\r\n");
-        $this->_finishBuffer($buf);
-        $this->assertTrue($smtp->ping());
-    }
-    public function testPingOnDeadConnection()
-    {
-        $buf = $this->_getBuffer();
-        $smtp = $this->_getTransport($buf);
-        $buf->shouldReceive('initialize')
-            ->once();
-        $buf->shouldReceive('readLine')
-            ->once()
-            ->with(0)
-            ->andReturn("220 some.server.tld bleh\r\n");
-        $buf->shouldReceive('write')
-            ->once()
-            ->with('~^NOOP\r\n$~D')
-            ->andThrow('Swift_TransportException');
-        $this->_finishBuffer($buf);
-        $smtp->start();
-        $this->assertTrue($smtp->isStarted());
-        $this->assertFalse($smtp->ping());
-        $this->assertFalse($smtp->isStarted());
-    }
-
     protected function _getBuffer()
     {
         return $this->getMockery('Swift_Transport_IoBuffer')->shouldIgnoreMissing();

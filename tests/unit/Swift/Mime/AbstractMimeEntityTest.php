@@ -822,7 +822,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
           $this->_createCache()
       );
 
-      //$entity->setChildren($children);
+      $entity->setChildren($children);
     }
   }
 

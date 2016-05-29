@@ -35,10 +35,10 @@ class Swift_Mime_AttachmentTest extends Swift_Mime_AbstractMimeEntityTest
         $disposition->shouldReceive('setFieldBodyModel')
                     ->zeroOrMoreTimes();
 
-        $attachment = $this->_createAttachment($this->_createHeaderSet(array(
-            'Content-Disposition' => $disposition, )),
+        $attachment = $this->_createAttachment(
+            $this->_createHeaderSet(array('Content-Disposition' => $disposition, )),
             $this->_createEncoder(), $this->_createCache()
-            );
+        );
         $attachment->setDisposition('inline');
     }
 
@@ -80,10 +80,13 @@ class Swift_Mime_AttachmentTest extends Swift_Mime_AbstractMimeEntityTest
         $cType->shouldReceive('setFieldBodyModel')
               ->zeroOrMoreTimes();
 
-        $attachment = $this->_createAttachment($this->_createHeaderSet(array(
-            'Content-Type' => $cType, )),
-            $this->_createEncoder(), $this->_createCache()
-            );
+        $attachment = $this->_createAttachment(
+            $this->_createHeaderSet(
+                array('Content-Type' => $cType, )
+            ),
+            $this->_createEncoder(),
+            $this->_createCache()
+        );
     }
 
     public function testFilenameIsReturnedFromHeader()

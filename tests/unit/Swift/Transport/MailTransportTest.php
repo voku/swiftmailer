@@ -346,7 +346,7 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
                     'body'
                 );
 
-        if ("\r\n" != PHP_EOL) {
+        if ("\r\n" !== PHP_EOL) {
             $expectedHeaders = "From: Foo\n<foo@bar>\n";
             $expectedSubject = "Foo\nBar";
             $expectedBody = "This\nbody";
@@ -385,7 +385,7 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         return $message;
     }
 
-    private function _createHeaders($headers = array())
+    private function _createHeaders(array $headers = array())
     {
         $set = $this->getMockery('Swift_Mime_HeaderSet')->shouldIgnoreMissing();
 
