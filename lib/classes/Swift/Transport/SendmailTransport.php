@@ -145,11 +145,6 @@ class Swift_Transport_SendmailTransport extends Swift_Transport_AbstractSmtpTran
                 $this->_eventDispatcher->dispatchEvent($evt, 'sendPerformed');
             }
 
-            // TODO: Why do we need this only for the parameter "-f"?
-            // -> take a look at "AbstractSmtpTransport"
-            //
-            $message->generateId(); // Make sure a new Message ID is used
-
         } elseif (false !== strpos($command, ' -bs')) {
             $count = parent::send($message, $failedRecipients);
         } else {
@@ -161,7 +156,7 @@ class Swift_Transport_SendmailTransport extends Swift_Transport_AbstractSmtpTran
             );
         }
 
-        //$message->generateId(); // Make sure a new Message ID is used
+        $message->generateId(); // Make sure a new Message ID is used
 
         return $count;
     }
