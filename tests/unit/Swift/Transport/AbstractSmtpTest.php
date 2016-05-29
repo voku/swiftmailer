@@ -1178,8 +1178,8 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
 
     public function testPing()
     {
-        $buf = $this->getBuffer();
-        $smtp = $this->getTransport($buf);
+        $buf = $this->_getBuffer();
+        $smtp = $this->_getTransport($buf);
         $buf->shouldReceive('initialize')
             ->once();
         $buf->shouldReceive('readLine')
@@ -1199,8 +1199,8 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
     }
     public function testPingOnDeadConnection()
     {
-        $buf = $this->getBuffer();
-        $smtp = $this->getTransport($buf);
+        $buf = $this->_getBuffer();
+        $smtp = $this->_getTransport($buf);
         $buf->shouldReceive('initialize')
             ->once();
         $buf->shouldReceive('readLine')
