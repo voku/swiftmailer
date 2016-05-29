@@ -124,8 +124,7 @@ class Swift_Transport_SendmailTransportTest extends Swift_Transport_AbstractSmtp
         $message->shouldReceive('getTo')
                 ->zeroOrMoreTimes()
                 ->andReturn(array('foo@bar' => 'Foobar', 'zip@button' => 'Zippy'));
-        $message->shouldReceive('generateId')
-            ->$this->times(3);
+        $message->shouldReceive('generateId');
         $buf->shouldReceive('initialize')
             ->once();
         $buf->shouldReceive('terminate')
