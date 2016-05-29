@@ -218,10 +218,12 @@ class Swift_Transport_MailTransport implements Swift_Transport
                 $this->_eventDispatcher->dispatchEvent($evt, 'sendPerformed');
             }
 
+            $message->generateId();  // Make sure a new Message ID is used
+
             $count = 0;
         }
 
-        $message->generateId();  // Make sure a new Message ID is used
+        //$message->generateId();  // Make sure a new Message ID is used
 
         return $count;
     }
