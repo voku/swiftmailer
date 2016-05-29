@@ -9,6 +9,8 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="tests/bootstrap.php"
+         verbose="true"
+         tap="true"
 >
     <php>
         <ini name="intl.default_locale" value="en"/>
