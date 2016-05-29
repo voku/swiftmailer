@@ -51,17 +51,17 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
      */
     public function ping()
     {
-        $maxTransports = count($this->transports);
+        $maxTransports = count($this->_transports);
         for ($i = 0; $i < $maxTransports
-            && $transport = $this->getNextTransport(); ++$i) {
+            && $transport = $this->_getNextTransport(); ++$i) {
             if ($transport->ping()) {
                 return true;
             } else {
-                $this->killCurrentTransport();
+                $this->_killCurrentTransport();
             }
         }
 
-        return count($this->transports) > 0;
+        return count($this->_transports) > 0;
     }
 
     /**

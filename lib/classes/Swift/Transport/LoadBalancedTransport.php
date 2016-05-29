@@ -123,13 +123,13 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
      */
     public function ping()
     {
-        foreach ($this->transports as $transport) {
+        foreach ($this->_transports as $transport) {
             if (!$transport->ping()) {
-                $this->killCurrentTransport();
+                $this->_killCurrentTransport();
             }
         }
 
-        return count($this->transports) > 0;
+        return count($this->_transports) > 0;
     }
 
     /**
