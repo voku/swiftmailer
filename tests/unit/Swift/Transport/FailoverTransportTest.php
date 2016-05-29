@@ -520,7 +520,7 @@ class Swift_Transport_FailoverTransportTest extends \SwiftMailerTestCase
            ->once()
            ->andReturn(true);
 
-        $transport = $this->getTransport(array($t1, $t2));
+        $transport = $this->_getTransport(array($t1, $t2));
         $this->assertTrue($transport->isStarted());
         $this->assertTrue($transport->ping());
     }
@@ -549,7 +549,7 @@ class Swift_Transport_FailoverTransportTest extends \SwiftMailerTestCase
            ->twice()
            ->andReturn(true);
 
-        $transport = $this->getTransport(array($t1, $t2));
+        $transport = $this->_getTransport(array($t1, $t2));
         $this->assertTrue($transport->ping());
         $this->assertTrue($transport->ping());
         $this->assertTrue($transport->isStarted());
@@ -579,7 +579,7 @@ class Swift_Transport_FailoverTransportTest extends \SwiftMailerTestCase
            ->once()
            ->andReturn(false);
 
-        $transport = $this->getTransport(array($t1, $t2));
+        $transport = $this->_getTransport(array($t1, $t2));
         $this->assertFalse($transport->ping());
         $this->assertFalse($transport->isStarted());
         $this->assertFalse($transport->ping());
