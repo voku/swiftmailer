@@ -96,7 +96,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     public function queueMessage(Swift_Mime_Message $message)
     {
         $ser = serialize($message);
-        $fileName = $this->_path . '/' . $this->getRandomString(10);
+        $fileName = $this->_path . '/' . $this->getRandomString();
         for ($i = 0; $i < $this->_retryLimit; ++$i) {
             /* We try an exclusive creation of the file. This is an atomic operation, it avoid locking mechanism */
             $fp = @fopen($fileName . '.message', 'x');
@@ -162,7 +162,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         foreach ($directoryIterator as $file) {
             $file = $file->getRealPath();
 
-            if (substr($file, -8) != '.message') {
+            if (substr($file, -8) !== '.message') {
                 continue;
             }
 
@@ -193,18 +193,23 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     /**
      * Returns a random string needed to generate a fileName for the queue.
      *
-     * @param int $count
+     * @param int|null $count <strong>null</strong> use only "uniqid()"<br />
+     *                        <strong>int</strong> use "mt_rand()" with a fixed- / fs-safe string
      *
      * @return string
      */
-    protected function getRandomString($count)
+    protected function getRandomString($count = null)
     {
-        // This string MUST stay FS safe, avoid special chars
+        if ($count === null) {
+            return uniqid('', true);
+        }
+
+        // This string MUST stay FS safe, avoid special chars.
         $base = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
         $ret = '';
-        $strlen = strlen($base);
+        $strlen = strlen($base) - 1;
         for ($i = 0; $i < $count; ++$i) {
-            $ret .= $base[((int)mt_rand(0, $strlen - 1))];
+            $ret .= $base[(int)mt_rand(0, $strlen)];
         }
 
         return $ret;
