@@ -20,68 +20,48 @@ class Swift_KeyCache_DiskKeyCacheAcceptanceTest extends \PHPUnit_Framework_TestC
         $this->_cache = new Swift_KeyCache_DiskKeyCache(
             new Swift_KeyCache_SimpleKeyCacheInputStream(),
             SWIFT_TMP_DIR
-            );
+        );
     }
 
     public function testStringDataCanBeSetAndFetched()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
         $this->assertEquals('test', $this->_cache->getString($this->_key1, 'foo'));
     }
 
     public function testStringDataCanBeOverwritten()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'whatever', Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
+        $this->_cache->setString($this->_key1, 'foo', 'whatever', Swift_KeyCache::MODE_WRITE);
         $this->assertEquals('whatever', $this->_cache->getString($this->_key1, 'foo'));
     }
 
     public function testStringDataCanBeAppended()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'ing', Swift_KeyCache::MODE_APPEND
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
+        $this->_cache->setString($this->_key1, 'foo', 'ing', Swift_KeyCache::MODE_APPEND);
         $this->assertEquals('testing', $this->_cache->getString($this->_key1, 'foo'));
     }
 
     public function testHasKeyReturnValue()
     {
         $this->assertFalse($this->_cache->hasKey($this->_key1, 'foo'));
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
         $this->assertTrue($this->_cache->hasKey($this->_key1, 'foo'));
     }
 
     public function testNsKeyIsWellPartitioned()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
-        $this->_cache->setString(
-            $this->_key2, 'foo', 'ing', Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
+        $this->_cache->setString($this->_key2, 'foo', 'ing', Swift_KeyCache::MODE_WRITE);
         $this->assertEquals('test', $this->_cache->getString($this->_key1, 'foo'));
         $this->assertEquals('ing', $this->_cache->getString($this->_key2, 'foo'));
     }
 
     public function testItemKeyIsWellPartitioned()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
-        $this->_cache->setString(
-            $this->_key1, 'bar', 'ing', Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
+        $this->_cache->setString($this->_key1, 'bar', 'ing', Swift_KeyCache::MODE_WRITE);
         $this->assertEquals('test', $this->_cache->getString($this->_key1, 'foo'));
         $this->assertEquals('ing', $this->_cache->getString($this->_key1, 'bar'));
     }
@@ -91,9 +71,7 @@ class Swift_KeyCache_DiskKeyCacheAcceptanceTest extends \PHPUnit_Framework_TestC
         $os = new Swift_ByteStream_ArrayByteStream();
         $os->write('abcdef');
 
-        $this->_cache->importFromByteStream(
-            $this->_key1, 'foo', $os, Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->importFromByteStream($this->_key1, 'foo', $os, Swift_KeyCache::MODE_WRITE);
         $this->assertEquals('abcdef', $this->_cache->getString($this->_key1, 'foo'));
     }
 
@@ -105,36 +83,26 @@ class Swift_KeyCache_DiskKeyCacheAcceptanceTest extends \PHPUnit_Framework_TestC
         $os2 = new Swift_ByteStream_ArrayByteStream();
         $os2->write('xyzuvw');
 
-        $this->_cache->importFromByteStream(
-            $this->_key1, 'foo', $os1, Swift_KeyCache::MODE_APPEND
-            );
-        $this->_cache->importFromByteStream(
-            $this->_key1, 'foo', $os2, Swift_KeyCache::MODE_APPEND
-            );
+        $this->_cache->importFromByteStream($this->_key1, 'foo', $os1, Swift_KeyCache::MODE_APPEND);
+        $this->_cache->importFromByteStream($this->_key1, 'foo', $os2, Swift_KeyCache::MODE_APPEND);
 
         $this->assertEquals('abcdefxyzuvw', $this->_cache->getString($this->_key1, 'foo'));
     }
 
     public function testByteStreamAndStringCanBeAppended()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_APPEND
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_APPEND);
 
         $os = new Swift_ByteStream_ArrayByteStream();
         $os->write('abcdef');
 
-        $this->_cache->importFromByteStream(
-            $this->_key1, 'foo', $os, Swift_KeyCache::MODE_APPEND
-            );
+        $this->_cache->importFromByteStream($this->_key1, 'foo', $os, Swift_KeyCache::MODE_APPEND);
         $this->assertEquals('testabcdef', $this->_cache->getString($this->_key1, 'foo'));
     }
 
     public function testDataCanBeExportedToByteStream()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
 
         $is = new Swift_ByteStream_ArrayByteStream();
 
@@ -150,9 +118,7 @@ class Swift_KeyCache_DiskKeyCacheAcceptanceTest extends \PHPUnit_Framework_TestC
 
     public function testKeyCanBeCleared()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
         $this->assertTrue($this->_cache->hasKey($this->_key1, 'foo'));
         $this->_cache->clearKey($this->_key1, 'foo');
         $this->assertFalse($this->_cache->hasKey($this->_key1, 'foo'));
@@ -160,12 +126,8 @@ class Swift_KeyCache_DiskKeyCacheAcceptanceTest extends \PHPUnit_Framework_TestC
 
     public function testNsKeyCanBeCleared()
     {
-        $this->_cache->setString(
-            $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
-            );
-        $this->_cache->setString(
-            $this->_key1, 'bar', 'xyz', Swift_KeyCache::MODE_WRITE
-            );
+        $this->_cache->setString($this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE);
+        $this->_cache->setString($this->_key1, 'bar', 'xyz', Swift_KeyCache::MODE_WRITE);
         $this->assertTrue($this->_cache->hasKey($this->_key1, 'foo'));
         $this->assertTrue($this->_cache->hasKey($this->_key1, 'bar'));
         $this->_cache->clearAll($this->_key1);
