@@ -1175,7 +1175,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
                 ->zeroOrMoreTimes()
                 ->andReturn(array('foo@bar' => null));
         $message->shouldReceive('generateId')
-                ->twice();
+                ->once();
 
         $this->_finishBuffer($buf);
         $smtp->start();
