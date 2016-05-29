@@ -68,8 +68,6 @@ interface Swift_InputByteStream
     /**
      * Flush the contents of the stream (empty it) and set the internal pointer
      * to the beginning.
-     *
-     * @throws Swift_IoException
      */
     public function flushBuffers();
 }

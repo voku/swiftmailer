@@ -549,6 +549,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * @param array              $failedRecipients
      *
      * @return int
+     * 
+     * @throws Swift_TransportException
      */
     private function _doMailTransaction($message, $reversePath, array $recipients, array &$failedRecipients)
     {
@@ -562,13 +564,11 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             } catch (Swift_TransportException $e) {
                 $failedRecipients[] = $forwardPath;
 
-                // throw $e;
-                // <-- TODO: check this
-                // <-- https://github.com/michaelhogg/swiftmailer/commit/b824cba068d10c46291018947e463cb201a3e572
+                throw $e;
             }
         }
 
-        if ($sent != 0) {
+        if ($sent !== 0) {
             $this->_doDataCommand();
             $this->_streamMessage($message);
         } else {
@@ -587,6 +587,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * @param array              $failedRecipients
      *
      * @return int
+     *
+     * @throws Swift_TransportException
      */
     private function _sendTo(Swift_Mime_Message $message, $reversePath, array $to, array &$failedRecipients)
     {
@@ -606,6 +608,8 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      * @param array              $failedRecipients
      *
      * @return int
+     * 
+     * @throws Swift_TransportException
      */
     private function _sendBcc(Swift_Mime_Message $message, $reversePath, array $bcc, array &$failedRecipients)
     {

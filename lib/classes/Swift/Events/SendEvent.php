@@ -87,7 +87,7 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
     /**
      * Set the array of addresses that failed in sending.
      *
-     * @param array $recipients
+     * @param string[] $recipients
      */
     public function setFailedRecipients($recipients)
     {

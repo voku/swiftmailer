@@ -2,7 +2,13 @@
 
 abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
 {
-    /** Abstract test method */
+    /**
+     * Abstract test method
+     *
+     * @param $buf
+     *
+     * @return Swift_Transport
+     */
     abstract protected function _getTransport($buf);
 
     public function testStartAccepts220ServiceGreeting()
@@ -1194,7 +1200,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
             ->once()
             ->with(1)
             ->andReturn('250 OK'."\r\n");
-        $this->finishBuffer($buf);
+        $this->_finishBuffer($buf);
         $this->assertTrue($smtp->ping());
     }
     public function testPingOnDeadConnection()
@@ -1211,7 +1217,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
             ->once()
             ->with('~^NOOP\r\n$~D')
             ->andThrow('Swift_TransportException');
-        $this->finishBuffer($buf);
+        $this->_finishBuffer($buf);
         $smtp->start();
         $this->assertTrue($smtp->isStarted());
         $this->assertFalse($smtp->ping());

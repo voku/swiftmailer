@@ -122,7 +122,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
      * The return value is the number of recipients who were accepted for delivery.
      *
      * @param Swift_Mime_Message $message
-     * @param string[]           $failedRecipients An array of failures by-reference
+     * @param string[]           $failedRecipients An array of failures (by-reference)
      *
      * @return int
      *
@@ -186,7 +186,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
 
         unset($messageStr);
 
-        if ("\r\n" != PHP_EOL) {
+        if ("\r\n" !== PHP_EOL) {
             // Non-windows (not using SMTP)
             $headers = str_replace("\r\n", PHP_EOL, $headers);
             $subject = str_replace("\r\n", PHP_EOL, $subject);
@@ -218,13 +218,10 @@ class Swift_Transport_MailTransport implements Swift_Transport
                 $this->_eventDispatcher->dispatchEvent($evt, 'sendPerformed');
             }
 
-            // TODO: Why do we do this only on error?
-            // -> take a look at "AbstractSmtpTransport"
-            //
-            $message->generateId(); // Make sure a new Message ID is used
-
             $count = 0;
         }
+
+        $message->generateId();  // Make sure a new Message ID is used
 
         return $count;
     }
@@ -276,6 +273,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
      */
     public function mail($to, $subject, $body, $headers = null, $extraParams = null)
     {
+        /** @noinspection DeprecatedIniOptionsInspection */
         if (!ini_get('safe_mode')) {
             return @mail($to, $subject, $body, $headers, $extraParams);
         }

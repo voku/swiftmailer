@@ -146,8 +146,6 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
     /**
      * Flush the contents of the stream (empty it) and set the internal pointer
      * to the beginning.
-     *
-     * @throws Swift_IoException
      */
     public function flushBuffers()
     {
