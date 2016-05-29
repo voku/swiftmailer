@@ -11,6 +11,7 @@
          bootstrap="tests/bootstrap.php"
          verbose="true"
          tap="true"
+         testdox="true"
 >
     <php>
         <ini name="intl.default_locale" value="en"/>
