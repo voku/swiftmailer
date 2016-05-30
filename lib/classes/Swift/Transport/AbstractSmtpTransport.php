@@ -523,7 +523,10 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             } catch (Swift_TransportException $e) {
                 $failedRecipients[] = $forwardPath;
 
-                $this->_throwException($e);
+                // $this->_throwException($e);
+                // throw $e;
+                // <-- TODO: check this
+                // <-- https://github.com/michaelhogg/swiftmailer/commit/b824cba068d10c46291018947e463cb201a3e572
             }
         }
 
