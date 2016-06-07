@@ -4,7 +4,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
 {
     /**
      * Abstract test method
-     * 
+     *
      * @param $buf
      *
      * @return Swift_Transport
