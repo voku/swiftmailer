@@ -175,6 +175,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     {
         $options['ssl']['verify_peer'] = $bool;
         $options['ssl']['verify_peer_name'] = $bool;
+        $options['ssl']['allow_self_signed'] = !$bool;
 
         $this->_params['verifySsl'] = $options;
 
