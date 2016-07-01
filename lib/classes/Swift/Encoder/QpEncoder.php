@@ -249,12 +249,18 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
         $ret = '';
         $size = 0;
         foreach ($bytes as $b) {
+
+            $tmpRet = '';
             if (isset($this->_safeMap[$b])) {
-                $ret .= $this->_safeMap[$b];
+                $tmpRet .= $this->_safeMap[$b];
                 ++$size;
             } else {
-                $ret .= self::$_qpMap[$b];
+                $tmpRet .= self::$_qpMap[$b];
                 $size += 3;
+            }
+
+            if ($tmpRet !== '=00') {
+              $ret .= $tmpRet;
             }
         }
 
@@ -270,7 +276,7 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      *
      * @param int $size number of bytes to read
      *
-     * @return integer[]
+     * @return int[]
      */
     protected function _nextSequence($size = 72)
     {
