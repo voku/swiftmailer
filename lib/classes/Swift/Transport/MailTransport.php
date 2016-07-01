@@ -286,10 +286,10 @@ class Swift_Transport_MailTransport implements Swift_Transport
     /**
      * Return php mail extra params to use for invoker->mail.
      *
-     * @param $extraParams
-     * @param $reversePath
+     * @param string $extraParams
+     * @param string $reversePath
      *
-     * @return mixed string|null
+     * @return null|string
      */
     private function _formatExtraParams($extraParams, $reversePath)
     {

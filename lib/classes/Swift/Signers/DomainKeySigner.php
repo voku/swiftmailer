@@ -435,6 +435,9 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
 
     /* Private helpers */
 
+    /**
+     * @param string $header
+     */
     protected function _addHeader($header)
     {
         switch ($this->_canon) {

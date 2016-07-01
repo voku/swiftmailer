@@ -641,7 +641,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      *
      * @param string $field
      *
-     * @return string
+     * @return null|string[]|string
      */
     protected function _getHeaderFieldModel($field)
     {
@@ -812,6 +812,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         }
     }
 
+    /**
+     * @param string $type
+     */
     private function _setContentTypeInHeaders($type)
     {
         if (!$this->_setHeaderFieldModel('Content-Type', $type)) {
@@ -819,6 +822,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         }
     }
 
+    /**
+     * @param int $level
+     */
     private function _setNestingLevel($level)
     {
         $this->_nestingLevel = $level;

@@ -213,7 +213,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
     /**
      * Set the nesting level of this entity
      *
-     * @param $level
+     * @param int $level
      */
     protected function _setNestingLevel($level)
     {
@@ -223,7 +223,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
     /**
      * Encode charset
      *
-     * @param $string
+     * @param string $string
      *
      * @return string
      */

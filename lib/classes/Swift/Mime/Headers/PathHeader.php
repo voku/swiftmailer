@@ -72,7 +72,7 @@ class Swift_Mime_Headers_PathHeader extends Swift_Mime_Headers_AbstractHeader
      * Get the model for the field body.
      * This method returns a string email address.
      *
-     * @return mixed
+     * @return string
      */
     public function getFieldBodyModel()
     {

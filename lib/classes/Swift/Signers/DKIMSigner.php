@@ -593,6 +593,10 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
 
     /* Private helpers */
 
+    /**
+     * @param string $header
+     * @param bool   $is_sig
+     */
     protected function _addHeader($header, $is_sig = false)
     {
         switch ($this->_headerCanon) {
@@ -618,6 +622,9 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
     {
     }
 
+    /**
+     * @param string $string
+     */
     protected function _canonicalizeBody($string)
     {
         $len = strlen($string);
@@ -697,6 +704,9 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
         $this->_bodyLen += $len;
     }
 
+    /**
+     * @param string $header
+     */
     private function _addToHeaderHash($header)
     {
         if ($this->_debugHeaders) {
