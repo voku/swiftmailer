@@ -47,7 +47,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
 
             $encoder = new Swift_Encoder_QpEncoder($charStream);
 
-            $this->assertIdenticalBinary($char, $encoder->encodeString($char));
+            self::assertIdenticalBinary($char, $encoder->encodeString($char));
         }
     }
 
@@ -98,7 +98,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
         $charStream->shouldReceive('readBytes')->once()->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        $this->assertEquals(
+        self::assertEquals(
             'a'.$HT.'=09'."\r\n".'b',
             $encoder->encodeString($string)
             );
@@ -122,7 +122,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
         $charStream->shouldReceive('readBytes')->once()->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        $this->assertEquals(
+        self::assertEquals(
             'a'.$SPACE.'=20'."\r\n".'b',
             $encoder->encodeString($string)
             );
@@ -178,7 +178,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
         $charStream->shouldReceive('readBytes')->once()->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        $this->assertEquals($string, $encoder->encodeString($string));
+        self::assertEquals($string, $encoder->encodeString($string));
     }
 
     public function testLinesLongerThan76CharactersAreSoftBroken()
@@ -219,7 +219,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
                     ->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        $this->assertEquals($output, $encoder->encodeString($input));
+        self::assertEquals($output, $encoder->encodeString($input));
     }
 
     public function testMaxLineLengthCanBeSpecified()
@@ -249,7 +249,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
                     ->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        $this->assertEquals($output, $encoder->encodeString($input, 0, 54));
+        self::assertEquals($output, $encoder->encodeString($input, 0, 54));
     }
 
     public function testBytesBelowPermittedRangeAreEncoded()
@@ -258,7 +258,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
         According to Rule (1 & 2)
         */
 
-        foreach (range(0, 32) as $ordinal) {
+        foreach (range(1, 32) as $ordinal) {
             $char = chr($ordinal);
 
             $charStream = $this->_createCharStream();
@@ -276,9 +276,9 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
 
             $encoder = new Swift_Encoder_QpEncoder($charStream);
 
-            $this->assertEquals(
+            self::assertEquals(
                 sprintf('=%02X', $ordinal), $encoder->encodeString($char)
-                );
+            );
         }
     }
 
@@ -305,7 +305,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
 
-        $this->assertEquals('=3D', $encoder->encodeString('='));
+        self::assertEquals('=3D', $encoder->encodeString('='));
     }
 
     public function testBytesAbovePermittedRangeAreEncoded()
@@ -332,7 +332,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
 
             $encoder = new Swift_Encoder_QpEncoder($charStream);
 
-            $this->assertEquals(
+            self::assertEquals(
                 sprintf('=%02X', $ordinal), $encoder->encodeString($char)
                 );
         }
@@ -366,7 +366,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
                     ->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        $this->assertEquals(
+        self::assertEquals(
             $output, $encoder->encodeString($input, 22),
             '%s: First line should start at offset 22 so can only have max length 54'
             );
@@ -380,7 +380,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
                  str_repeat('a', 70)."\r\n".
                  str_repeat('a', 70);
 
-        $this->assertEquals(
+        self::assertEquals(
             $input, $encoder->encodeString($input)
             );
     }
