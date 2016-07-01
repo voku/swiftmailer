@@ -27,7 +27,7 @@
         "voku/portable-utf8": "~2.1"
     },
     "require-dev": {
-        "mockery/mockery": "~0.9.1,<0.9.4",
+        "mockery/mockery": "~0.9.1",
         "phpunit/phpunit": "~4.0"
     },
     "autoload": {
