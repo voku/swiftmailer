@@ -1,6 +1,5 @@
 <?php
 
-use voku\helper\UTF8;
 
 /**
  * A CharacterStream implementation which skips over all the manual processing
