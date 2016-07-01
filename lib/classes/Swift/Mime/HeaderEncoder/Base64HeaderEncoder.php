@@ -1,7 +1,5 @@
 <?php
 
-use voku\helper\UTF8;
-
 /*
  * This file is part of SwiftMailer.
  * (c) 2004-2009 Chris Corbyn
@@ -44,14 +42,12 @@ class Swift_Mime_HeaderEncoder_Base64HeaderEncoder extends Swift_Encoder_Base64E
     public function encodeString($string, $firstLineOffset = 0, $maxLineLength = 0, $charset = 'utf-8')
     {
         if (Swift::strtolowerWithStaticCache($charset) === 'iso-2022-jp') {
-            UTF8::checkForSupport();
+            $old = \mb_internal_encoding();
 
-            $old = mb_internal_encoding();
+            \mb_internal_encoding('utf-8');
+            $newString = \mb_encode_mimeheader($string, $charset, $this->getName(), "\r\n");
 
-            mb_internal_encoding('utf-8');
-            $newString = mb_encode_mimeheader($string, $charset, $this->getName(), "\r\n");
-
-            mb_internal_encoding($old);
+            \mb_internal_encoding($old);
 
             return $newString;
         }
