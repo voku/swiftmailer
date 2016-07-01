@@ -279,7 +279,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
             if ($char === "\x00") {
                 // special for "NULL"
                 self::assertEquals(
-                    sprintf('', $ordinal), $encoder->encodeString($char), 'tested:' . $char
+                    '', $encoder->encodeString($char), 'tested:' . $char
                 );
             } else {
                 self::assertEquals(
