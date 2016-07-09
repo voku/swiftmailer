@@ -31,6 +31,7 @@ class Swift_Bug650Test extends \PHPUnit_Framework_TestCase
             array('( test ö', '=?utf-8?Q?=28?= test =?utf-8?Q?=C3=B6?='),
             array('[ test ö', '=?utf-8?Q?=5B?= test =?utf-8?Q?=C3=B6?='),
             array('@ test ö)', '=?utf-8?Q?=40?= test =?utf-8?Q?=C3=B6=29?='),
+            array('this is --- a test ö \'', 'this is --- a test =?utf-8?Q?=C3=B6?= \''),
         );
     }
 }
