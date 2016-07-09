@@ -311,8 +311,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
     /**
      * Redefine the encoding requirements for mailboxes.
      *
-     * Commas and semicolons are used to separate
-     * multiple addresses, and should therefore be encoded
+     * All "specials" must be encoded as the full header value will not be quoted
+     *
+     * @see RFC 2822 3.2.1
      *
      * @param string $token
      *
@@ -320,7 +321,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     protected function tokenNeedsEncoding($token)
     {
-        return preg_match('/[,;]/', $token) || parent::tokenNeedsEncoding($token);
+        return preg_match('/[()<>\[\]:;@\,."]/', $token) || parent::tokenNeedsEncoding($token);
     }
 
     /**
@@ -336,9 +337,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
         foreach ($mailboxes as $email => $name) {
             $mailboxStr = $email;
-            if ($name) {
+            if (!is_null($name)) {
                 $nameStr = $this->createDisplayNameString($name, empty($strings));
-                $mailboxStr = $nameStr . ' <' . $mailboxStr . '>';
+                $mailboxStr = $nameStr.' <'.$mailboxStr.'>';
             }
             $strings[] = $mailboxStr;
         }
@@ -355,8 +356,12 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      */
     private function _assertValidAddress($address)
     {
-        if ($this->_emailValidator->isValidWrapper($address) === false) {
-            throw new Swift_RfcComplianceException('Address in mailbox given [' . $address . '] does not comply with RFC 2822, 3.6.2.');
+        if (!preg_match('/^'.$this->getGrammar()->getDefinition('addr-spec').'$/D',
+            $address)) {
+            throw new Swift_RfcComplianceException(
+                'Address in mailbox given ['.$address.
+                '] does not comply with RFC 2822, 3.6.2.'
+                );
         }
     }
 }

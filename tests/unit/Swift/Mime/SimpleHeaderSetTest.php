@@ -361,8 +361,13 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
         $set = $this->_createSet($factory);
         $set->addIdHeader('Message-ID', 'some@id');
         $set->addIdHeader('Message-ID', 'other@id');
+        $set->remove('Message-ID', 0);
+        $this->assertFalse($set->has('Message-ID', 0));
+        $this->assertTrue($set->has('Message-ID', 1));
+        $this->assertTrue($set->has('Message-ID'));
         $set->remove('Message-ID', 1);
         $this->assertFalse($set->has('Message-ID', 1));
+        $this->assertFalse($set->has('Message-ID'));
         $this->assertTrue($set->has('Message-ID', 0));
         $set->remove('Message-ID', 0);
         $this->assertFalse($set->has('Message-ID', 0));
