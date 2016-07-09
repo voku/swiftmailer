@@ -283,12 +283,13 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      * Produces a compliant, formatted display-name based on the string given.
      *
      * @param string $displayName as displayed
+     * @param bool   $shorten     the first line to make remove for header name
      *
      * @return string
      */
-    protected function createDisplayNameString($displayName)
+    protected function createDisplayNameString($displayName, $shorten = false)
     {
-        return $this->createPhrase($this, $displayName);
+        return $this->createPhrase($this, $displayName, $this->getCharset(), $this->getEncoder(), $shorten);
     }
 
     /**
@@ -334,9 +335,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
         foreach ($mailboxes as $email => $name) {
             $mailboxStr = $email;
-            if (null !== $name) {
+            if ($name) {
                 $nameStr = $this->createDisplayNameString($name);
-                $mailboxStr = $nameStr.' <'.$mailboxStr.'>';
+                $mailboxStr = $nameStr . ' <' . $mailboxStr . '>';
             }
             $strings[] = $mailboxStr;
         }

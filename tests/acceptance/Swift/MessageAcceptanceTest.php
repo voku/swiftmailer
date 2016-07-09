@@ -19,7 +19,7 @@ class Swift_MessageAcceptanceTest extends Swift_Mime_SimpleMessageAcceptanceTest
         $message->addPart('foo', 'text/plain', 'iso-8859-1');
         $message->addPart('test <b>foo</b>', 'text/html', 'iso-8859-1');
 
-        $this->assertEquals(
+        self::assertEquals(
             'Message-ID: <'.$id.'>'."\r\n".
             'Date: '.date('r', $date)."\r\n".
             'Subject: just a test subject'."\r\n".
@@ -42,7 +42,7 @@ class Swift_MessageAcceptanceTest extends Swift_Mime_SimpleMessageAcceptanceTest
             "\r\n\r\n".
             '--'.$boundary.'--'."\r\n",
             $message->toString()
-            );
+        );
     }
 
     // -- Private helpers

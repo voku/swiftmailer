@@ -270,14 +270,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
     public function remove($name, $index = 0)
     {
         $lowerName = Swift::strtolowerWithStaticCache($name);
-
-        if (isset($this->_headers[$lowerName])) {
-            array_splice($this->_headers[$lowerName], $index, 1);
-
-            if (empty($this->_headers[$lowerName])) {
-                $this->removeAll($lowerName);
-            }
-        }
+        unset($this->_headers[$lowerName][$index]);
     }
 
     /**
