@@ -336,7 +336,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
         foreach ($mailboxes as $email => $name) {
             $mailboxStr = $email;
             if ($name) {
-                $nameStr = $this->createDisplayNameString($name);
+                $nameStr = $this->createDisplayNameString($name, 0 === count($strings));
                 $mailboxStr = $nameStr . ' <' . $mailboxStr . '>';
             }
             $strings[] = $mailboxStr;
