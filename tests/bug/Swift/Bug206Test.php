@@ -1,6 +1,5 @@
 <?php
 
-use voku\helper\UTF8;
 
 class Swift_Bug206Test extends \PHPUnit_Framework_TestCase
 {
