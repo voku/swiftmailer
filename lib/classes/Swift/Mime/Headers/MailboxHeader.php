@@ -188,7 +188,7 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      * @see setNameAddresses()
      * @see setValue()
      *
-     * @param string[] $addresses
+     * @param string[]|string $addresses
      *
      * @throws Swift_RfcComplianceException
      */
