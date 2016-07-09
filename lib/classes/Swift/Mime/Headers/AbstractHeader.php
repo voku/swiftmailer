@@ -27,7 +27,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     /**
      * The Encoder used to encode this Header.
      *
-     * @var Swift_Encoder|Swift_Mime_ContentEncoder
+     * @var Swift_Mime_HeaderEncoder
      */
     private $_encoder;
 
