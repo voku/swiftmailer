@@ -6,7 +6,8 @@
  */
 class One
 {
-    public $arg1, $arg2;
+    public $arg1;
+    public $arg2;
 
     /**
      * One constructor.
