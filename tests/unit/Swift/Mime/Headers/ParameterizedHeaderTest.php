@@ -10,7 +10,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('Content-Type',
             $this->_getHeaderEncoder('Q', true), $this->_getParameterEncoder(true)
         );
-        $this->assertEquals(Swift_Mime_Header::TYPE_PARAMETERIZED, $header->getFieldType());
+        $this->assertSame(Swift_Mime_Header::TYPE_PARAMETERIZED, $header->getFieldType());
     }
 
     public function testValueIsReturnedVerbatim()
@@ -19,7 +19,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
             $this->_getHeaderEncoder('Q', true), $this->_getParameterEncoder(true)
         );
         $header->setValue('text/plain');
-        $this->assertEquals('text/plain', $header->getValue());
+        $this->assertSame('text/plain', $header->getValue());
     }
 
     public function testParametersAreAppended()
@@ -48,7 +48,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
             );
         $header->setValue('text/plain');
         $header->setParameters(array('charset' => 'utf-8'));
-        $this->assertEquals('text/plain; charset=utf-8', $header->getFieldBody());
+        $this->assertSame('text/plain; charset=utf-8', $header->getFieldBody());
     }
 
     public function testSpaceInParamResultsInQuotedString()
@@ -58,7 +58,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         );
         $header->setValue('attachment');
         $header->setParameters(array('filename' => 'my file.txt'));
-        $this->assertEquals('attachment; filename="my file.txt"',
+        $this->assertSame('attachment; filename="my file.txt"',
             $header->getFieldBody()
         );
     }
@@ -107,7 +107,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         $header->setValue('attachment');
         $header->setParameters(array('filename' => $value));
         $header->setMaxLineLength(78);
-        $this->assertEquals(
+        $this->assertSame(
             'attachment; '.
             'filename*0*=utf-8\'\''.str_repeat('a', 63).";\r\n ".
             'filename*1*='.str_repeat('a', 63).";\r\n ".
@@ -156,7 +156,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         $header->setParameters(array('filename' => $value));
         $header->setMaxLineLength(78);
         $header->setLanguage($this->_lang);
-        $this->assertEquals(
+        $this->assertSame(
             'attachment; filename*='.$this->_charset."'".$this->_lang."'".
             str_repeat('a', 20).'%8F'.str_repeat('a', 10),
             $header->getFieldBody()
@@ -210,7 +210,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         $header->setParameters(array('filename' => $value));
         $header->setMaxLineLength(78);
         $header->setLanguage($this->_lang);
-        $this->assertEquals(
+        $this->assertSame(
             'attachment; filename*0*='.$this->_charset."'".$this->_lang."'".
             str_repeat('a', 20).'%8F'.str_repeat('a', 28).";\r\n ".
             'filename*1*='.str_repeat('a', 32),
@@ -225,7 +225,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
             );
         $header->setValue('text/html');
         $header->setParameters(array('charset' => 'utf-8'));
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: text/html; charset=utf-8'."\r\n",
             $header->toString()
         );
@@ -244,7 +244,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('X-Foo', $encoder, $this->_getParameterEncoder(true));
         $header->setValue($value);
         $header->setParameters(array('lookslike' => 'foobar'));
-        $this->assertEquals(
+        $this->assertSame(
             'X-Foo: =?utf-8?Q?fo=8Fbar?=; lookslike=foobar'."\r\n",
             $header->toString()
         );
@@ -269,7 +269,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('X-Foo', $encoder, $paramEncoder);
         $header->setValue($value);
         $header->setParameters(array('says' => $value));
-        $this->assertEquals(
+        $this->assertSame(
             "X-Foo: =?utf-8?Q?fo=8Fbar?=; says*=utf-8''fo%8Fbar\r\n",
             $header->toString()
         );
@@ -288,7 +288,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('X-Foo', $encoder, null);
         $header->setValue('bar');
         $header->setParameters(array('says' => $value));
-        $this->assertEquals(
+        $this->assertSame(
             "X-Foo: bar; says=\"=?utf-8?Q?fo=8Fbar?=\"\r\n",
             $header->toString()
         );
@@ -331,7 +331,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         $header->setLanguage('en');
         $header->setValue($value);
         $header->setParameters(array('says' => $value));
-        $this->assertEquals(
+        $this->assertSame(
             "X-Foo: =?utf-8*en?Q?fo=8Fbar?=; says*=utf-8'en'fo%8Fbar\r\n",
             $header->toString()
         );
@@ -343,7 +343,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
             $this->_getHeaderEncoder('Q', true), $this->_getParameterEncoder(true)
         );
         $header->setFieldBodyModel('text/html');
-        $this->assertEquals('text/html', $header->getValue());
+        $this->assertSame('text/html', $header->getValue());
     }
 
     public function testGetBodyModel()
@@ -352,7 +352,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
             $this->_getHeaderEncoder('Q', true), $this->_getParameterEncoder(true)
         );
         $header->setValue('text/plain');
-        $this->assertEquals('text/plain', $header->getFieldBodyModel());
+        $this->assertSame('text/plain', $header->getFieldBodyModel());
     }
 
     public function testSetParameter()
@@ -362,7 +362,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
         );
         $header->setParameters(array('charset' => 'utf-8', 'delsp' => 'yes'));
         $header->setParameter('delsp', 'no');
-        $this->assertEquals(array('charset' => 'utf-8', 'delsp' => 'no'),
+        $this->assertSame(array('charset' => 'utf-8', 'delsp' => 'no'),
             $header->getParameters()
         );
     }
@@ -373,7 +373,7 @@ class Swift_Mime_Headers_ParameterizedHeaderTest extends \SwiftMailerTestCase
             $this->_getHeaderEncoder('Q', true), $this->_getParameterEncoder(true)
             );
         $header->setParameters(array('charset' => 'utf-8', 'delsp' => 'yes'));
-        $this->assertEquals('utf-8', $header->getParameter('charset'));
+        $this->assertSame('utf-8', $header->getParameter('charset'));
     }
 
     // -- Private helper

@@ -112,13 +112,13 @@ class Swift_CharacterStream_MbCharacterStreamTest extends \SwiftMailerTestCase
             )
         );
 
-        self::assertEquals(array(0xD0, 0x94), $stream->readBytes(1));
-        self::assertEquals(array(0xD0, 0xB6, 0xD0, 0xBE), $stream->readBytes(2));
-        self::assertEquals(array(0xD0, 0xBB), $stream->readBytes(1));
-        self::assertEquals(
+        self::assertSame(array(0xD0, 0x94), $stream->readBytes(1));
+        self::assertSame(array(0xD0, 0xB6, 0xD0, 0xBE), $stream->readBytes(2));
+        self::assertSame(array(0xD0, 0xBB), $stream->readBytes(1));
+        self::assertSame(
             array(0xD1, 0x8E, 0xD0, 0xB1, 0xD1, 0x8B), $stream->readBytes(3)
         );
-        self::assertEquals(array(0xD1, 0x85), $stream->readBytes(1));
+        self::assertSame(array(0xD1, 0x85), $stream->readBytes(1));
 
         self::assertSame(false, $stream->readBytes(1));
     }
@@ -157,7 +157,7 @@ class Swift_CharacterStream_MbCharacterStreamTest extends \SwiftMailerTestCase
 
         $stream->importString(pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE));
 
-        self::assertEquals(
+        self::assertSame(
             array(0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE),
             $stream->readBytes(100)
         );

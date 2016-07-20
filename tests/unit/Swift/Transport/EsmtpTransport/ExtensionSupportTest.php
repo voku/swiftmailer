@@ -34,7 +34,7 @@ class Swift_Transport_EsmtpTransport_ExtensionSupportTest extends Swift_Transpor
         $this->_finishBuffer($buf);
 
         $smtp->setExtensionHandlers(array($ext1, $ext2));
-        $this->assertEquals(array($ext2, $ext1), $smtp->getExtensionHandlers());
+        $this->assertSame(array($ext2, $ext1), $smtp->getExtensionHandlers());
     }
 
     public function testHandlersAreNotifiedOfParams()
@@ -522,9 +522,9 @@ class Swift_Transport_EsmtpTransport_ExtensionSupportTest extends Swift_Transpor
 
         $smtp->setExtensionHandlers(array($ext1, $ext2));
         $ret = $smtp->setUsername('mick');
-        $this->assertEquals($smtp, $ret);
+        $this->assertSame($smtp, $ret);
         $ret = $smtp->setPassword('pass');
-        $this->assertEquals($smtp, $ret);
+        $this->assertSame($smtp, $ret);
     }
 
     public function testMixinSetterWhichReturnValuesAreNotFluid()
@@ -554,7 +554,7 @@ class Swift_Transport_EsmtpTransport_ExtensionSupportTest extends Swift_Transpor
         $this->_finishBuffer($buf);
 
         $smtp->setExtensionHandlers(array($ext1, $ext2));
-        $this->assertEquals('x', $smtp->setUsername('mick'));
-        $this->assertEquals('x', $smtp->setPassword('pass'));
+        $this->assertSame('x', $smtp->setUsername('mick'));
+        $this->assertSame('x', $smtp->setPassword('pass'));
     }
 }

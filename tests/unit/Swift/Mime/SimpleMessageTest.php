@@ -23,7 +23,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals('a@b', $message->getId());
+    $this->assertSame('a@b', $message->getId());
   }
 
   public function testIdIsSetInHeader()
@@ -115,7 +115,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals(
+    $this->assertSame(
         Swift_Mime_MimeEntity::LEVEL_TOP, $message->getNestingLevel()
     );
   }
@@ -139,7 +139,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createHeaderSet(array('Date' => $date)),
         $this->_createEncoder(), $this->_createCache()
     );
-    $this->assertEquals(123, $message->getDate());
+    $this->assertSame(123, $message->getDate());
   }
 
   public function testDateIsSetInHeader()
@@ -202,7 +202,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals('example subject', $message->getSubject());
+    $this->assertSame('example subject', $message->getSubject());
   }
 
   public function testSubjectIsSetInHeader()
@@ -250,7 +250,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals('bounces@domain', $message->getReturnPath());
+    $this->assertSame('bounces@domain', $message->getReturnPath());
   }
 
   public function testReturnPathIsSetInHeader()
@@ -293,7 +293,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals(array('sender@domain' => 'Name'), $message->getSender());
+    $this->assertSame(array('sender@domain' => 'Name'), $message->getSender());
   }
 
   public function testSenderIsSetInHeader()
@@ -363,7 +363,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals(array('from@domain' => 'Name'), $message->getFrom());
+    $this->assertSame(array('from@domain' => 'Name'), $message->getFrom());
   }
 
   public function testFromIsSetInHeader()
@@ -454,7 +454,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals(array('reply@domain' => 'Name'), $message->getReplyTo());
+    $this->assertSame(array('reply@domain' => 'Name'), $message->getReplyTo());
   }
 
   public function testReplyToIsSetInHeader()
@@ -547,7 +547,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals(array('to@domain' => 'Name'), $message->getTo());
+    $this->assertSame(array('to@domain' => 'Name'), $message->getTo());
   }
 
   public function testToIsSetInHeader()
@@ -640,7 +640,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals(array('cc@domain' => 'Name'), $message->getCc());
+    $this->assertSame(array('cc@domain' => 'Name'), $message->getCc());
   }
 
   public function testCcIsSetInHeader()
@@ -736,7 +736,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createCache()
     );
 
-    $this->assertEquals(array('bcc@domain' => 'Name'), $message->getBcc());
+    $this->assertSame(array('bcc@domain' => 'Name'), $message->getBcc());
   }
 
   public function testBccIsSetInHeader()
@@ -826,7 +826,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals(2, $message->getPriority());
+    $this->assertSame('2', $message->getPriority());
   }
 
   public function testPriorityIsSetInHeader()
@@ -874,7 +874,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals(
+    $this->assertSame(
         array('chris@swiftmailer.org' => 'Chris'),
         $message->getReadReceiptTo()
     );
@@ -935,7 +935,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
     $message->attach($child1);
     $message->attach($child2);
 
-    $this->assertEquals(array($child1, $child2), $message->getChildren());
+    $this->assertSame(array($child1, $child2), $message->getChildren());
   }
 
   // -- Private helpers
@@ -958,7 +958,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
 
     $message->detach($child1);
 
-    $this->assertEquals(array($child2), $message->getChildren());
+    $this->assertSame(array($child2), $message->getChildren());
   }
 
   public function testEmbedAttachesChild()
@@ -973,7 +973,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
 
     $message->embed($child);
 
-    $this->assertEquals(array($child), $message->getChildren());
+    $this->assertSame(array($child), $message->getChildren());
   }
 
   public function testEmbedReturnsValidCid()
@@ -993,6 +993,6 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $this->assertEquals('cid:foo@bar', $message->embed($child));
+    $this->assertSame('cid:foo@bar', $message->embed($child));
   }
 }

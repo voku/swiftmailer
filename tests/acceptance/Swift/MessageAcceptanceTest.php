@@ -19,7 +19,7 @@ class Swift_MessageAcceptanceTest extends Swift_Mime_SimpleMessageAcceptanceTest
         $message->addPart('foo', 'text/plain', 'iso-8859-1');
         $message->addPart('test <b>foo</b>', 'text/html', 'iso-8859-1');
 
-        self::assertEquals(
+        self::assertSame(
             'Message-ID: <'.$id.'>'."\r\n".
             'Date: '.date('r', $date)."\r\n".
             'Subject: just a test subject'."\r\n".

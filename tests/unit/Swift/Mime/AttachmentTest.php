@@ -8,7 +8,7 @@ class Swift_Mime_AttachmentTest extends Swift_Mime_AbstractMimeEntityTest
             $this->_createHeaderSet(),
             $this->_createEncoder(), $this->_createCache()
         );
-        $this->assertEquals(
+        $this->assertSame(
             Swift_Mime_MimeEntity::LEVEL_MIXED, $attachment->getNestingLevel()
         );
     }
@@ -23,7 +23,7 @@ class Swift_Mime_AttachmentTest extends Swift_Mime_AbstractMimeEntityTest
             $this->_createHeaderSet(array('Content-Disposition' => $disposition, )),
             $this->_createEncoder(), $this->_createCache()
         );
-        $this->assertEquals('attachment', $attachment->getDisposition());
+        $this->assertSame('attachment', $attachment->getDisposition());
     }
 
     public function testDispositionIsSetInHeader()
@@ -103,7 +103,7 @@ class Swift_Mime_AttachmentTest extends Swift_Mime_AbstractMimeEntityTest
             $this->_createHeaderSet(array('Content-Disposition' => $disposition, )),
             $this->_createEncoder(), $this->_createCache()
         );
-        $this->assertEquals('foo.txt', $attachment->getFilename());
+        $this->assertSame('foo.txt', $attachment->getFilename());
     }
 
     public function testFilenameIsSetInHeader()
@@ -162,7 +162,7 @@ class Swift_Mime_AttachmentTest extends Swift_Mime_AbstractMimeEntityTest
             $this->_createHeaderSet(array('Content-Disposition' => $disposition, )),
             $this->_createEncoder(), $this->_createCache()
         );
-        $this->assertEquals(1234, $attachment->getSize());
+        $this->assertSame(1234, $attachment->getSize());
     }
 
     public function testSizeIsSetInHeader()
@@ -274,7 +274,7 @@ class Swift_Mime_AttachmentTest extends Swift_Mime_AbstractMimeEntityTest
             $this->_createCache()
         );
         $attachment->setFile($file);
-        $this->assertEquals('<some data>', $attachment->getBody());
+        $this->assertSame('<some data>', $attachment->getBody());
     }
 
     public function testFluidInterface()

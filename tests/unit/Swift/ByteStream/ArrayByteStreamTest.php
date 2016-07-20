@@ -10,7 +10,7 @@ class Swift_ByteStream_ArrayByteStreamTest extends \PHPUnit_Framework_TestCase
         while (false !== $bytes = $bs->read(1)) {
             $output[] = $bytes;
         }
-        $this->assertEquals($input, $output,
+        $this->assertSame($input, $output,
             '%s: Bytes read from stream should be the same as bytes in constructor'
             );
     }
@@ -23,7 +23,7 @@ class Swift_ByteStream_ArrayByteStreamTest extends \PHPUnit_Framework_TestCase
         while (false !== $bytes = $bs->read(2)) {
             $output[] = $bytes;
         }
-        $this->assertEquals(array('ab', 'cd'), $output,
+        $this->assertSame(array('ab', 'cd'), $output,
             '%s: Bytes read from stream should be in pairs'
             );
     }
@@ -36,7 +36,7 @@ class Swift_ByteStream_ArrayByteStreamTest extends \PHPUnit_Framework_TestCase
         while (false !== $bytes = $bs->read(2)) {
             $output[] = $bytes;
         }
-        $this->assertEquals(array('ab', 'cd', 'e'), $output,
+        $this->assertSame(array('ab', 'cd', 'e'), $output,
             '%s: Bytes read from stream should be in pairs except final read'
             );
     }
@@ -46,7 +46,7 @@ class Swift_ByteStream_ArrayByteStreamTest extends \PHPUnit_Framework_TestCase
         $input = array('a', 'b', 'c');
         $bs = $this->_createArrayStream($input);
         $bs->setReadPointer(1);
-        $this->assertEquals('b', $bs->read(1),
+        $this->assertSame('b', $bs->read(1),
             '%s: Byte should be second byte since pointer as at offset 1'
             );
     }
@@ -57,7 +57,7 @@ class Swift_ByteStream_ArrayByteStreamTest extends \PHPUnit_Framework_TestCase
         $bs = $this->_createArrayStream($input); while (false !== $bs->read(1));
 
         $bs->setReadPointer(0);
-        $this->assertEquals('a', $bs->read(1),
+        $this->assertSame('a', $bs->read(1),
             '%s: Byte should be first byte since pointer as at offset 0'
             );
     }
@@ -68,7 +68,7 @@ class Swift_ByteStream_ArrayByteStreamTest extends \PHPUnit_Framework_TestCase
         $bs = $this->_createArrayStream($input);
 
         $bs->setReadPointer(-1);
-        $this->assertEquals('a', $bs->read(1),
+        $this->assertSame('a', $bs->read(1),
             '%s: Byte should be first byte since pointer should be at offset 0'
             );
     }
@@ -95,7 +95,7 @@ class Swift_ByteStream_ArrayByteStreamTest extends \PHPUnit_Framework_TestCase
         while (false !== $bytes = $bs->read(1)) {
             $output[] = $bytes;
         }
-        $this->assertEquals(array('a', 'b', 'c', 'd', 'e'), $output,
+        $this->assertSame(array('a', 'b', 'c', 'd', 'e'), $output,
             '%s: Bytes read from stream should be from initial stack + written'
             );
     }
@@ -119,7 +119,7 @@ class Swift_ByteStream_ArrayByteStreamTest extends \PHPUnit_Framework_TestCase
         while (false !== $bytes = $bs->read(1)) {
             $output[] = $bytes;
         }
-        $this->assertEquals(array('a', 'b', 'c'), $output,
+        $this->assertSame(array('a', 'b', 'c'), $output,
             '%s: Bytes read from stream should be the same as bytes in constructor'
             );
     }

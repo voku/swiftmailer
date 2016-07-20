@@ -98,7 +98,7 @@ class Swift_Encoder_Rfc2231EncoderTest extends \SwiftMailerTestCase
 
         $encoded = $encoder->encodeString($string, 0, 75);
 
-        $this->assertEquals(
+        $this->assertSame(
             str_repeat('a', 75)."\r\n".
             str_repeat('a', 75)."\r\n".
             str_repeat('a', 50),
@@ -130,7 +130,7 @@ class Swift_Encoder_Rfc2231EncoderTest extends \SwiftMailerTestCase
         $encoder = new Swift_Encoder_Rfc2231Encoder($charStream);
         $encoded = $encoder->encodeString($string, 25, 75);
 
-        $this->assertEquals(
+        $this->assertSame(
             str_repeat('a', 50)."\r\n".
             str_repeat('a', 75)."\r\n".
             str_repeat('a', 75),

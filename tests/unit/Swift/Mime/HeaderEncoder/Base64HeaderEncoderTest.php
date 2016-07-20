@@ -8,6 +8,6 @@ class Swift_Mime_HeaderEncoder_Base64HeaderEncoderTest extends \PHPUnit_Framewor
     public function testNameIsB()
     {
         $encoder = new Swift_Mime_HeaderEncoder_Base64HeaderEncoder();
-        $this->assertEquals('B', $encoder->getName());
+        $this->assertSame('B', $encoder->getName());
     }
 }

@@ -146,13 +146,13 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
             )
         );
 
-        $this->assertEquals(array(0xD0, 0x94), $stream->readBytes(1));
-        $this->assertEquals(array(0xD0, 0xB6, 0xD0, 0xBE), $stream->readBytes(2));
-        $this->assertEquals(array(0xD0, 0xBB), $stream->readBytes(1));
-        $this->assertEquals(
+        $this->assertSame(array(0xD0, 0x94), $stream->readBytes(1));
+        $this->assertSame(array(0xD0, 0xB6, 0xD0, 0xBE), $stream->readBytes(2));
+        $this->assertSame(array(0xD0, 0xBB), $stream->readBytes(1));
+        $this->assertSame(
             array(0xD1, 0x8E, 0xD0, 0xB1, 0xD1, 0x8B), $stream->readBytes(3)
         );
-        $this->assertEquals(array(0xD1, 0x85), $stream->readBytes(1));
+        $this->assertSame(array(0xD1, 0x85), $stream->readBytes(1));
 
         $this->assertSame(false, $stream->readBytes(1));
     }
@@ -197,7 +197,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
 
         $stream->importString(pack('C*', 0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE));
 
-        $this->assertEquals(
+        $this->assertSame(
             array(0xD0, 0x94, 0xD0, 0xB6, 0xD0, 0xBE),
             $stream->readBytes(100)
         );

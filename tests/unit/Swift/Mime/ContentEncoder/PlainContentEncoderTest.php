@@ -5,10 +5,10 @@ class Swift_Mime_ContentEncoder_PlainContentEncoderTest extends \SwiftMailerTest
     public function testNameCanBeSpecifiedInConstructor()
     {
         $encoder = $this->_getEncoder('7bit');
-        $this->assertEquals('7bit', $encoder->getName());
+        $this->assertSame('7bit', $encoder->getName());
 
         $encoder = $this->_getEncoder('8bit');
-        $this->assertEquals('8bit', $encoder->getName());
+        $this->assertSame('8bit', $encoder->getName());
     }
 
     public function testNoOctetsAreModifiedInString()
@@ -55,7 +55,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoderTest extends \SwiftMailerTest
         }
         $input = implode(' ', $chars); //99 chars long
 
-        $this->assertEquals(
+        $this->assertSame(
             'a a a a a a a a a a a a a a a a a a a a a a a a a '."\r\n".//50 *
             'a a a a a a a a a a a a a a a a a a a a a a a a a',            //99
             $encoder->encodeString($input, 0, 50),
@@ -86,7 +86,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoderTest extends \SwiftMailerTest
            ->andReturn(false);
 
         $encoder->encodeByteStream($os, $is, 0, 50);
-        $this->assertEquals(
+        $this->assertSame(
             str_repeat('a ', 25)."\r\n".str_repeat('a ', 25),
             $collection->content
             );
@@ -95,19 +95,19 @@ class Swift_Mime_ContentEncoder_PlainContentEncoderTest extends \SwiftMailerTest
     public function testencodeStringGeneratesCorrectCrlf()
     {
         $encoder = $this->_getEncoder('7bit', true);
-        $this->assertEquals("a\r\nb", $encoder->encodeString("a\rb"),
+        $this->assertSame("a\r\nb", $encoder->encodeString("a\rb"),
             '%s: Line endings should be standardized'
             );
-        $this->assertEquals("a\r\nb", $encoder->encodeString("a\nb"),
+        $this->assertSame("a\r\nb", $encoder->encodeString("a\nb"),
             '%s: Line endings should be standardized'
             );
-        $this->assertEquals("a\r\n\r\nb", $encoder->encodeString("a\n\rb"),
+        $this->assertSame("a\r\n\r\nb", $encoder->encodeString("a\n\rb"),
             '%s: Line endings should be standardized'
             );
-        $this->assertEquals("a\r\n\r\nb", $encoder->encodeString("a\r\rb"),
+        $this->assertSame("a\r\n\r\nb", $encoder->encodeString("a\r\rb"),
             '%s: Line endings should be standardized'
             );
-        $this->assertEquals("a\r\n\r\nb", $encoder->encodeString("a\n\nb"),
+        $this->assertSame("a\r\n\r\nb", $encoder->encodeString("a\n\nb"),
             '%s: Line endings should be standardized'
             );
     }
@@ -151,7 +151,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoderTest extends \SwiftMailerTest
            ->andReturn(false);
 
         $encoder->encodeByteStream($os, $is);
-        $this->assertEquals($expected, $collection->content);
+        $this->assertSame($expected, $collection->content);
     }
 
     // -- Private helpers

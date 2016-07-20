@@ -7,7 +7,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
         $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder(
             $this->_createCharacterStream(true)
         );
-        self::assertEquals('quoted-printable', $encoder->getName());
+        self::assertSame('quoted-printable', $encoder->getName());
     }
 
     /* -- RFC 2045, 6.7 --
@@ -133,7 +133,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
         $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
         $encoder->encodeByteStream($os, $is);
 
-        self::assertEquals("a\t=09\r\nb", $collection->content);
+        self::assertSame("a\t=09\r\nb", $collection->content);
 
         //SPACE
         $os = $this->_createOutputByteStream(true);
@@ -174,7 +174,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
         $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
         $encoder->encodeByteStream($os, $is);
 
-        self::assertEquals("a =20\r\nb", $collection->content);
+        self::assertSame("a =20\r\nb", $collection->content);
     }
 
     public function testCRLFIsLeftAlone()
@@ -252,7 +252,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
 
         $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
         $encoder->encodeByteStream($os, $is);
-        self::assertEquals("a\r\nb\r\nc\r\n", $collection->content);
+        self::assertSame("a\r\nb\r\nc\r\n", $collection->content);
     }
 
     public function testLinesLongerThan76CharactersAreSoftBroken()
@@ -292,7 +292,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
 
         $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
         $encoder->encodeByteStream($os, $is);
-        self::assertEquals(str_repeat('a', 75) . "=\r\n" . str_repeat('a', 66), $collection->content);
+        self::assertSame(str_repeat('a', 75) . "=\r\n" . str_repeat('a', 66), $collection->content);
     }
 
     public function testMaxLineLengthCanBeSpecified()
@@ -322,7 +322,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
 
         $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
         $encoder->encodeByteStream($os, $is, 0, 54);
-        self::assertEquals(str_repeat('a', 53) . "=\r\n" . str_repeat('a', 48), $collection->content);
+        self::assertSame(str_repeat('a', 53) . "=\r\n" . str_repeat('a', 48), $collection->content);
     }
 
     public function testBytesBelowPermittedRangeAreEncoded()
@@ -359,11 +359,11 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
 
             if ($ordinal === 0) {
                 // special for "NULL"
-                self::assertEquals(
+                self::assertSame(
                     '', $collection->content, 'tested:' . $ordinal
                 );
             } else {
-                self::assertEquals(
+                self::assertSame(
                     sprintf('=%02X', $ordinal), $collection->content
                 );
             }
@@ -400,7 +400,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
 
         $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
         $encoder->encodeByteStream($os, $is);
-        self::assertEquals(sprintf('=%02X', 61), $collection->content);
+        self::assertSame(sprintf('=%02X', 61), $collection->content);
     }
 
     public function testBytesAbovePermittedRangeAreEncoded()
@@ -434,7 +434,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
 
             $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
             $encoder->encodeByteStream($os, $is);
-            self::assertEquals(sprintf('=%02X', $ordinal), $collection->content);
+            self::assertSame(sprintf('=%02X', $ordinal), $collection->content);
         }
     }
 
@@ -465,7 +465,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
 
         $encoder = new Swift_Mime_ContentEncoder_QpContentEncoder($charStream);
         $encoder->encodeByteStream($os, $is, 22);
-        self::assertEquals(
+        self::assertSame(
             str_repeat('a', 53) . "=\r\n" . str_repeat('a', 75) . "=\r\n" . str_repeat('a', 13),
             $collection->content
         );
@@ -496,7 +496,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderTest extends \SwiftMailerTestCas
 
         $encoder->encodeByteStream($is, $os);
 
-        self::assertEquals(
+        self::assertSame(
             $input, $os->read(PHP_INT_MAX)
         );
     }

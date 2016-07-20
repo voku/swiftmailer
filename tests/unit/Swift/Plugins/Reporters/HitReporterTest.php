@@ -16,7 +16,7 @@ class Swift_Plugins_Reporters_HitReporterTest extends \PHPUnit_Framework_TestCas
         $this->_hitReporter->notify($this->_message, 'foo@bar.tld',
             Swift_Plugins_Reporter::RESULT_FAIL
             );
-        $this->assertEquals(array('foo@bar.tld'),
+        $this->assertSame(array('foo@bar.tld'),
             $this->_hitReporter->getFailedRecipients()
             );
     }
@@ -29,7 +29,7 @@ class Swift_Plugins_Reporters_HitReporterTest extends \PHPUnit_Framework_TestCas
         $this->_hitReporter->notify($this->_message, 'zip@button',
             Swift_Plugins_Reporter::RESULT_FAIL
             );
-        $this->assertEquals(array('foo@bar.tld', 'zip@button'),
+        $this->assertSame(array('foo@bar.tld', 'zip@button'),
             $this->_hitReporter->getFailedRecipients()
             );
     }
@@ -42,7 +42,7 @@ class Swift_Plugins_Reporters_HitReporterTest extends \PHPUnit_Framework_TestCas
         $this->_hitReporter->notify($this->_message, 'zip@button',
             Swift_Plugins_Reporter::RESULT_PASS
             );
-        $this->assertEquals(array('foo@bar.tld'),
+        $this->assertSame(array('foo@bar.tld'),
             $this->_hitReporter->getFailedRecipients()
             );
     }
@@ -55,10 +55,10 @@ class Swift_Plugins_Reporters_HitReporterTest extends \PHPUnit_Framework_TestCas
         $this->_hitReporter->notify($this->_message, 'zip@button',
             Swift_Plugins_Reporter::RESULT_FAIL
             );
-        $this->assertEquals(array('foo@bar.tld', 'zip@button'),
+        $this->assertSame(array('foo@bar.tld', 'zip@button'),
             $this->_hitReporter->getFailedRecipients()
             );
         $this->_hitReporter->clear();
-        $this->assertEquals(array(), $this->_hitReporter->getFailedRecipients());
+        $this->assertSame(array(), $this->_hitReporter->getFailedRecipients());
     }
 }

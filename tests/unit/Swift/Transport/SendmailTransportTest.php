@@ -28,9 +28,9 @@ class Swift_Transport_SendmailTransportTest extends Swift_Transport_AbstractSmtp
         $sendmail = $this->_getSendmail($buf);
 
         $sendmail->setCommand('/usr/sbin/sendmail -bs');
-        $this->assertEquals('/usr/sbin/sendmail -bs', $sendmail->getCommand());
+        $this->assertSame('/usr/sbin/sendmail -bs', $sendmail->getCommand());
         $sendmail->setCommand('/usr/sbin/sendmail -oi -t');
-        $this->assertEquals('/usr/sbin/sendmail -oi -t', $sendmail->getCommand());
+        $this->assertSame('/usr/sbin/sendmail -oi -t', $sendmail->getCommand());
     }
 
     public function testSendingMessageIn_t_ModeUsesSimplePipe()
@@ -57,7 +57,7 @@ class Swift_Transport_SendmailTransportTest extends Swift_Transport_AbstractSmtp
             ->with(array());
 
         $sendmail->setCommand('/usr/sbin/sendmail -t');
-        $this->assertEquals(2, $sendmail->send($message));
+        $this->assertSame(2, $sendmail->send($message));
     }
 
     public function testSendingIn_t_ModeWith_i_FlagDoesntEscapeDot()
@@ -84,7 +84,7 @@ class Swift_Transport_SendmailTransportTest extends Swift_Transport_AbstractSmtp
             ->with(array());
 
         $sendmail->setCommand('/usr/sbin/sendmail -i -t');
-        $this->assertEquals(2, $sendmail->send($message));
+        $this->assertSame(2, $sendmail->send($message));
     }
 
     public function testSendingInTModeWith_oi_FlagDoesntEscapeDot()
@@ -111,7 +111,7 @@ class Swift_Transport_SendmailTransportTest extends Swift_Transport_AbstractSmtp
             ->with(array());
 
         $sendmail->setCommand('/usr/sbin/sendmail -oi -t');
-        $this->assertEquals(2, $sendmail->send($message));
+        $this->assertSame(2, $sendmail->send($message));
     }
 
     public function testSendingMessageRegeneratesId()
@@ -136,7 +136,7 @@ class Swift_Transport_SendmailTransportTest extends Swift_Transport_AbstractSmtp
             ->with(array());
 
         $sendmail->setCommand('/usr/sbin/sendmail -t');
-        $this->assertEquals(2, $sendmail->send($message));
+        $this->assertSame(2, $sendmail->send($message));
     }
 
     public function testFluidInterface()
@@ -145,6 +145,6 @@ class Swift_Transport_SendmailTransportTest extends Swift_Transport_AbstractSmtp
         $sendmail = $this->_getTransport($buf);
 
         $ref = $sendmail->setCommand('/foo');
-        $this->assertEquals($ref, $sendmail);
+        $this->assertSame($ref, $sendmail);
     }
 }

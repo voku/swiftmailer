@@ -30,15 +30,15 @@ class Swift_Encoder_Base64EncoderTest extends \PHPUnit_Framework_TestCase
          of which is translated into a single digit in the base64 alphabet.
          */
 
-        self::assertEquals(
+        self::assertSame(
             'MTIz', $this->_encoder->encodeString('123'),
             '%s: 3 bytes of input should yield 4 bytes of output'
         );
-        self::assertEquals(
+        self::assertSame(
             'MTIzNDU2', $this->_encoder->encodeString('123456'),
             '%s: 6 bytes in input should yield 8 bytes of output'
         );
-        self::assertEquals(
+        self::assertSame(
             'MTIzNDU2Nzg5', $this->_encoder->encodeString('123456789'),
             '%s: 9 bytes in input should yield 12 bytes of output'
         );
@@ -116,7 +116,7 @@ class Swift_Encoder_Base64EncoderTest extends \PHPUnit_Framework_TestCase
         'MTIzNDU2Nzg5MEFCQ0RFRkdISUpLTE1OT1BRUl'.//38
         'NUVVZXWFla';                                       //48
 
-        self::assertEquals(
+        self::assertSame(
             $output, $this->_encoder->encodeString($input),
             '%s: Lines should be no more than 76 characters'
         );
@@ -143,7 +143,7 @@ class Swift_Encoder_Base64EncoderTest extends \PHPUnit_Framework_TestCase
         'laMTIzNDU2Nzg5MEFCQ0RFRkdISUpLTE1OT1BR'.//38
         'UlNUVVZXWFla';                                     //50 *
 
-        self::assertEquals(
+        self::assertSame(
             $output, $this->_encoder->encodeString($input, 0, 50),
             '%s: Lines should be no more than 100 characters'
         );
@@ -168,7 +168,7 @@ class Swift_Encoder_Base64EncoderTest extends \PHPUnit_Framework_TestCase
         'E1OT1BRUlNUVVZXWFlaMTIzNDU2Nzg5MEFCQ0R'.//38
         'FRkdISUpLTE1OT1BRUlNUVVZXWFla';                    //67
 
-        self::assertEquals(
+        self::assertSame(
             $output, $this->_encoder->encodeString($input, 19),
             '%s: First line offset is 19 so first line should be 57 chars long'
         );

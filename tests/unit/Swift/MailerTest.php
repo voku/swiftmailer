@@ -80,7 +80,7 @@ class Swift_MailerTest extends \SwiftMailerTestCase
                   ->andReturn(57);
 
         $mailer = $this->_createMailer($transport);
-        $this->assertEquals(57, $mailer->send($message));
+        $this->assertSame(57, $mailer->send($message));
     }
 
     public function testFailedRecipientReferenceIsPassedToTransport()
@@ -114,8 +114,8 @@ class Swift_MailerTest extends \SwiftMailerTestCase
                   ->andThrow($rfcException);
 
         $mailer = $this->_createMailer($transport);
-        $this->assertEquals(0, $mailer->send($message, $failures), '%s: Should return 0');
-        $this->assertEquals(
+        $this->assertSame(0, $mailer->send($message, $failures), '%s: Should return 0');
+        $this->assertSame(
             array(
                 'foo&invalid',
                 'bar@valid.tld',

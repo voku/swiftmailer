@@ -5,17 +5,17 @@ class Swift_Plugins_AntiFloodPluginTest extends \PHPUnit_Framework_TestCase
     public function testThresholdCanBeSetAndFetched()
     {
         $plugin = new Swift_Plugins_AntiFloodPlugin(10);
-        $this->assertEquals(10, $plugin->getThreshold());
+        $this->assertSame(10, $plugin->getThreshold());
         $plugin->setThreshold(100);
-        $this->assertEquals(100, $plugin->getThreshold());
+        $this->assertSame(100, $plugin->getThreshold());
     }
 
     public function testSleepTimeCanBeSetAndFetched()
     {
         $plugin = new Swift_Plugins_AntiFloodPlugin(10, 5);
-        $this->assertEquals(5, $plugin->getSleepTime());
+        $this->assertSame(5, $plugin->getSleepTime());
         $plugin->setSleepTime(1);
-        $this->assertEquals(1, $plugin->getSleepTime());
+        $this->assertSame(1, $plugin->getSleepTime());
     }
 
     public function testPluginStopsConnectionAfterThreshold()

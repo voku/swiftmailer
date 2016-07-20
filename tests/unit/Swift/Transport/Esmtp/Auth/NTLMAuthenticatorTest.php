@@ -18,7 +18,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
     public function testKeywordIsNtlm()
     {
         $login = $this->_getAuthenticator();
-        self::assertEquals('NTLM', $login->getAuthKeyword());
+        self::assertSame('NTLM', $login->getAuthKeyword());
     }
 
     public function testMessage1Generator()
@@ -26,7 +26,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         $login = $this->_getAuthenticator();
         $message1 = $this->_invokePrivateMethod('createMessage1', $login);
 
-        self::assertEquals(
+        self::assertSame(
             $this->_message1, bin2hex($message1),
             '%s: We send the smallest ntlm message which should never fail.'
         );
@@ -48,7 +48,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
             )
         );
 
-        self::assertEquals(
+        self::assertSame(
             $lmv1, bin2hex($lmv1Result),
             '%s: The keys should be the same cause we use the same values to generate them.'
         );
@@ -75,7 +75,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
             )
         );
 
-        self::assertEquals(
+        self::assertSame(
             $lmv2, bin2hex($lmv2Result),
             '%s: The keys should be the same cause we use the same values to generate them.'
         );
@@ -103,7 +103,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
             )
         );
 
-        self::assertEquals(
+        self::assertSame(
             $message3T, bin2hex($message3),
             '%s: We send the same information as the example is created with so this should be the same'
         );
@@ -130,7 +130,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
             )
         );
 
-        self::assertEquals(
+        self::assertSame(
             $this->_message3, bin2hex($message3),
             '%s: We send the same information as the example is created with so this should be the same'
         );
@@ -143,11 +143,11 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         $login = $this->_getAuthenticator();
         list($domain, $user) = $this->_invokePrivateMethod('getDomainAndUsername', $login, array($username));
 
-        self::assertEquals(
+        self::assertSame(
             'DOMAIN', $domain,
             '%s: the fetched domain did not match'
         );
-        self::assertEquals(
+        self::assertSame(
             'user', $user,
             '%s: the fetched user did not match'
         );
@@ -160,11 +160,11 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         $login = $this->_getAuthenticator();
         list($domain, $user) = $this->_invokePrivateMethod('getDomainAndUsername', $login, array($username));
 
-        self::assertEquals(
+        self::assertSame(
             'domain.com', $domain,
             '%s: the fetched domain did not match'
         );
-        self::assertEquals(
+        self::assertSame(
             'user', $user,
             '%s: the fetched user did not match'
         );
@@ -177,11 +177,11 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         $login = $this->_getAuthenticator();
         list($domain, $user) = $this->_invokePrivateMethod('getDomainAndUsername', $login, array($username));
 
-        self::assertEquals(
+        self::assertSame(
             'DOMAIN', $domain,
             '%s: the fetched domain did not match'
         );
-        self::assertEquals(
+        self::assertSame(
             'user', $user,
             '%s: the fetched user did not match'
         );
@@ -194,11 +194,11 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         $login = $this->_getAuthenticator();
         list($domain, $user) = $this->_invokePrivateMethod('getDomainAndUsername', $login, array($username));
 
-        self::assertEquals(
+        self::assertSame(
             'domain.com', $domain,
             '%s: the fetched domain did not match'
         );
-        self::assertEquals(
+        self::assertSame(
             'user', $user,
             '%s: the fetched user did not match'
         );

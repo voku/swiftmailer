@@ -5,13 +5,13 @@ class Swift_Events_CommandEventTest extends \PHPUnit_Framework_TestCase
     public function testCommandCanBeFetchedByGetter()
     {
         $evt = $this->_createEvent($this->_createTransport(), "FOO\r\n");
-        $this->assertEquals("FOO\r\n", $evt->getCommand());
+        $this->assertSame("FOO\r\n", $evt->getCommand());
     }
 
     public function testSuccessCodesCanBeFetchedViaGetter()
     {
         $evt = $this->_createEvent($this->_createTransport(), "FOO\r\n", array(250));
-        $this->assertEquals(array(250), $evt->getSuccessCodes());
+        $this->assertSame(array(250), $evt->getSuccessCodes());
     }
 
     public function testSourceIsBuffer()
@@ -19,7 +19,7 @@ class Swift_Events_CommandEventTest extends \PHPUnit_Framework_TestCase
         $transport = $this->_createTransport();
         $evt = $this->_createEvent($transport, "FOO\r\n");
         $ref = $evt->getSource();
-        $this->assertEquals($transport, $ref);
+        $this->assertSame($transport, $ref);
     }
 
     // -- Creation Methods

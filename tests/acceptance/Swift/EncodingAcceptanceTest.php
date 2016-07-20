@@ -7,24 +7,24 @@ class Swift_EncodingAcceptanceTest extends \PHPUnit_Framework_TestCase
     public function testGet7BitEncodingReturns7BitEncoder()
     {
         $encoder = Swift_Encoding::get7BitEncoding();
-        $this->assertEquals('7bit', $encoder->getName());
+        $this->assertSame('7bit', $encoder->getName());
     }
 
     public function testGet8BitEncodingReturns8BitEncoder()
     {
         $encoder = Swift_Encoding::get8BitEncoding();
-        $this->assertEquals('8bit', $encoder->getName());
+        $this->assertSame('8bit', $encoder->getName());
     }
 
     public function testGetQpEncodingReturnsQpEncoder()
     {
         $encoder = Swift_Encoding::getQpEncoding();
-        $this->assertEquals('quoted-printable', $encoder->getName());
+        $this->assertSame('quoted-printable', $encoder->getName());
     }
 
     public function testGetBase64EncodingReturnsBase64Encoder()
     {
         $encoder = Swift_Encoding::getBase64Encoding();
-        $this->assertEquals('base64', $encoder->getName());
+        $this->assertSame('base64', $encoder->getName());
     }
 }

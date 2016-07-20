@@ -9,7 +9,7 @@ class Swift_Mime_Headers_DateHeaderTest extends \PHPUnit_Framework_TestCase
     public function testTypeIsDateHeader()
     {
         $header = $this->_getHeader('Date');
-        $this->assertEquals(Swift_Mime_Header::TYPE_DATE, $header->getFieldType());
+        $this->assertSame(Swift_Mime_Header::TYPE_DATE, $header->getFieldType());
     }
 
     public function testGetTimestamp()
@@ -33,7 +33,7 @@ class Swift_Mime_Headers_DateHeaderTest extends \PHPUnit_Framework_TestCase
         $timestamp = time();
         $header = $this->_getHeader('Date');
         $header->setTimestamp($timestamp);
-        $this->assertEquals(date('r', $timestamp), $header->getFieldBody());
+        $this->assertSame(date('r', $timestamp), $header->getFieldBody());
     }
 
     public function testSetBodyModel()
@@ -41,7 +41,7 @@ class Swift_Mime_Headers_DateHeaderTest extends \PHPUnit_Framework_TestCase
         $timestamp = time();
         $header = $this->_getHeader('Date');
         $header->setFieldBodyModel($timestamp);
-        $this->assertEquals(date('r', $timestamp), $header->getFieldBody());
+        $this->assertSame(date('r', $timestamp), $header->getFieldBody());
     }
 
     public function testGetBodyModel()
@@ -49,7 +49,7 @@ class Swift_Mime_Headers_DateHeaderTest extends \PHPUnit_Framework_TestCase
         $timestamp = time();
         $header = $this->_getHeader('Date');
         $header->setTimestamp($timestamp);
-        $this->assertEquals($timestamp, $header->getFieldBodyModel());
+        $this->assertSame($timestamp, $header->getFieldBodyModel());
     }
 
     public function testToString()
@@ -57,7 +57,7 @@ class Swift_Mime_Headers_DateHeaderTest extends \PHPUnit_Framework_TestCase
         $timestamp = time();
         $header = $this->_getHeader('Date');
         $header->setTimestamp($timestamp);
-        $this->assertEquals('Date: '.date('r', $timestamp)."\r\n",
+        $this->assertSame('Date: '.date('r', $timestamp)."\r\n",
             $header->toString()
             );
     }

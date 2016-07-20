@@ -41,7 +41,7 @@ class Swift_Bug206Test extends \PHPUnit_Framework_TestCase
 
         $headerBody = $mailboxHeader->toString();
 
-        self::assertEquals(
+        self::assertSame(
             str_replace(array("\n", "\r\n", "\r"), "\n", $expected),
             str_replace(array("\n", "\r\n", "\r"), "\n", $headerBody)
         );

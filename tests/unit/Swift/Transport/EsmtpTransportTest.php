@@ -16,7 +16,7 @@ class Swift_Transport_EsmtpTransportTest extends Swift_Transport_AbstractSmtpEve
         $buf = $this->_getBuffer();
         $smtp = $this->_getTransport($buf);
         $smtp->setHost('foo');
-        $this->assertEquals('foo', $smtp->getHost(), '%s: Host should be returned');
+        $this->assertSame('foo', $smtp->getHost(), '%s: Host should be returned');
     }
 
     public function testPortCanBeSetAndFetched()
@@ -24,7 +24,7 @@ class Swift_Transport_EsmtpTransportTest extends Swift_Transport_AbstractSmtpEve
         $buf = $this->_getBuffer();
         $smtp = $this->_getTransport($buf);
         $smtp->setPort(25);
-        $this->assertEquals(25, $smtp->getPort(), '%s: Port should be returned');
+        $this->assertSame(25, $smtp->getPort(), '%s: Port should be returned');
     }
 
     public function testTimeoutCanBeSetAndFetched()
@@ -36,7 +36,7 @@ class Swift_Transport_EsmtpTransportTest extends Swift_Transport_AbstractSmtpEve
 
         $smtp = $this->_getTransport($buf);
         $smtp->setTimeout(10);
-        $this->assertEquals(10, $smtp->getTimeout(), '%s: Timeout should be returned');
+        $this->assertSame(10, $smtp->getTimeout(), '%s: Timeout should be returned');
     }
 
     public function testEncryptionCanBeSetAndFetched()
@@ -44,7 +44,7 @@ class Swift_Transport_EsmtpTransportTest extends Swift_Transport_AbstractSmtpEve
         $buf = $this->_getBuffer();
         $smtp = $this->_getTransport($buf);
         $smtp->setEncryption('tls');
-        $this->assertEquals('tls', $smtp->getEncryption(), '%s: Crypto should be returned');
+        $this->assertSame('tls', $smtp->getEncryption(), '%s: Crypto should be returned');
     }
 
     public function testStartSendsHeloToInitiate()
@@ -292,6 +292,6 @@ class Swift_Transport_EsmtpTransportTest extends Swift_Transport_AbstractSmtpEve
             ->setEncryption('tls')
             ->setTimeout(30)
             ;
-        $this->assertEquals($ref, $smtp);
+        $this->assertSame($ref, $smtp);
     }
 }

@@ -39,7 +39,7 @@ class Swift_Encoder_Rfc2231EncoderAcceptanceTest extends \PHPUnit_Framework_Test
                     $text = UTF8::file_get_contents($sampleDir . '/' . $sampleFile);
                     $encodedText = $encoder->encodeString($text);
 
-                    $this->assertEquals(
+                    $this->assertSame(
                         $text,
                         UTF8::urldecode(implode('', explode("\r\n", $encodedText))),
                         '%s: Encoded string should decode back to original string for sample ' . $sampleDir . '/' . $sampleFile

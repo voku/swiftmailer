@@ -12,7 +12,7 @@ class Swift_Transport_Esmtp_Auth_LoginAuthenticatorTest extends \SwiftMailerTest
     public function testKeywordIsLogin()
     {
         $login = $this->_getAuthenticator();
-        $this->assertEquals('LOGIN', $login->getAuthKeyword());
+        $this->assertSame('LOGIN', $login->getAuthKeyword());
     }
 
     public function testSuccessfulAuthentication()

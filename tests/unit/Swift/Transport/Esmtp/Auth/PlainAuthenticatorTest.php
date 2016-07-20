@@ -16,7 +16,7 @@ class Swift_Transport_Esmtp_Auth_PlainAuthenticatorTest extends \SwiftMailerTest
         */
 
         $login = $this->_getAuthenticator();
-        $this->assertEquals('PLAIN', $login->getAuthKeyword());
+        $this->assertSame('PLAIN', $login->getAuthKeyword());
     }
 
     public function testSuccessfulAuthentication()

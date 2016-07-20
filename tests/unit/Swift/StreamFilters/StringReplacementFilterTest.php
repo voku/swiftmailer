@@ -5,7 +5,7 @@ class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit_Framework
     public function testBasicReplacementsAreMade()
     {
         $filter = $this->_createFilter('foo', 'bar');
-        $this->assertEquals('XbarYbarZ', $filter->filter('XfooYfooZ'));
+        $this->assertSame('XbarYbarZ', $filter->filter('XfooYfooZ'));
     }
 
     public function testShouldBufferReturnsTrueIfPartialMatchAtEndOfBuffer()
@@ -20,13 +20,13 @@ class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit_Framework
     public function testFilterCanMakeMultipleReplacements()
     {
         $filter = $this->_createFilter(array('a', 'b'), 'foo');
-        $this->assertEquals('XfooYfooZ', $filter->filter('XaYbZ'));
+        $this->assertSame('XfooYfooZ', $filter->filter('XaYbZ'));
     }
 
     public function testMultipleReplacementsCanBeDifferent()
     {
         $filter = $this->_createFilter(array('a', 'b'), array('foo', 'zip'));
-        $this->assertEquals('XfooYzipZ', $filter->filter('XaYbZ'));
+        $this->assertSame('XfooYzipZ', $filter->filter('XaYbZ'));
     }
 
     public function testShouldBufferReturnsFalseOnEmptySearch()

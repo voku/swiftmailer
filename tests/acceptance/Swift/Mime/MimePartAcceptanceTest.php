@@ -39,7 +39,7 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
         $part->setContentType('text/plain');
         $part->setCharset('utf-8');
         $part->setBody('foobar');
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: text/plain; charset=utf-8'."\r\n".
             'Content-Transfer-Encoding: quoted-printable'."\r\n".
             "\r\n".
@@ -54,7 +54,7 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
         $part->setContentType('text/plain');
         $part->setFormat('flowed');
         $part->setBody('> foobar');
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: text/plain; format=flowed'."\r\n".
             'Content-Transfer-Encoding: quoted-printable'."\r\n".
             "\r\n".
@@ -69,7 +69,7 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
         $part->setContentType('text/plain');
         $part->setDelSp(true);
         $part->setBody('foobar');
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: text/plain; delsp=yes'."\r\n".
             'Content-Transfer-Encoding: quoted-printable'."\r\n".
             "\r\n".
@@ -86,7 +86,7 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
         $part->setFormat('fixed');
         $part->setDelSp(true);
         $part->setBody('foobar');
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: text/plain; charset=utf-8; format=fixed; delsp=yes'."\r\n".
             'Content-Transfer-Encoding: quoted-printable'."\r\n".
             "\r\n".
@@ -101,7 +101,7 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
         $part->setContentType('text/plain');
         $part->setCharset('utf-8');
         $part->setBody("foobar\r\rtest\ning\r");
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: text/plain; charset=utf-8'."\r\n".
             'Content-Transfer-Encoding: quoted-printable'."\r\n".
             "\r\n".

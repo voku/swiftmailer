@@ -10,7 +10,7 @@ class Swift_Events_SendEventTest extends \PHPUnit_Framework_TestCase
         $evt = $this->_createEvent($transport, $message);
 
         $ref = $evt->getMessage();
-        $this->assertEquals($message, $ref,
+        $this->assertSame($message, $ref,
             '%s: Message should be returned from getMessage()'
             );
     }
@@ -23,7 +23,7 @@ class Swift_Events_SendEventTest extends \PHPUnit_Framework_TestCase
         $evt = $this->_createEvent($transport, $message);
 
         $ref = $evt->getTransport();
-        $this->assertEquals($transport, $ref,
+        $this->assertSame($transport, $ref,
             '%s: Transport should be returned from getTransport()'
             );
     }
@@ -36,7 +36,7 @@ class Swift_Events_SendEventTest extends \PHPUnit_Framework_TestCase
         $evt = $this->_createEvent($transport, $message);
 
         $ref = $evt->getSource();
-        $this->assertEquals($transport, $ref,
+        $this->assertSame($transport, $ref,
             '%s: Transport should be returned from getSource()'
             );
     }
@@ -65,7 +65,7 @@ class Swift_Events_SendEventTest extends \PHPUnit_Framework_TestCase
 
         $evt->setFailedRecipients(array('foo@bar', 'zip@button'));
 
-        $this->assertEquals(array('foo@bar', 'zip@button'), $evt->getFailedRecipients(),
+        $this->assertSame(array('foo@bar', 'zip@button'), $evt->getFailedRecipients(),
             '%s: FailedRecipients should be returned from getter'
             );
     }
@@ -76,7 +76,7 @@ class Swift_Events_SendEventTest extends \PHPUnit_Framework_TestCase
         $transport = $this->_createTransport();
 
         $evt = $this->_createEvent($transport, $message);
-        $this->assertEquals(array(), $evt->getFailedRecipients());
+        $this->assertSame(array(), $evt->getFailedRecipients());
     }
 
     // -- Creation Methods

@@ -24,7 +24,7 @@ class Swift_Signers_SMimeSignerTest extends \PHPUnit_Framework_TestCase
           ->setTo(array('receiver@domain.org', 'other@domain.org' => 'A name'))
           ->setBody('Here is the message itself');
 
-        $this->assertEquals('Here is the message itself', $message->getBody());
+        $this->assertSame('Here is the message itself', $message->getBody());
     }
 
     public function testSingedMessage()
@@ -137,8 +137,8 @@ OEL;
             return false;
         }
 
-        $this->assertEquals($headers['content-transfer-encoding'], 'base64');
-        $this->assertEquals($headers['content-disposition'], 'attachment; filename="smime.p7m"');
+        $this->assertSame($headers['content-transfer-encoding'], 'base64');
+        $this->assertSame($headers['content-disposition'], 'attachment; filename="smime.p7m"');
 
         $expectedBody = '(?:^[a-zA-Z0-9\/\\r\\n+]*={0,2})';
 
@@ -246,7 +246,7 @@ OEL;
             $this->fail(sprintf('Decrypt of the message failed. Internal error "%s".', openssl_error_string()));
         }
 
-        $this->assertEquals($originalMessage, $decryptedMessageStream->getContent());
+        $this->assertSame($originalMessage, $decryptedMessageStream->getContent());
         unset($decryptedMessageStream, $messageStream);
     }
 
@@ -284,7 +284,7 @@ OEL;
             $this->fail(sprintf('Decrypt of the message failed. Internal error "%s".', openssl_error_string()));
         }
 
-        $this->assertEquals($originalMessage, $decryptedMessageStream->getContent());
+        $this->assertSame($originalMessage, $decryptedMessageStream->getContent());
         unset($decryptedMessageStream);
 
         $decryptedMessageStream = new Swift_ByteStream_TemporaryFileByteStream();
@@ -293,7 +293,7 @@ OEL;
             $this->fail(sprintf('Decrypt of the message failed. Internal error "%s".', openssl_error_string()));
         }
 
-        $this->assertEquals($originalMessage, $decryptedMessageStream->getContent());
+        $this->assertSame($originalMessage, $decryptedMessageStream->getContent());
         unset($decryptedMessageStream, $messageStream);
     }
 
@@ -430,7 +430,7 @@ OEL;
             $this->fail(sprintf('Decrypt of the message failed. Internal error "%s".', openssl_error_string()));
         }
 
-        $this->assertEquals($originalMessage, $decryptedMessageStream->getContent());
+        $this->assertSame($originalMessage, $decryptedMessageStream->getContent());
         unset($messageStreamClean, $messageStream, $decryptedMessageStream);
     }
 

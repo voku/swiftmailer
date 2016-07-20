@@ -45,7 +45,7 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest extends \PH
                         $encoded .= $bytes;
                     }
 
-                    $this->assertEquals(
+                    $this->assertSame(
                         quoted_printable_decode($encoded),
                         // CR and LF are converted to CRLF
                         preg_replace('~\r(?!\n)|(?<!\r)\n~', "\r\n", $text),

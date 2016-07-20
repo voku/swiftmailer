@@ -45,7 +45,7 @@ abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transp
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(1, $smtp->send($message));
+        $this->assertSame(1, $smtp->send($message));
     }
 
     public function testSendingDispatchesSendEvent()
@@ -76,7 +76,7 @@ abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transp
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(1, $smtp->send($message));
+        $this->assertSame(1, $smtp->send($message));
     }
 
     public function testSendEventCapturesFailures()
@@ -127,7 +127,7 @@ abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transp
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(0, $smtp->send($message));
+        $this->assertSame(0, $smtp->send($message));
     }
 
     public function testSendEventHasResultFailedIfAllFailures()
@@ -178,7 +178,7 @@ abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transp
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(0, $smtp->send($message));
+        $this->assertSame(0, $smtp->send($message));
     }
 
     public function testSendEventHasResultTentativeIfSomeFailures()
@@ -232,7 +232,7 @@ abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transp
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(1, $smtp->send($message));
+        $this->assertSame(1, $smtp->send($message));
     }
 
     public function testSendEventHasResultSuccessIfNoFailures()
@@ -270,7 +270,7 @@ abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transp
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(2, $smtp->send($message));
+        $this->assertSame(2, $smtp->send($message));
     }
 
     public function testCancellingEventBubbleBeforeSendStopsEvent()
@@ -302,7 +302,7 @@ abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transp
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(0, $smtp->send($message));
+        $this->assertSame(0, $smtp->send($message));
     }
 
     public function testStartingTransportDispatchesTransportChangeEvent()

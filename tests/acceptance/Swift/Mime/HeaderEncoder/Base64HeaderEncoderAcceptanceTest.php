@@ -23,7 +23,7 @@ class Swift_Mime_HeaderEncoder_Base64HeaderEncoderAcceptanceTest extends \PHPUni
             mb_internal_encoding($old);
 
             $encoded = $this->_encoder->encodeString($subject, 0, 75 - $encodedWrapperLength, 'iso-2022-jp');
-            $this->assertEquals(
+            $this->assertSame(
                 $encoded, $newstring,
                 'Encoded string should decode back to original string for sample '
             );

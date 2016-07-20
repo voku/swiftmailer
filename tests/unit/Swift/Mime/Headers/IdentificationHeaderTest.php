@@ -5,7 +5,7 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
     public function testTypeIsIdHeader()
     {
         $header = $this->_getHeader('Message-ID');
-        $this->assertEquals(Swift_Mime_Header::TYPE_ID, $header->getFieldType());
+        $this->assertSame(Swift_Mime_Header::TYPE_ID, $header->getFieldType());
     }
 
     public function testValueMatchesMsgIdSpec()
@@ -30,21 +30,21 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
 
         $header = $this->_getHeader('Message-ID');
         $header->setId('id-left@id-right');
-        $this->assertEquals('<id-left@id-right>', $header->getFieldBody());
+        $this->assertSame('<id-left@id-right>', $header->getFieldBody());
     }
 
     public function testIdCanBeRetrievedVerbatim()
     {
         $header = $this->_getHeader('Message-ID');
         $header->setId('id-left@id-right');
-        $this->assertEquals('id-left@id-right', $header->getId());
+        $this->assertSame('id-left@id-right', $header->getId());
     }
 
     public function testMultipleIdsCanBeSet()
     {
         $header = $this->_getHeader('References');
         $header->setIds(array('a@b', 'x@y'));
-        $this->assertEquals(array('a@b', 'x@y'), $header->getIds());
+        $this->assertSame(array('a@b', 'x@y'), $header->getIds());
     }
 
     public function testSettingMultipleIdsProducesAListValue()
@@ -62,7 +62,7 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
 
         $header = $this->_getHeader('References');
         $header->setIds(array('a@b', 'x@y'));
-        $this->assertEquals('<a@b> <x@y>', $header->getFieldBody());
+        $this->assertSame('<a@b> <x@y>', $header->getFieldBody());
     }
 
     public function testIdLeftCanBeQuoted()
@@ -73,8 +73,8 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
 
         $header = $this->_getHeader('References');
         $header->setId('"ab"@c');
-        $this->assertEquals('"ab"@c', $header->getId());
-        $this->assertEquals('<"ab"@c>', $header->getFieldBody());
+        $this->assertSame('"ab"@c', $header->getId());
+        $this->assertSame('<"ab"@c>', $header->getFieldBody());
     }
 
     public function testIdLeftCanContainAnglesAsQuotedPairs()
@@ -85,16 +85,16 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
 
         $header = $this->_getHeader('References');
         $header->setId('"a\\<\\>b"@c');
-        $this->assertEquals('"a\\<\\>b"@c', $header->getId());
-        $this->assertEquals('<"a\\<\\>b"@c>', $header->getFieldBody());
+        $this->assertSame('"a\\<\\>b"@c', $header->getId());
+        $this->assertSame('<"a\\<\\>b"@c>', $header->getFieldBody());
     }
 
     public function testIdLeftCanBeDotAtom()
     {
         $header = $this->_getHeader('References');
         $header->setId('a.b+&%$.c@d');
-        $this->assertEquals('a.b+&%$.c@d', $header->getId());
-        $this->assertEquals('<a.b+&%$.c@d>', $header->getFieldBody());
+        $this->assertSame('a.b+&%$.c@d', $header->getId());
+        $this->assertSame('<a.b+&%$.c@d>', $header->getFieldBody());
     }
 
     public function testInvalidIdLeftThrowsException()
@@ -117,8 +117,8 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
 
         $header = $this->_getHeader('References');
         $header->setId('a@b.c+&%$.d');
-        $this->assertEquals('a@b.c+&%$.d', $header->getId());
-        $this->assertEquals('<a@b.c+&%$.d>', $header->getFieldBody());
+        $this->assertSame('a@b.c+&%$.d', $header->getId());
+        $this->assertSame('<a@b.c+&%$.d>', $header->getFieldBody());
     }
 
     public function testIdRightCanBeLiteral()
@@ -129,8 +129,8 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
 
         $header = $this->_getHeader('References');
         $header->setId('a@[1.2.3.4]');
-        $this->assertEquals('a@[1.2.3.4]', $header->getId());
-        $this->assertEquals('<a@[1.2.3.4]>', $header->getFieldBody());
+        $this->assertSame('a@[1.2.3.4]', $header->getId());
+        $this->assertSame('<a@[1.2.3.4]>', $header->getFieldBody());
     }
 
     public function testInvalidIdRightThrowsException()
@@ -165,21 +165,21 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
     {
         $header = $this->_getHeader('Message-ID');
         $header->setFieldBodyModel('a@b');
-        $this->assertEquals(array('a@b'), $header->getIds());
+        $this->assertSame(array('a@b'), $header->getIds());
     }
 
     public function testGetBodyModel()
     {
         $header = $this->_getHeader('Message-ID');
         $header->setId('a@b');
-        $this->assertEquals(array('a@b'), $header->getFieldBodyModel());
+        $this->assertSame(array('a@b'), $header->getFieldBodyModel());
     }
 
     public function testStringValue()
     {
         $header = $this->_getHeader('References');
         $header->setIds(array('a@b', 'x@y'));
-        $this->assertEquals('References: <a@b> <x@y>'."\r\n", $header->toString());
+        $this->assertSame('References: <a@b> <x@y>'."\r\n", $header->toString());
     }
 
     private function _getHeader($name)

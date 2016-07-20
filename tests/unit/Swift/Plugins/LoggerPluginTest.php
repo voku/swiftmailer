@@ -21,7 +21,7 @@ class Swift_Plugins_LoggerPluginTest extends \SwiftMailerTestCase
                ->will($this->returnValue('foobar'));
 
         $plugin = $this->_createPlugin($logger);
-        $this->assertEquals('foobar', $plugin->dump());
+        $this->assertSame('foobar', $plugin->dump());
     }
 
     public function testLoggerDelegatesClearingEntries()

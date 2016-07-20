@@ -25,8 +25,8 @@ class Swift_Events_SimpleEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $evt = $this->_dispatcher->createCommandEvent($buf, "FOO\r\n", array(250));
         $this->assertInstanceof('Swift_Events_CommandEvent', $evt);
         $this->assertSame($buf, $evt->getSource());
-        $this->assertEquals("FOO\r\n", $evt->getCommand());
-        $this->assertEquals(array(250), $evt->getSuccessCodes());
+        $this->assertSame("FOO\r\n", $evt->getCommand());
+        $this->assertSame(array(250), $evt->getSuccessCodes());
     }
 
     public function testResponseEventCanBeCreated()
@@ -35,7 +35,7 @@ class Swift_Events_SimpleEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $evt = $this->_dispatcher->createResponseEvent($buf, "250 Ok\r\n", true);
         $this->assertInstanceof('Swift_Events_ResponseEvent', $evt);
         $this->assertSame($buf, $evt->getSource());
-        $this->assertEquals("250 Ok\r\n", $evt->getResponse());
+        $this->assertSame("250 Ok\r\n", $evt->getResponse());
         $this->assertTrue($evt->isValid());
     }
 

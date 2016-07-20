@@ -31,37 +31,37 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
         while (false !== $bytes = $file->read(8192)) {
             $str .= $bytes;
         }
-        $this->assertEquals('abcdefghijklm', $str);
+        $this->assertSame('abcdefghijklm', $str);
     }
 
     public function testFileDataCanBeReadSequentially()
     {
         $file = $this->_createFileStream($this->_testFile);
-        $this->assertEquals('abcde', $file->read(5));
-        $this->assertEquals('fghijklm', $file->read(8));
+        $this->assertSame('abcde', $file->read(5));
+        $this->assertSame('fghijklm', $file->read(8));
         $this->assertFalse($file->read(1));
     }
 
     public function testFilenameIsReturned()
     {
         $file = $this->_createFileStream($this->_testFile);
-        $this->assertEquals($this->_testFile, $file->getPath());
+        $this->assertSame($this->_testFile, $file->getPath());
     }
 
     public function testFileCanBeWrittenTo()
     {
         $file = $this->_createFileStream($this->_testFile, true);
         $file->write('foobar');
-        $this->assertEquals('foobar', $file->read(8192));
+        $this->assertSame('foobar', $file->read(8192));
     }
 
     public function testReadingFromThenWritingToFile()
     {
         $file = $this->_createFileStream($this->_testFile, true);
         $file->write('foobar');
-        $this->assertEquals('foobar', $file->read(8192));
+        $this->assertSame('foobar', $file->read(8192));
         $file->write('zipbutton');
-        $this->assertEquals('zipbutton', $file->read(8192));
+        $this->assertSame('zipbutton', $file->read(8192));
     }
 
     public function testWritingToFileWithCanonicalization()
@@ -71,7 +71,7 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
         $file->write("foo\r\nbar\r");
         $file->write("\nzip\r\ntest\r");
         $file->flushBuffers();
-        $this->assertEquals("foo\nbar\nzip\ntest\n", file_get_contents($this->_testFile));
+        $this->assertSame("foo\nbar\nzip\ntest\n", file_get_contents($this->_testFile));
     }
 
     public function testBindingOtherStreamsMirrorsWriteOperations()

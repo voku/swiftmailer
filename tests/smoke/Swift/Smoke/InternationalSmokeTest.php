@@ -33,7 +33,7 @@ class Swift_Smoke_InternationalSmokeTest extends SwiftMailerSmokeTestCase
                 ->setFilename('κείμενο, εδάφιο, θέμα.zip')
                 )
             ;
-        $this->assertEquals(1, $mailer->send($message),
+        $this->assertSame(1, $mailer->send($message),
             '%s: The smoke test should send a single message'
             );
     }

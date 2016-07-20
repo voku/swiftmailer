@@ -610,7 +610,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(2, $smtp->send($message),
+        $this->assertSame(2, $smtp->send($message),
             '%s: 1 of 3 recipients failed so 2 should be returned'
             );
     }
@@ -660,7 +660,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(0, $smtp->send($message),
+        $this->assertSame(0, $smtp->send($message),
             '%s: 1 of 1 recipients failed so 0 should be returned'
             );
     }
@@ -935,7 +935,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(3, $smtp->send($message));
+        $this->assertSame(3, $smtp->send($message));
     }
 
     public function testMessageStateIsRestoredOnFailure()
@@ -1054,7 +1054,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
         $buf = $this->_getBuffer();
         $smtp = $this->_getTransport($buf);
         $ref = $smtp->getBuffer();
-        $this->assertEquals($buf, $ref);
+        $this->assertSame($buf, $ref);
     }
 
     public function testBufferCanBeWrittenToUsingExecuteCommand()
@@ -1072,7 +1072,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
             ->andReturn("250 OK\r\n");
 
         $res = $smtp->executeCommand("FOO\r\n");
-        $this->assertEquals("250 OK\r\n", $res);
+        $this->assertSame("250 OK\r\n", $res);
     }
 
     public function testResponseCodesAreValidated()
@@ -1155,8 +1155,8 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
 
         $this->_finishBuffer($buf);
         $smtp->start();
-        $this->assertEquals(1, $smtp->send($message, $failures));
-        $this->assertEquals(
+        $this->assertSame(1, $smtp->send($message, $failures));
+        $this->assertSame(
             array('zip@button', 'test@domain'),
             $failures,
             '%s: Failures should be caught in an array'

@@ -60,7 +60,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_
             $encoded .= $bytes;
           }
 
-          self::assertEquals(
+          self::assertSame(
               $text,
               quoted_printable_decode($encoded),
               '%s: Encoded string should decode back to original string for sample ' . $sampleDir . '/' . $sampleFile
@@ -105,7 +105,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_
 
           $decoded = quoted_printable_decode($encoded);
 
-          self::assertEquals(
+          self::assertSame(
               0,
               strcmp(
                 str_replace("\r\n", "\n", $decoded),
@@ -129,25 +129,25 @@ class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_
   public function testEncodingLFTextWithDiConfiguredInstance()
   {
     $encoder = $this->_createEncoderFromContainer();
-    self::assertEquals("a\r\nb\r\nc", $encoder->encodeString("a\nb\nc"));
+    self::assertSame("a\r\nb\r\nc", $encoder->encodeString("a\nb\nc"));
   }
 
   public function testEncodingCRTextWithDiConfiguredInstance()
   {
     $encoder = $this->_createEncoderFromContainer();
-    self::assertEquals("a\r\nb\r\nc", $encoder->encodeString("a\rb\rc"));
+    self::assertSame("a\r\nb\r\nc", $encoder->encodeString("a\rb\rc"));
   }
 
   public function testEncodingLFCRTextWithDiConfiguredInstance()
   {
     $encoder = $this->_createEncoderFromContainer();
-    self::assertEquals("a\r\n\r\nb\r\n\r\nc", $encoder->encodeString("a\n\rb\n\rc"));
+    self::assertSame("a\r\n\r\nb\r\n\r\nc", $encoder->encodeString("a\n\rb\n\rc"));
   }
 
   public function testEncodingCRLFTextWithDiConfiguredInstance()
   {
     $encoder = $this->_createEncoderFromContainer();
-    self::assertEquals("a\r\nb\r\nc", $encoder->encodeString("a\r\nb\r\nc"));
+    self::assertSame("a\r\nb\r\nc", $encoder->encodeString("a\r\nb\r\nc"));
   }
 
   public function testEncodingDotStuffingWithDiConfiguredInstance()
@@ -155,12 +155,12 @@ class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_
     // Enable DotEscaping
     Swift_Preferences::getInstance()->setQPDotEscape(true);
     $encoder = $this->_createEncoderFromContainer();
-    self::assertEquals("a=2E\r\n=2E\r\n=2Eb\r\nc", $encoder->encodeString("a.\r\n.\r\n.b\r\nc"));
+    self::assertSame("a=2E\r\n=2E\r\n=2Eb\r\nc", $encoder->encodeString("a.\r\n.\r\n.b\r\nc"));
 
     // Return to default
     Swift_Preferences::getInstance()->setQPDotEscape(false);
     $encoder = $this->_createEncoderFromContainer();
-    self::assertEquals("a.\r\n.\r\n.b\r\nc", $encoder->encodeString("a.\r\n.\r\n.b\r\nc"));
+    self::assertSame("a.\r\n.\r\n.b\r\nc", $encoder->encodeString("a.\r\n.\r\n.b\r\nc"));
   }
 
   public function testDotStuffingEncodingAndDecodingSamplesFromDiConfiguredInstance()

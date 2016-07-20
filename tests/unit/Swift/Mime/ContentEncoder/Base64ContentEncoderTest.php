@@ -11,7 +11,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoderTest extends \SwiftMailerTes
 
     public function testNameIsBase64()
     {
-        $this->assertEquals('base64', $this->_encoder->getName());
+        $this->assertSame('base64', $this->_encoder->getName());
     }
 
     /*
@@ -47,7 +47,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoderTest extends \SwiftMailerTes
            ->andReturn(false);
 
         $this->_encoder->encodeByteStream($os, $is);
-        $this->assertEquals('MTIz', $collection->content);
+        $this->assertSame('MTIz', $collection->content);
     }
 
     public function testPadLength()
@@ -177,7 +177,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoderTest extends \SwiftMailerTes
            ->andReturn(false);
 
         $this->_encoder->encodeByteStream($os, $is);
-        $this->assertEquals(
+        $this->assertSame(
             "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXphYmMxMjM0NTY3ODkwQUJDREVGR0hJSktMTU5PUFFS\r\n".
             'U1RVVldYWVoxMjM0NTY3YWJjZGVmZ2hpamts',
             $collection->content
@@ -219,7 +219,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoderTest extends \SwiftMailerTes
            ->andReturn(false);
 
         $this->_encoder->encodeByteStream($os, $is, 0, 50);
-        $this->assertEquals(
+        $this->assertSame(
             "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXphYmMxMjM0NTY3OD\r\n".
             "kwQUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVoxMjM0NTY3YWJj\r\n".
             'ZGVmZ2hpamts',
@@ -262,7 +262,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoderTest extends \SwiftMailerTes
            ->andReturn(false);
 
         $this->_encoder->encodeByteStream($os, $is, 0, 100);
-        $this->assertEquals(
+        $this->assertSame(
             "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXphYmMxMjM0NTY3ODkwQUJDREVGR0hJSktMTU5PUFFS\r\n".
             'U1RVVldYWVoxMjM0NTY3YWJjZGVmZ2hpamts',
             $collection->content
@@ -304,7 +304,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoderTest extends \SwiftMailerTes
            ->andReturn(false);
 
         $this->_encoder->encodeByteStream($os, $is, 19);
-        $this->assertEquals(
+        $this->assertSame(
             "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXphYmMxMjM0NTY3ODkwQUJDR\r\n".
             'EVGR0hJSktMTU5PUFFSU1RVVldYWVoxMjM0NTY3YWJjZGVmZ2hpamts',
             $collection->content

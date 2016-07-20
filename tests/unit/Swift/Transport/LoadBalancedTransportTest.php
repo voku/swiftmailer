@@ -64,8 +64,8 @@ class Swift_Transport_LoadBalancedTransportTest extends \SwiftMailerTestCase
 
         $transport = $this->_getTransport(array($t1, $t2));
         $transport->start();
-        $this->assertEquals(1, $transport->send($message1));
-        $this->assertEquals(1, $transport->send($message2));
+        $this->assertSame(1, $transport->send($message1));
+        $this->assertSame(1, $transport->send($message2));
     }
 
     public function testTransportsAreReusedInRotatingFashion()
@@ -157,10 +157,10 @@ class Swift_Transport_LoadBalancedTransportTest extends \SwiftMailerTestCase
         $transport = $this->_getTransport(array($t1, $t2));
         $transport->start();
 
-        $this->assertEquals(1, $transport->send($message1));
-        $this->assertEquals(1, $transport->send($message2));
-        $this->assertEquals(1, $transport->send($message3));
-        $this->assertEquals(1, $transport->send($message4));
+        $this->assertSame(1, $transport->send($message1));
+        $this->assertSame(1, $transport->send($message2));
+        $this->assertSame(1, $transport->send($message3));
+        $this->assertSame(1, $transport->send($message4));
     }
 
     public function testMessageCanBeTriedOnNextTransportIfExceptionThrown()
@@ -220,7 +220,7 @@ class Swift_Transport_LoadBalancedTransportTest extends \SwiftMailerTestCase
 
         $transport = $this->_getTransport(array($t1, $t2));
         $transport->start();
-        $this->assertEquals(1, $transport->send($message));
+        $this->assertSame(1, $transport->send($message));
     }
 
     public function testMessageIsTriedOnNextTransportIfZeroReturned()
@@ -279,7 +279,7 @@ class Swift_Transport_LoadBalancedTransportTest extends \SwiftMailerTestCase
 
         $transport = $this->_getTransport(array($t1, $t2));
         $transport->start();
-        $this->assertEquals(1, $transport->send($message));
+        $this->assertSame(1, $transport->send($message));
     }
 
     public function testZeroIsReturnedIfAllTransportsReturnZero()
@@ -338,7 +338,7 @@ class Swift_Transport_LoadBalancedTransportTest extends \SwiftMailerTestCase
 
         $transport = $this->_getTransport(array($t1, $t2));
         $transport->start();
-        $this->assertEquals(0, $transport->send($message));
+        $this->assertSame(0, $transport->send($message));
     }
 
     public function testTransportsWhichThrowExceptionsAreNotRetried()
@@ -410,10 +410,10 @@ class Swift_Transport_LoadBalancedTransportTest extends \SwiftMailerTestCase
 
         $transport = $this->_getTransport(array($t1, $t2));
         $transport->start();
-        $this->assertEquals(1, $transport->send($message1));
-        $this->assertEquals(1, $transport->send($message2));
-        $this->assertEquals(1, $transport->send($message3));
-        $this->assertEquals(1, $transport->send($message4));
+        $this->assertSame(1, $transport->send($message1));
+        $this->assertSame(1, $transport->send($message2));
+        $this->assertSame(1, $transport->send($message3));
+        $this->assertSame(1, $transport->send($message4));
     }
 
     public function testExceptionIsThrownIfAllTransportsDie()
@@ -655,7 +655,7 @@ class Swift_Transport_LoadBalancedTransportTest extends \SwiftMailerTestCase
         //Restart and re-try
         $transport->start();
         $this->assertTrue($transport->isStarted());
-        $this->assertEquals(10, $transport->send($message2));
+        $this->assertSame(10, $transport->send($message2));
     }
 
     public function testFailureReferenceIsPassedToDelegates()

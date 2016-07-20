@@ -8,7 +8,7 @@ class Swift_Mime_MimePartTest extends Swift_Mime_AbstractMimeEntityTest
             $this->_createEncoder(), $this->_createCache()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             Swift_Mime_MimeEntity::LEVEL_ALTERNATIVE, $part->getNestingLevel()
         );
     }
@@ -36,7 +36,7 @@ class Swift_Mime_MimePartTest extends Swift_Mime_AbstractMimeEntityTest
             $this->_createEncoder(), $this->_createCache()
         );
 
-        $this->assertEquals('iso-8859-1', $part->getCharset());
+        $this->assertSame('iso-8859-1', $part->getCharset());
     }
 
     public function testCharsetIsSetInHeader()
@@ -166,7 +166,7 @@ class Swift_Mime_MimePartTest extends Swift_Mime_AbstractMimeEntityTest
             $this->_createEncoder(), $this->_createCache()
         );
 
-        $this->assertEquals('flowed', $part->getFormat());
+        $this->assertSame('flowed', $part->getFormat());
     }
 
     public function testFormatIsSetInHeader()

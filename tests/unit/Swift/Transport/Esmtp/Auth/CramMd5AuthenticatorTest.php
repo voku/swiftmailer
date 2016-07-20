@@ -16,7 +16,7 @@ class Swift_Transport_Esmtp_Auth_CramMd5AuthenticatorTest extends \SwiftMailerTe
         */
 
         $cram = $this->_getAuthenticator();
-        self::assertEquals('CRAM-MD5', $cram->getAuthKeyword());
+        self::assertSame('CRAM-MD5', $cram->getAuthKeyword());
     }
 
     public function testSuccessfulAuthentication()

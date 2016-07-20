@@ -42,7 +42,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoderAcceptanceTest extends \PHPU
                         $encoded .= $bytes;
                     }
 
-                    $this->assertEquals(
+                    $this->assertSame(
                         base64_decode($encoded), $text,
                         '%s: Encoded string should decode back to original string for sample '.
                         $sampleDir.'/'.$sampleFile

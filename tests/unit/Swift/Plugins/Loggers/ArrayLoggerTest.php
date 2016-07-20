@@ -6,7 +6,7 @@ class Swift_Plugins_Loggers_ArrayLoggerTest extends \PHPUnit_Framework_TestCase
     {
         $logger = new Swift_Plugins_Loggers_ArrayLogger();
         $logger->add(">> Foo\r\n");
-        $this->assertEquals(">> Foo\r\n", $logger->dump());
+        $this->assertSame(">> Foo\r\n", $logger->dump());
     }
 
     public function testAddingMultipleEntriesDumpsMultipleLines()
@@ -17,7 +17,7 @@ class Swift_Plugins_Loggers_ArrayLoggerTest extends \PHPUnit_Framework_TestCase
         $logger->add(">> RSET\r\n");
         $logger->add("<< 250 OK\r\n");
 
-        $this->assertEquals(
+        $this->assertSame(
             ">> FOO\r\n".PHP_EOL.
             "<< 502 That makes no sense\r\n".PHP_EOL.
             ">> RSET\r\n".PHP_EOL.
@@ -34,7 +34,7 @@ class Swift_Plugins_Loggers_ArrayLoggerTest extends \PHPUnit_Framework_TestCase
         $logger->add(">> RSET\r\n");
         $logger->add("<< 250 OK\r\n");
 
-        $this->assertEquals(
+        $this->assertSame(
             ">> FOO\r\n".PHP_EOL.
             "<< 502 That makes no sense\r\n".PHP_EOL.
             ">> RSET\r\n".PHP_EOL.
@@ -44,7 +44,7 @@ class Swift_Plugins_Loggers_ArrayLoggerTest extends \PHPUnit_Framework_TestCase
 
         $logger->clear();
 
-        $this->assertEquals('', $logger->dump());
+        $this->assertSame('', $logger->dump());
     }
 
     public function testLengthCanBeTruncated()
@@ -55,7 +55,7 @@ class Swift_Plugins_Loggers_ArrayLoggerTest extends \PHPUnit_Framework_TestCase
         $logger->add(">> RSET\r\n");
         $logger->add("<< 250 OK\r\n");
 
-        $this->assertEquals(
+        $this->assertSame(
             ">> RSET\r\n".PHP_EOL.
             "<< 250 OK\r\n",
             $logger->dump(),

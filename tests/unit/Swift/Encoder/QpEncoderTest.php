@@ -98,7 +98,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
         $charStream->shouldReceive('readBytes')->once()->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        self::assertEquals(
+        self::assertSame(
             'a' . $HT . '=09' . "\r\n" . 'b',
             $encoder->encodeString($string)
         );
@@ -122,7 +122,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
         $charStream->shouldReceive('readBytes')->once()->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        self::assertEquals(
+        self::assertSame(
             'a' . $SPACE . '=20' . "\r\n" . 'b',
             $encoder->encodeString($string)
         );
@@ -178,7 +178,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
         $charStream->shouldReceive('readBytes')->once()->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        self::assertEquals($string, $encoder->encodeString($string));
+        self::assertSame($string, $encoder->encodeString($string));
     }
 
     public function testLinesLongerThan76CharactersAreSoftBroken()
@@ -219,7 +219,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
             ->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        self::assertEquals($output, $encoder->encodeString($input));
+        self::assertSame($output, $encoder->encodeString($input));
     }
 
     public function testMaxLineLengthCanBeSpecified()
@@ -249,7 +249,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
             ->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        self::assertEquals($output, $encoder->encodeString($input, 0, 54));
+        self::assertSame($output, $encoder->encodeString($input, 0, 54));
     }
 
     public function testBytesBelowPermittedRangeAreEncoded()
@@ -278,11 +278,11 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
 
             if ($char === "\x00") {
                 // special for "NULL"
-                self::assertEquals(
+                self::assertSame(
                     '', $encoder->encodeString($char), 'tested:' . $char
                 );
             } else {
-                self::assertEquals(
+                self::assertSame(
                     sprintf('=%02X', $ordinal), $encoder->encodeString($char), 'tested:' . $char
                 );
             }
@@ -312,7 +312,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
 
-        self::assertEquals('=3D', $encoder->encodeString('='));
+        self::assertSame('=3D', $encoder->encodeString('='));
     }
 
     public function testBytesAbovePermittedRangeAreEncoded()
@@ -339,7 +339,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
 
             $encoder = new Swift_Encoder_QpEncoder($charStream);
 
-            self::assertEquals(
+            self::assertSame(
                 sprintf('=%02X', $ordinal), $encoder->encodeString($char)
             );
         }
@@ -373,7 +373,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
             ->andReturn(false);
 
         $encoder = new Swift_Encoder_QpEncoder($charStream);
-        self::assertEquals(
+        self::assertSame(
             $output, $encoder->encodeString($input, 22),
             '%s: First line should start at offset 22 so can only have max length 54'
         );
@@ -387,7 +387,7 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
             str_repeat('a', 70) . "\r\n" .
             str_repeat('a', 70);
 
-        self::assertEquals(
+        self::assertSame(
             $input, $encoder->encodeString($input)
         );
     }

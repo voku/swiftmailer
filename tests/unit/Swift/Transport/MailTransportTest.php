@@ -198,7 +198,7 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
                   ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any())
                   ->andReturn(true);
 
-        self::assertEquals(3, $transport->send($message));
+        self::assertSame(3, $transport->send($message));
     }
 
     public function testTransportReturnsZeroIfReturnsFalse()
@@ -220,7 +220,7 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
                   ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any())
                   ->andReturn(false);
 
-        self::assertEquals(0, $transport->send($message));
+        self::assertSame(0, $transport->send($message));
     }
 
     public function testToHeaderIsRemovedFromHeaderSetDuringSending()

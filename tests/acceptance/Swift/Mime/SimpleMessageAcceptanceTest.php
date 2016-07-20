@@ -15,7 +15,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message = $this->_createMessage();
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'From: ' . "\r\n" .
@@ -33,7 +33,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setSubject('just a test subject');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -51,7 +51,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setSubject('just a test subject');
         $id = $message->getId();
         $message->setDate(1234);
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', 1234) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -69,7 +69,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setSubject('just a test subject');
         $message->setId('foo@bar');
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <foo@bar>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -88,7 +88,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setContentType('text/html');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -108,7 +108,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setCharset('iso-8859-1');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -127,7 +127,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setFormat('flowed');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -149,7 +149,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -168,7 +168,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setFrom('chris.corbyn@swiftmailer.org');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -187,7 +187,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setFrom(array('chris.corbyn@swiftmailer.org' => 'Chris Corbyn'));
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -211,7 +211,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -235,7 +235,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -260,7 +260,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -280,7 +280,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setSender('chris.corbyn@swiftmailer.org');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Sender: chris.corbyn@swiftmailer.org' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -300,7 +300,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setSender(array('chris.corbyn@swiftmailer.org' => 'Chris'));
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Sender: Chris <chris.corbyn@swiftmailer.org>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -321,7 +321,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setReplyTo(array('chris@w3style.co.uk' => 'Myself'));
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -347,7 +347,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -374,7 +374,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setTo('mark@swiftmailer.org');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -407,7 +407,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -441,7 +441,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setCc('john@some-site.com');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -481,7 +481,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -524,7 +524,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setBcc('x@alphabet.tld');
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -568,7 +568,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->setBcc(array('x@alphabet.tld', 'a@alphabet.tld' => 'A'));
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
             'Subject: just a test subject' . "\r\n" .
@@ -596,7 +596,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -624,7 +624,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -665,7 +665,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
 
         $message->attach($part2);
 
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -1016,7 +1016,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->detach($part1);
         $message->detach($part2);
 
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -1058,7 +1058,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
 
         $message->attach($part2);
 
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .
@@ -1106,7 +1106,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
 
         $message->attach($attachment);
 
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . $date . "\r\n" .
@@ -1160,7 +1160,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         $message->attach($part1);
         $message->attach($part2);
 
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . $date . "\r\n" .
@@ -1206,7 +1206,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
 
         $message->attach($part2);
 
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . $date . "\r\n" .
@@ -1245,7 +1245,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
         $id = $message->getId();
         $date = $message->getDate();
-        $this->assertEquals(
+        $this->assertSame(
             'Return-Path: <chris@w3style.co.uk>' . "\r\n" .
             'Message-ID: <' . $id . '>' . "\r\n" .
             'Date: ' . date('r', $date) . "\r\n" .

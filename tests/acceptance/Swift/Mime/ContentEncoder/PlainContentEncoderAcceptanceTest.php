@@ -31,7 +31,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoderAcceptanceTest extends \PHPUn
                     $text = file_get_contents($sampleDir.'/'.$sampleFile);
                     $encodedText = $this->_encoder->encodeString($text);
 
-                    $this->assertEquals(
+                    $this->assertSame(
                         $encodedText,
                         $text,
                         '%s: Encoded string should be identical to original string for sample '. $sampleDir.'/'.$sampleFile
@@ -74,7 +74,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoderAcceptanceTest extends \PHPUn
                         $encoded .= $bytes;
                     }
 
-                    $this->assertEquals(
+                    $this->assertSame(
                         $encoded,
                         $text,
                         '%s: Encoded string should be identical to original string for sample '. $sampleDir.'/'.$sampleFile

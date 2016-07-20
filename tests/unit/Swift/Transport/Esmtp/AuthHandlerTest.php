@@ -12,28 +12,28 @@ class Swift_Transport_Esmtp_AuthHandlerTest extends \SwiftMailerTestCase
     public function testKeywordIsAuth()
     {
         $auth = $this->_createHandler(array());
-        $this->assertEquals('AUTH', $auth->getHandledKeyword());
+        $this->assertSame('AUTH', $auth->getHandledKeyword());
     }
 
     public function testUsernameCanBeSetAndFetched()
     {
         $auth = $this->_createHandler(array());
         $auth->setUsername('jack');
-        $this->assertEquals('jack', $auth->getUsername());
+        $this->assertSame('jack', $auth->getUsername());
     }
 
     public function testPasswordCanBeSetAndFetched()
     {
         $auth = $this->_createHandler(array());
         $auth->setPassword('pass');
-        $this->assertEquals('pass', $auth->getPassword());
+        $this->assertSame('pass', $auth->getPassword());
     }
 
     public function testAuthModeCanBeSetAndFetched()
     {
         $auth = $this->_createHandler(array());
         $auth->setAuthMode('PLAIN');
-        $this->assertEquals('PLAIN', $auth->getAuthMode());
+        $this->assertSame('PLAIN', $auth->getAuthMode());
     }
 
     public function testMixinMethods()

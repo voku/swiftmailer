@@ -7,7 +7,7 @@ class Swift_Events_EventObjectTest extends \PHPUnit_Framework_TestCase
         $source = new stdClass();
         $evt = $this->_createEvent($source);
         $ref = $evt->getSource();
-        $this->assertEquals($source, $ref);
+        $this->assertSame($source, $ref);
     }
 
     public function testEventDoesNotHaveCancelledBubbleWhenNew()

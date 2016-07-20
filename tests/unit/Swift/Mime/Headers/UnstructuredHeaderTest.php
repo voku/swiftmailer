@@ -7,20 +7,20 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
     public function testTypeIsTextHeader()
     {
         $header = $this->_getHeader('Subject', $this->_getEncoder('Q', true));
-        $this->assertEquals(Swift_Mime_Header::TYPE_TEXT, $header->getFieldType());
+        $this->assertSame(Swift_Mime_Header::TYPE_TEXT, $header->getFieldType());
     }
 
     public function testGetNameReturnsNameVerbatim()
     {
         $header = $this->_getHeader('Subject', $this->_getEncoder('Q', true));
-        $this->assertEquals('Subject', $header->getFieldName());
+        $this->assertSame('Subject', $header->getFieldName());
     }
 
     public function testGetValueReturnsValueVerbatim()
     {
         $header = $this->_getHeader('Subject', $this->_getEncoder('Q', true));
         $header->setValue('Test');
-        $this->assertEquals('Test', $header->getValue());
+        $this->assertSame('Test', $header->getValue());
     }
 
     public function testBasicStructureIsKeyValuePair()
@@ -31,7 +31,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
         */
         $header = $this->_getHeader('Subject', $this->_getEncoder('Q', true));
         $header->setValue('Test');
-        $this->assertEquals('Subject: Test'."\r\n", $header->toString());
+        $this->assertSame('Subject: Test'."\r\n", $header->toString());
     }
 
     public function testLongHeadersAreFoldedAtWordBoundary()
@@ -57,7 +57,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
         X-Custom-Header: The quick brown fox jumped over the fence, he was a very very
      scary brown fox with a bushy tail
         */
-        $this->assertEquals(
+        $this->assertSame(
             'X-Custom-Header: The quick brown fox jumped over the fence, he was a'.
             ' very very'."\r\n".//Folding
             ' scary brown fox with a bushy tail'."\r\n",
@@ -120,7 +120,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
 
         $header = $this->_getHeader('X-Test', $encoder);
         $header->setValue($nonAsciiChar);
-        $this->assertEquals(
+        $this->assertSame(
             'X-Test: =?'.$this->_charset.'?Q?=8F?='."\r\n",
             $header->toString()
             );
@@ -146,7 +146,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
             $header = $this->_getHeader('X-A', $encoder);
             $header->setValue($char);
 
-            $this->assertEquals(
+            $this->assertSame(
                 'X-A: =?'.$this->_charset.'?Q?'.$encodedChar.'?='."\r\n",
                 $header->toString(), '%s: Non-printable ascii should be encoded'
                 );
@@ -170,7 +170,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
             $header = $this->_getHeader('X-A', $encoder);
             $header->setValue($char);
 
-            $this->assertEquals(
+            $this->assertSame(
                 'X-A: =?'.$this->_charset.'?Q?'.$encodedChar.'?='."\r\n",
                 $header->toString(), '%s: 8-bit octets should be encoded'
                 );
@@ -204,7 +204,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('X-Test', $encoder);
         $header->setValue($nonAsciiChar);
 
-        $this->assertEquals(
+        $this->assertSame(
             'X-Test: =?'.$this->_charset.'?Q?=8F?='."\r\n",
             $header->toString()
             );
@@ -235,7 +235,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('X-Test', $encoder);
         $header->setValue($nonAsciiChar);
 
-        $this->assertEquals(
+        $this->assertSame(
             'X-Test: =?'.$this->_charset.'?Q?line_one_here?='."\r\n".
             ' =?'.$this->_charset.'?Q?line_two_here?='."\r\n",
             $header->toString()
@@ -279,7 +279,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
 
         $headerString = $header->toString();
 
-        $this->assertEquals('X-Test: start =?'.$this->_charset.'?Q?'.
+        $this->assertSame('X-Test: start =?'.$this->_charset.'?Q?'.
             'w=8Frd_w=8Frd?= then end =?'.$this->_charset.'?Q?'.
             'w=8Frd?='."\r\n", $headerString,
             '%s: Adjacent encoded words should appear grouped with WSP encoded'
@@ -316,7 +316,7 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
         $header = $this->_getHeader('Subject', $encoder);
         $header->setLanguage('en');
         $header->setValue($value);
-        $this->assertEquals("Subject: =?utf-8*en?Q?fo=8Fbar?=\r\n",
+        $this->assertSame("Subject: =?utf-8*en?Q?fo=8Fbar?=\r\n",
             $header->toString()
             );
     }
@@ -325,14 +325,14 @@ class Swift_Mime_Headers_UnstructuredHeaderTest extends \SwiftMailerTestCase
     {
         $header = $this->_getHeader('Subject', $this->_getEncoder('Q', true));
         $header->setFieldBodyModel('test');
-        $this->assertEquals('test', $header->getValue());
+        $this->assertSame('test', $header->getValue());
     }
 
     public function testGetBodyModel()
     {
         $header = $this->_getHeader('Subject', $this->_getEncoder('Q', true));
         $header->setValue('test');
-        $this->assertEquals('test', $header->getFieldBodyModel());
+        $this->assertSame('test', $header->getFieldBodyModel());
     }
 
     private function _getHeader($name, $encoder)

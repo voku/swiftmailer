@@ -99,7 +99,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
         $this->_createCache()
     );
 
-    $this->assertEquals('image/jpeg-test', $entity->getContentType());
+    $this->assertSame('image/jpeg-test', $entity->getContentType());
   }
 
   /**
@@ -284,7 +284,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
         $this->_createCache()
     );
 
-    $this->assertEquals('zip@button', $entity->getId());
+    $this->assertSame('zip@button', $entity->getId());
   }
 
   public function testIdIsSetInHeader()
@@ -345,7 +345,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     );
 
     $id = $entity->generateId();
-    $this->assertEquals($id, $entity->getId());
+    $this->assertSame($id, $entity->getId());
   }
 
   public function testDescriptionIsReadFromHeader()
@@ -367,7 +367,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
         $this->_createCache()
     );
 
-    $this->assertEquals('something', $entity->getDescription());
+    $this->assertSame('something', $entity->getDescription());
   }
 
   public function testDescriptionIsSetInHeader()
@@ -415,7 +415,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     );
 
     $entity->setMaxLineLength(60);
-    $this->assertEquals(60, $entity->getMaxLineLength());
+    $this->assertSame(60, $entity->getMaxLineLength());
   }
 
   public function testEncoderIsUsedForStringGeneration()
@@ -469,7 +469,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
         $this->_createCache()
     );
 
-    $this->assertEquals(
+    $this->assertSame(
         "Content-Type: text/plain; charset=utf-8\r\n" .
         "X-MyHeader: foobar\r\n",
         $entity->toString()
@@ -484,7 +484,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
         $this->_createCache()
     );
     $entity->setBody("blah\r\nblah!");
-    $this->assertEquals("blah\r\nblah!", $entity->getBody());
+    $this->assertSame("blah\r\nblah!", $entity->getBody());
   }
 
   public function testBodyIsAppended()
@@ -501,7 +501,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     );
 
     $entity->setBody("blah\r\nblah!");
-    $this->assertEquals(
+    $this->assertSame(
         "Content-Type: text/plain; charset=utf-8\r\n" . "\r\n" . "blah\r\nblah!",
         $entity->toString()
     );
@@ -518,7 +518,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     );
 
     $entity->setBody($os);
-    $this->assertEquals('byte stream string', $entity->getBody());
+    $this->assertSame('byte stream string', $entity->getBody());
   }
 
   /**
@@ -568,7 +568,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     );
 
     $entity->setBody($os);
-    $this->assertEquals(
+    $this->assertSame(
         "Content-Type: text/plain; charset=utf-8\r\n" . "\r\n" . 'streamed',
         $entity->toString()
     );
@@ -608,7 +608,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
 
     $firstBoundary = $entity->getBoundary();
     for ($i = 0; $i < 10; ++$i) {
-      $this->assertEquals($firstBoundary, $entity->getBoundary());
+      $this->assertSame($firstBoundary, $entity->getBoundary());
     }
   }
 
@@ -621,7 +621,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     );
 
     $entity->setBoundary('foobar');
-    $this->assertEquals('foobar', $entity->getBoundary());
+    $this->assertSame('foobar', $entity->getBoundary());
   }
 
   public function testAddingChildrenGeneratesBoundaryInHeaders()
@@ -858,7 +858,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     $entity->setBoundary('xxx');
     $entity->setChildren(array($child1, $child2));
 
-    $this->assertEquals(
+    $this->assertSame(
         "Content-Type: multipart/alternative; boundary=\"xxx\"\r\n" .
         "\r\n" .
         "\r\n--xxx\r\n" .
@@ -1061,7 +1061,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     $entity->setBoundary('xxx');
     $entity->setChildren(array($htmlChild, $textChild));
 
-    $this->assertEquals(
+    $this->assertSame(
         "Content-Type: multipart/alternative; boundary=\"xxx\"\r\n" .
         "\r\n\r\n--xxx\r\n" .
         "Content-Type: text/plain\r\n" .
@@ -1138,7 +1138,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
 
     $entity->setBody("blah\r\nblah!");
 
-    $this->assertEquals(
+    $this->assertSame(
         "Content-Type: text/plain; charset=utf-8\r\n" .
         "\r\n" .
         "cache\r\ncache!",

@@ -21,7 +21,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testMailboxHeaderHasCorrectName()
     {
         $header = $this->_factory->createMailboxHeader('X-Foo');
-        $this->assertEquals('X-Foo', $header->getFieldName());
+        $this->assertSame('X-Foo', $header->getFieldName());
     }
 
     public function testMailboxHeaderHasCorrectModel()
@@ -30,7 +30,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
             'X-Foo',
             array('foo@bar.com' => 'FooBar')
         );
-        $this->assertEquals(array('foo@bar.com' => 'FooBar'), $header->getFieldBodyModel());
+        $this->assertSame(array('foo@bar.com' => 'FooBar'), $header->getFieldBodyModel());
     }
 
     public function testDateHeaderHasCorrectType()
@@ -42,13 +42,13 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testDateHeaderHasCorrectName()
     {
         $header = $this->_factory->createDateHeader('X-Date');
-        $this->assertEquals('X-Date', $header->getFieldName());
+        $this->assertSame('X-Date', $header->getFieldName());
     }
 
     public function testDateHeaderHasCorrectModel()
     {
         $header = $this->_factory->createDateHeader('X-Date', 123);
-        $this->assertEquals(123, $header->getFieldBodyModel());
+        $this->assertSame(123, $header->getFieldBodyModel());
     }
 
     public function testTextHeaderHasCorrectType()
@@ -60,13 +60,13 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testTextHeaderHasCorrectName()
     {
         $header = $this->_factory->createTextHeader('X-Foo');
-        $this->assertEquals('X-Foo', $header->getFieldName());
+        $this->assertSame('X-Foo', $header->getFieldName());
     }
 
     public function testTextHeaderHasCorrectModel()
     {
         $header = $this->_factory->createTextHeader('X-Foo', 'bar');
-        $this->assertEquals('bar', $header->getFieldBodyModel());
+        $this->assertSame('bar', $header->getFieldBodyModel());
     }
 
     public function testParameterizedHeaderHasCorrectType()
@@ -78,13 +78,13 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testParameterizedHeaderHasCorrectName()
     {
         $header = $this->_factory->createParameterizedHeader('X-Foo');
-        $this->assertEquals('X-Foo', $header->getFieldName());
+        $this->assertSame('X-Foo', $header->getFieldName());
     }
 
     public function testParameterizedHeaderHasCorrectModel()
     {
         $header = $this->_factory->createParameterizedHeader('X-Foo', 'bar');
-        $this->assertEquals('bar', $header->getFieldBodyModel());
+        $this->assertSame('bar', $header->getFieldBodyModel());
     }
 
     public function testParameterizedHeaderHasCorrectParams()
@@ -93,7 +93,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
             'X-Foo', 'bar',
             array('zip' => 'button')
         );
-        $this->assertEquals(array('zip' => 'button'), $header->getParameters());
+        $this->assertSame(array('zip' => 'button'), $header->getParameters());
     }
 
     public function testIdHeaderHasCorrectType()
@@ -105,13 +105,13 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testIdHeaderHasCorrectName()
     {
         $header = $this->_factory->createIdHeader('X-ID');
-        $this->assertEquals('X-ID', $header->getFieldName());
+        $this->assertSame('X-ID', $header->getFieldName());
     }
 
     public function testIdHeaderHasCorrectModel()
     {
         $header = $this->_factory->createIdHeader('X-ID', 'xyz@abc');
-        $this->assertEquals(array('xyz@abc'), $header->getFieldBodyModel());
+        $this->assertSame(array('xyz@abc'), $header->getFieldBodyModel());
     }
 
     public function testPathHeaderHasCorrectType()
@@ -123,13 +123,13 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testPathHeaderHasCorrectName()
     {
         $header = $this->_factory->createPathHeader('X-Path');
-        $this->assertEquals('X-Path', $header->getFieldName());
+        $this->assertSame('X-Path', $header->getFieldName());
     }
 
     public function testPathHeaderHasCorrectModel()
     {
         $header = $this->_factory->createPathHeader('X-Path', 'foo@bar.com');
-        $this->assertEquals('foo@bar.com', $header->getFieldBodyModel());
+        $this->assertSame('foo@bar.com', $header->getFieldBodyModel());
     }
 
     public function testCharsetChangeNotificationNotifiesEncoders()

@@ -287,7 +287,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
         $set->addIdHeader('Message-ID', 'other@id');
         $set->addIdHeader('Message-ID', 'more@id');
 
-        self::assertEquals(
+        self::assertSame(
             array($header0, $header1, $header2,),
             $set->getAll('Message-ID')
         );
@@ -317,7 +317,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
         $set->addIdHeader('Subject', 'thing');
         $set->addIdHeader('To', 'person@example.org');
 
-        self::assertEquals(
+        self::assertSame(
             array($header0, $header1, $header2,),
             $set->getAll()
         );
@@ -326,7 +326,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
     public function testGetAllReturnsEmptyArrayIfNoneSet()
     {
         $set = $this->_createSet($this->_createFactory());
-        self::assertEquals(array(), $set->getAll('Received'));
+        self::assertSame(array(), $set->getAll('Received'));
     }
 
     public function testRemoveWithUnspecifiedOffset()
@@ -470,7 +470,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
 
         $set = $this->_createSet($factory);
         $set->addIdHeader('Message-ID', 'some@id');
-        self::assertEquals(array($header), $set->getAll('message-id'));
+        self::assertSame(array($header), $set->getAll('message-id'));
     }
 
     public function testRemoveIsNotCaseSensitive()
@@ -525,7 +525,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
         $set = $this->_createSet($factory);
         $set->addTextHeader('Foo', 'bar');
         $set->addTextHeader('Zip', 'buttons');
-        self::assertEquals(
+        self::assertSame(
             "Foo: bar\r\n" .
             "Zip: buttons\r\n",
             $set->toString()
@@ -547,7 +547,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
         $set = $this->_createSet($factory);
         $set->addTextHeader('Foo', 'bar');
         $set->addTextHeader('Zip', '');
-        self::assertEquals(
+        self::assertSame(
             "Foo: bar\r\n",
             $set->toString()
         );
@@ -569,7 +569,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
         $set->addTextHeader('Foo', '');
         $set->addTextHeader('Zip', '');
         $set->setAlwaysDisplayed(array('Foo', 'Zip'));
-        self::assertEquals(
+        self::assertSame(
             "Foo: \r\n" .
             "Zip: \r\n",
             $set->toString()
@@ -599,7 +599,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
 
         $set->defineOrdering(array('First', 'Second', 'Third'));
 
-        self::assertEquals(
+        self::assertSame(
             "First: one\r\n" .
             "Second: two\r\n" .
             "Third: three\r\n",
@@ -640,7 +640,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
 
         $set->defineOrdering(array('First', 'Second', 'Third'));
 
-        self::assertEquals(
+        self::assertSame(
             "First: one\r\n" .
             "Second: two\r\n" .
             "Third: three\r\n" .

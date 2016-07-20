@@ -20,7 +20,7 @@ class Swift_Bug534Test extends \PHPUnit_Framework_TestCase
             $cid = $matches[1];
             preg_match('/Content-ID: <(.*)>/', $message->toString(), $matches);
             $contentId = $matches[1];
-            $that->assertEquals($cid, $contentId, 'cid in body and mime part Content-ID differ');
+            $that->assertSame($cid, $contentId, 'cid in body and mime part Content-ID differ');
 
             return true;
         };

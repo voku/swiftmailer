@@ -10,7 +10,7 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoderTest extends \SwiftMailerTestCase
         $encoder = $this->_createEncoder(
             $this->_createCharacterStream(true)
         );
-        self::assertEquals('Q', $encoder->getName());
+        self::assertSame('Q', $encoder->getName());
     }
 
     public function testSpaceAndTabNeverAppear()
@@ -58,7 +58,7 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoderTest extends \SwiftMailerTestCase
             ->andReturn(false);
 
         $encoder = $this->_createEncoder($charStream);
-        self::assertEquals('a_b', $encoder->encodeString('a b'),
+        self::assertSame('a_b', $encoder->encodeString('a b'),
             '%s: Spaces can be represented by more readable underscores as per RFC 2047.'
         );
     }
@@ -87,7 +87,7 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoderTest extends \SwiftMailerTestCase
             ->andReturn(false);
 
         $encoder = $this->_createEncoder($charStream);
-        self::assertEquals('=3D=3F=5F', $encoder->encodeString('=?_'),
+        self::assertSame('=3D=3F=5F', $encoder->encodeString('=?_'),
             '%s: Chars =, ? and _ (underscore) may not appear as per RFC 2047.'
         );
     }
@@ -114,7 +114,7 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoderTest extends \SwiftMailerTestCase
             ->andReturn(false);
 
         $encoder = $this->_createEncoder($charStream);
-        self::assertEquals('=28=22=29', $encoder->encodeString('(")'),
+        self::assertSame('=28=22=29', $encoder->encodeString('(")'),
             '%s: Chars (, " (DQUOTE) and ) may not appear as per RFC 2047.'
         );
     }
@@ -157,21 +157,21 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoderTest extends \SwiftMailerTestCase
             $encodedChar = $encoder->encodeString($char);
 
             if (in_array($byte, $allowedBytes, true)) {
-                self::assertEquals($char, $encodedChar,
+                self::assertSame($char, $encodedChar,
                     '%s: Character ' . $char . ' should not be encoded.'
                 );
             } elseif (0x00 == $byte) {
                 //Special case
-                self::assertEquals('', $encodedChar,
+                self::assertSame('', $encodedChar,
                     '%s: \NULL should replaced.'
                 );
             } elseif (0x20 == $byte) {
                 //Special case
-                self::assertEquals('_', $encodedChar,
+                self::assertSame('_', $encodedChar,
                     '%s: Space character should be replaced.'
                 );
             } else {
-                self::assertEquals(sprintf('=%02X', $byte), $encodedChar,
+                self::assertSame(sprintf('=%02X', $byte), $encodedChar,
                     '%s: Byte ' . $byte . ' should be encoded.'
                 );
             }
@@ -211,7 +211,7 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoderTest extends \SwiftMailerTestCase
             ->andReturn(false);
 
         $encoder = $this->_createEncoder($charStream);
-        self::assertEquals($output, $encoder->encodeString($input));
+        self::assertSame($output, $encoder->encodeString($input));
     }
 
     // -- Creation Methods

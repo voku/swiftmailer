@@ -12,7 +12,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
         $cache->setString(
             $this->_key1, 'foo', 'test', Swift_KeyCache::MODE_WRITE
             );
-        $this->assertEquals('test', $cache->getString($this->_key1, 'foo'));
+        $this->assertSame('test', $cache->getString($this->_key1, 'foo'));
     }
 
     public function testStringDataCanBeOverwritten()
@@ -26,7 +26,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
             $this->_key1, 'foo', 'whatever', Swift_KeyCache::MODE_WRITE
             );
 
-        $this->assertEquals('whatever', $cache->getString($this->_key1, 'foo'));
+        $this->assertSame('whatever', $cache->getString($this->_key1, 'foo'));
     }
 
     public function testStringDataCanBeAppended()
@@ -40,7 +40,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
             $this->_key1, 'foo', 'ing', Swift_KeyCache::MODE_APPEND
             );
 
-        $this->assertEquals('testing', $cache->getString($this->_key1, 'foo'));
+        $this->assertSame('testing', $cache->getString($this->_key1, 'foo'));
     }
 
     public function testHasKeyReturnValue()
@@ -65,8 +65,8 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
             $this->_key2, 'foo', 'ing', Swift_KeyCache::MODE_WRITE
             );
 
-        $this->assertEquals('test', $cache->getString($this->_key1, 'foo'));
-        $this->assertEquals('ing', $cache->getString($this->_key2, 'foo'));
+        $this->assertSame('test', $cache->getString($this->_key1, 'foo'));
+        $this->assertSame('ing', $cache->getString($this->_key2, 'foo'));
     }
 
     public function testItemKeyIsWellPartitioned()
@@ -80,8 +80,8 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
             $this->_key1, 'bar', 'ing', Swift_KeyCache::MODE_WRITE
             );
 
-        $this->assertEquals('test', $cache->getString($this->_key1, 'foo'));
-        $this->assertEquals('ing', $cache->getString($this->_key1, 'bar'));
+        $this->assertSame('test', $cache->getString($this->_key1, 'foo'));
+        $this->assertSame('ing', $cache->getString($this->_key1, 'bar'));
     }
 
     public function testByteStreamCanBeImported()
@@ -102,7 +102,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
         $cache->importFromByteStream(
             $this->_key1, 'foo', $os, Swift_KeyCache::MODE_WRITE
             );
-        $this->assertEquals('abcdef', $cache->getString($this->_key1, 'foo'));
+        $this->assertSame('abcdef', $cache->getString($this->_key1, 'foo'));
     }
 
     public function testByteStreamCanBeAppended()
@@ -140,7 +140,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
             $this->_key1, 'foo', $os2, Swift_KeyCache::MODE_APPEND
             );
 
-        $this->assertEquals('abcdefxyzuvw', $cache->getString($this->_key1, 'foo'));
+        $this->assertSame('abcdefxyzuvw', $cache->getString($this->_key1, 'foo'));
     }
 
     public function testByteStreamAndStringCanBeAppended()
@@ -166,7 +166,7 @@ class Swift_KeyCache_ArrayKeyCacheTest extends \PHPUnit_Framework_TestCase
         $cache->importFromByteStream(
             $this->_key1, 'foo', $os, Swift_KeyCache::MODE_APPEND
             );
-        $this->assertEquals('testabcdef', $cache->getString($this->_key1, 'foo'));
+        $this->assertSame('testabcdef', $cache->getString($this->_key1, 'foo'));
     }
 
     public function testDataCanBeExportedToByteStream()

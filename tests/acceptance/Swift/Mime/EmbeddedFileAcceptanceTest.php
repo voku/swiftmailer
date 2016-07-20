@@ -32,7 +32,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
         $file = $this->_createEmbeddedFile();
         $file->setContentType('application/pdf');
         $file->setId('foo@bar');
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: application/pdf'."\r\n".
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-ID: <foo@bar>'."\r\n".
@@ -47,7 +47,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
         $id = $file->getId();
         $file->setContentType('application/pdf');
         $file->setDisposition('attachment');
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: application/pdf'."\r\n".
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-ID: <'.$id.'>'."\r\n".
@@ -62,7 +62,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
         $id = $file->getId();
         $file->setContentType('application/pdf');
         $file->setFilename('foo.pdf');
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: application/pdf; name=foo.pdf'."\r\n".
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-ID: <'.$id.'>'."\r\n".
@@ -77,7 +77,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
         $id = $file->getId();
         $file->setContentType('application/pdf');
         $file->setSize(12340);
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: application/pdf'."\r\n".
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-ID: <'.$id.'>'."\r\n".
@@ -94,7 +94,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
         $file->setFilename('foo.pdf');
         $file->setSize(12340);
 
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: application/pdf; name=foo.pdf'."\r\n".
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-ID: <'.$id.'>'."\r\n".
@@ -111,7 +111,7 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
         $file->setFilename('foo.pdf');
         $file->setSize(12340);
         $file->setBody('abcd');
-        $this->assertEquals(
+        $this->assertSame(
             'Content-Type: application/pdf; name=foo.pdf'."\r\n".
             'Content-Transfer-Encoding: base64'."\r\n".
             'Content-ID: <'.$id.'>'."\r\n".

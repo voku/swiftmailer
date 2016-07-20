@@ -37,7 +37,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $signer = new Swift_Signers_DKIMSigner(file_get_contents(dirname(dirname(dirname(__DIR__))).'/_samples/dkim/dkim.test.priv'), 'dummy.nxdomain.be', 'dummySelector');
         $signer->setSignatureTimestamp('1299879181');
         $altered = $signer->getAlteredHeaders();
-        $this->assertEquals(array('DKIM-Signature'), $altered);
+        $this->assertSame(array('DKIM-Signature'), $altered);
         $signer->reset();
         $signer->setHeaders($headerSet);
         $this->assertFalse($headerSet->has('DKIM-Signature'));
@@ -48,7 +48,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $this->assertTrue($headerSet->has('DKIM-Signature'));
         $dkim = $headerSet->getAll('DKIM-Signature');
         $sig = reset($dkim);
-        $this->assertEquals($sig->getValue(), 'v=1; a=rsa-sha1; bh=wlbYcY9O9OPInGJ4D0E/rGsvMLE=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; t=1299879181; b=RMSNelzM2O5MAAnMjT3G3/VF36S3DGJXoPCXR001F1WDReu0prGphWjuzK/m6V1pwqQL8cCNg Hi74mTx2bvyAvmkjvQtJf1VMUOCc9WHGcm1Yec66I3ZWoNMGSWZ1EKAm2CtTzyG0IFw4ml9DI wSkyAFxlgicckDD6FibhqwX4w=');
+        $this->assertSame($sig->getValue(), 'v=1; a=rsa-sha1; bh=wlbYcY9O9OPInGJ4D0E/rGsvMLE=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; t=1299879181; b=RMSNelzM2O5MAAnMjT3G3/VF36S3DGJXoPCXR001F1WDReu0prGphWjuzK/m6V1pwqQL8cCNg Hi74mTx2bvyAvmkjvQtJf1VMUOCc9WHGcm1Yec66I3ZWoNMGSWZ1EKAm2CtTzyG0IFw4ml9DI wSkyAFxlgicckDD6FibhqwX4w=');
     }
 
     // SHA256 Signing
@@ -60,7 +60,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $signer->setHashAlgorithm('rsa-sha256');
         $signer->setSignatureTimestamp('1299879181');
         $altered = $signer->getAlteredHeaders();
-        $this->assertEquals(array('DKIM-Signature'), $altered);
+        $this->assertSame(array('DKIM-Signature'), $altered);
         $signer->reset();
         $signer->setHeaders($headerSet);
         $this->assertFalse($headerSet->has('DKIM-Signature'));
@@ -71,7 +71,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $this->assertTrue($headerSet->has('DKIM-Signature'));
         $dkim = $headerSet->getAll('DKIM-Signature');
         $sig = reset($dkim);
-        $this->assertEquals($sig->getValue(), 'v=1; a=rsa-sha256; bh=f+W+hu8dIhf2VAni89o8lF6WKTXi7nViA4RrMdpD5/U=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; t=1299879181; b=jqPmieHzF5vR9F4mXCAkowuphpO4iJ8IAVuioh1BFZ3VITXZj5jlOFxULJMBiiApm2keJirnh u4mzogj444QkpT3lJg8/TBGAYQPdcvkG3KC0jdyN6QpSgpITBJG2BwWa+keXsv2bkQgLRAzNx qRhP45vpHCKun0Tg9LrwW/KCg=');
+        $this->assertSame($sig->getValue(), 'v=1; a=rsa-sha256; bh=f+W+hu8dIhf2VAni89o8lF6WKTXi7nViA4RrMdpD5/U=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; t=1299879181; b=jqPmieHzF5vR9F4mXCAkowuphpO4iJ8IAVuioh1BFZ3VITXZj5jlOFxULJMBiiApm2keJirnh u4mzogj444QkpT3lJg8/TBGAYQPdcvkG3KC0jdyN6QpSgpITBJG2BwWa+keXsv2bkQgLRAzNx qRhP45vpHCKun0Tg9LrwW/KCg=');
     }
 
     // Relaxed/Relaxed Hash Signing
@@ -85,7 +85,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $signer->setBodyCanon('relaxed');
         $signer->setHeaderCanon('relaxed');
         $altered = $signer->getAlteredHeaders();
-        $this->assertEquals(array('DKIM-Signature'), $altered);
+        $this->assertSame(array('DKIM-Signature'), $altered);
         $signer->reset();
         $signer->setHeaders($headerSet);
         $this->assertFalse($headerSet->has('DKIM-Signature'));
@@ -96,7 +96,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $this->assertTrue($headerSet->has('DKIM-Signature'));
         $dkim = $headerSet->getAll('DKIM-Signature');
         $sig = reset($dkim);
-        $this->assertEquals($sig->getValue(), 'v=1; a=rsa-sha256; bh=f+W+hu8dIhf2VAni89o8lF6WKTXi7nViA4RrMdpD5/U=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; c=relaxed/relaxed; t=1299879181; b=gzOI+PX6HpZKQFzwwmxzcVJsyirdLXOS+4pgfCpVHQIdqYusKLrhlLeFBTNoz75HrhNvGH6T0 Rt3w5aTqkrWfUuAEYt0Ns14GowLM7JojaFN+pZ4eYnRB3CBBgW6fee4NEMD5WPca3uS09tr1E 10RYh9ILlRtl+84sovhx5id3Y=');
+        $this->assertSame($sig->getValue(), 'v=1; a=rsa-sha256; bh=f+W+hu8dIhf2VAni89o8lF6WKTXi7nViA4RrMdpD5/U=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; c=relaxed/relaxed; t=1299879181; b=gzOI+PX6HpZKQFzwwmxzcVJsyirdLXOS+4pgfCpVHQIdqYusKLrhlLeFBTNoz75HrhNvGH6T0 Rt3w5aTqkrWfUuAEYt0Ns14GowLM7JojaFN+pZ4eYnRB3CBBgW6fee4NEMD5WPca3uS09tr1E 10RYh9ILlRtl+84sovhx5id3Y=');
     }
 
     // Relaxed/Simple Hash Signing
@@ -109,7 +109,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $signer->setSignatureTimestamp('1299879181');
         $signer->setHeaderCanon('relaxed');
         $altered = $signer->getAlteredHeaders();
-        $this->assertEquals(array('DKIM-Signature'), $altered);
+        $this->assertSame(array('DKIM-Signature'), $altered);
         $signer->reset();
         $signer->setHeaders($headerSet);
         $this->assertFalse($headerSet->has('DKIM-Signature'));
@@ -120,7 +120,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $this->assertTrue($headerSet->has('DKIM-Signature'));
         $dkim = $headerSet->getAll('DKIM-Signature');
         $sig = reset($dkim);
-        $this->assertEquals($sig->getValue(), 'v=1; a=rsa-sha256; bh=f+W+hu8dIhf2VAni89o8lF6WKTXi7nViA4RrMdpD5/U=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; c=relaxed; t=1299879181; b=dLPJNec5v81oelyzGOY0qPqTlGnQeNfUNBOrV/JKbStr3NqWGI9jH4JAe2YvO2V32lfPNoby1 4MMzZ6EPkaZkZDDSPa+53YbCPQAlqiD9QZZIUe2UNM33HN8yAMgiWEF5aP7MbQnxeVZMfVLEl 9S8qOImu+K5JZqhQQTL0dgLwA=');
+        $this->assertSame($sig->getValue(), 'v=1; a=rsa-sha256; bh=f+W+hu8dIhf2VAni89o8lF6WKTXi7nViA4RrMdpD5/U=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; c=relaxed; t=1299879181; b=dLPJNec5v81oelyzGOY0qPqTlGnQeNfUNBOrV/JKbStr3NqWGI9jH4JAe2YvO2V32lfPNoby1 4MMzZ6EPkaZkZDDSPa+53YbCPQAlqiD9QZZIUe2UNM33HN8yAMgiWEF5aP7MbQnxeVZMfVLEl 9S8qOImu+K5JZqhQQTL0dgLwA=');
     }
 
     // Simple/Relaxed Hash Signing
@@ -133,7 +133,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $signer->setSignatureTimestamp('1299879181');
         $signer->setBodyCanon('relaxed');
         $altered = $signer->getAlteredHeaders();
-        $this->assertEquals(array('DKIM-Signature'), $altered);
+        $this->assertSame(array('DKIM-Signature'), $altered);
         $signer->reset();
         $signer->setHeaders($headerSet);
         $this->assertFalse($headerSet->has('DKIM-Signature'));
@@ -144,7 +144,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
         $this->assertTrue($headerSet->has('DKIM-Signature'));
         $dkim = $headerSet->getAll('DKIM-Signature');
         $sig = reset($dkim);
-        $this->assertEquals($sig->getValue(), 'v=1; a=rsa-sha256; bh=f+W+hu8dIhf2VAni89o8lF6WKTXi7nViA4RrMdpD5/U=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; c=simple/relaxed; t=1299879181; b=M5eomH/zamyzix9kOes+6YLzQZxuJdBP4x3nP9zF2N26eMLG2/cBKbnNyqiOTDhJdYfWPbLIa 1CWnjST0j5p4CpeOkGYuiE+M4TWEZwhRmRWootlPO3Ii6XpbBJKFk1o9zviS7OmXblUUE4aqb yRSIMDhtLdCK5GlaCneFLN7RQ=');
+        $this->assertSame($sig->getValue(), 'v=1; a=rsa-sha256; bh=f+W+hu8dIhf2VAni89o8lF6WKTXi7nViA4RrMdpD5/U=; d=dummy.nxdomain.be; h=; i=@dummy.nxdomain.be; s=dummySelector; c=simple/relaxed; t=1299879181; b=M5eomH/zamyzix9kOes+6YLzQZxuJdBP4x3nP9zF2N26eMLG2/cBKbnNyqiOTDhJdYfWPbLIa 1CWnjST0j5p4CpeOkGYuiE+M4TWEZwhRmRWootlPO3Ii6XpbBJKFk1o9zviS7OmXblUUE4aqb yRSIMDhtLdCK5GlaCneFLN7RQ=');
     }
 
     // -- Creation Methods

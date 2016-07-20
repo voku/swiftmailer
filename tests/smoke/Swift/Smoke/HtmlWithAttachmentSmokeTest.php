@@ -24,7 +24,7 @@ class Swift_Smoke_HtmlWithAttachmentSmokeTest extends SwiftMailerSmokeTestCase
                 '<p><q>This is part of a Swift Mailer v4 smoke test.</q></p>', 'text/html'
             )
             ;
-        $this->assertEquals(1, $mailer->send($message),
+        $this->assertSame(1, $mailer->send($message),
             '%s: The smoke test should send a single message'
             );
     }
