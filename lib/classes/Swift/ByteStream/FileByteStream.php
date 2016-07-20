@@ -194,12 +194,20 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _getReadHandle()
     {
         if (!isset($this->_reader)) {
-            $pointer = @fopen($this->_path, 'rb');
+
+            $opts = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ),
+            );
+
+            /** @noinspection PhpUsageOfSilenceOperatorInspection */
+            $pointer = @fopen($this->_path, 'rb', false, stream_context_create($opts));
 
             if (!$pointer) {
-                throw new Swift_IoException(
-                    'Unable to open file for reading [' . $this->_path . ']'
-                );
+                throw new Swift_IoException('Unable to open file for reading [' . $this->_path . ']');
             }
 
             $this->_reader = $pointer;
@@ -217,12 +225,11 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     private function _getWriteHandle()
     {
         if (!isset($this->_writer)) {
+            /** @noinspection PhpUsageOfSilenceOperatorInspection */
             $pointer = @fopen($this->_path, $this->_mode);
 
             if (!$pointer) {
-                throw new Swift_IoException(
-                    'Unable to open file for writing [' . $this->_path . ']'
-                );
+                throw new Swift_IoException('Unable to open file for writing [' . $this->_path . ']');
             }
 
             $this->_writer = $pointer;
@@ -289,7 +296,9 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
 
         fclose($this->_reader);
 
+        /** @noinspection PhpUsageOfSilenceOperatorInspection */
         $source = @fopen($this->_path, 'rb');
+
         if (!$source) {
             throw new Swift_IoException('Unable to open file for copying [' . $this->_path . ']');
         }
