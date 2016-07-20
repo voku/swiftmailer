@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Swift_Mime_Headers_MailboxHeaderTest
+ */
 class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
 {
     /* -- RFC 2822, 3.6.2 for all tests.
@@ -302,7 +305,7 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
     public function testSetValidAddressWithSpecialChars()
     {
         $header = $this->_getHeader('From', $this->_getEncoder('Q', true));
-        $header->setAddresses(['valid@email.com', 'àlso@vàlid.com']);
+        $header->setAddresses(array('valid@email.com', 'àlso@vàlid.com'));
     }
     /**
      * @expectedException Swift_RfcComplianceException
@@ -310,7 +313,7 @@ class Swift_Mime_Headers_MailboxHeaderTest extends \SwiftMailerTestCase
     public function testSetInvalidEmailAddress()
     {
         $header = $this->_getHeader('From', $this->_getEncoder('Q', true));
-        $header->setAddresses(['invalid']);
+        $header->setAddresses(array('invalid'));
     }
 
     /**
