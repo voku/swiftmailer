@@ -312,7 +312,9 @@ class Swift_Mime_AttachmentTest extends Swift_Mime_AbstractMimeEntityTest
 
     protected function _createAttachment($headers, $encoder, $cache, $mimeTypes = array())
     {
-        return new Swift_Mime_Attachment($headers, $encoder, $cache, new Swift_EmailValidatorBridge(), $mimeTypes);
+        $idGenerator = new Swift_Mime_IdGenerator('example.com');
+
+        return new Swift_Mime_Attachment($headers, $encoder, $cache, $idGenerator, $mimeTypes);
     }
 
     protected function _createFileStream($path, $data, $stub = true)

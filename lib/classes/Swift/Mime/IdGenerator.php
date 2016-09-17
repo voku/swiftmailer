@@ -14,6 +14,11 @@
 class Swift_Mime_IdGenerator implements Swift_IdGenerator
 {
     /**
+     * @var string
+     */
+    private $idRight;
+
+    /**
      * @param string $idRight
      */
     public function __construct($idRight)

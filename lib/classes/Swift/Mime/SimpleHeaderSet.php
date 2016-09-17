@@ -157,7 +157,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
     {
         $lowerName = Swift::strtolowerWithStaticCache($name);
 
-        if (!isset($this->_headers[$lowerName])) {
+        if (!array_key_exists($lowerName, $this->_headers)) {
             return false;
         }
 

@@ -5,6 +5,7 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
     private $_contentEncoder;
     private $_cache;
     private $_emailValidator;
+    private $_idGenerator;
     private $_headers;
 
     public function setUp()
@@ -28,6 +29,7 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
             new Swift_CharacterStream_ArrayCharacterStream($factory, 'utf-8')
         );
         $this->_emailValidator = new Swift_EmailValidatorBridge();
+        $this->_idGenerator = new Swift_Mime_IdGenerator('example.com');
         $this->_headers = new Swift_Mime_SimpleHeaderSet(
             new Swift_Mime_SimpleHeaderFactory($headerEncoder, $paramEncoder, $this->_emailValidator)
         );
@@ -121,7 +123,7 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
             $this->_headers,
             $this->_contentEncoder,
             $this->_cache,
-            $this->_emailValidator
+            $this->_idGenerator
         );
 
         return $entity;

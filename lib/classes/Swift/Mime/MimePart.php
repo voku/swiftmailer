@@ -47,12 +47,12 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      * @param Swift_Mime_HeaderSet       $headers
      * @param Swift_Mime_ContentEncoder  $encoder
      * @param Swift_KeyCache             $cache
-     * @param Swift_EmailValidatorBridge $emailValidator
+     * @param Swift_IdGenerator          $idGenerator
      * @param string                     $charset
      */
-    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_EmailValidatorBridge $emailValidator, $charset = null)
+    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_IdGenerator $idGenerator, $charset = null)
     {
-        parent::__construct($headers, $encoder, $cache, $emailValidator);
+        parent::__construct($headers, $encoder, $cache, $idGenerator);
 
         $this->_setNestingLevel(self::LEVEL_ALTERNATIVE);
 

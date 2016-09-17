@@ -18,15 +18,15 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
     /**
      * Create a new SimpleMessage with $headers, $encoder and $cache.
      *
-     * @param Swift_Mime_HeaderSet $headers
+     * @param Swift_Mime_HeaderSet      $headers
      * @param Swift_Mime_ContentEncoder $encoder
-     * @param Swift_KeyCache $cache
-     * @param Swift_EmailValidatorBridge $emailValidator
-     * @param string $charset
+     * @param Swift_KeyCache            $cache
+     * @param Swift_IdGenerator         $idGenerator
+     * @param string                    $charset
      */
-    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_EmailValidatorBridge $emailValidator, $charset = null)
+    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_IdGenerator $idGenerator, $charset = null)
     {
-        parent::__construct($headers, $encoder, $cache, $emailValidator, $charset);
+        parent::__construct($headers, $encoder, $cache, $idGenerator, $charset);
         $this->getHeaders()->defineOrdering(
             array(
                 'Return-Path',
@@ -638,7 +638,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime
             $this->getHeaders()->newInstance(),
             $this->getEncoder(),
             $this->_getCache(),
-            $this->_getEmailValidator(),
+            $this->_getIdGenerator(),
             $this->_userCharset
         );
         $part->setContentType($this->_userContentType);

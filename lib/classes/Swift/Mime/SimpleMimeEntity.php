@@ -35,11 +35,11 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     private $_encoder;
 
     /**
-     * The validator for email
+     * Message ID generator
      *
-     * @var Swift_EmailValidatorBridge
+     * @var Swift_IdGenerator
      */
-    private $_emailValidator;
+    private $_idGenerator;
 
     /**
      * A mime boundary, if any is used
@@ -135,14 +135,14 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      * @param Swift_Mime_HeaderSet       $headers
      * @param Swift_Mime_ContentEncoder  $encoder
      * @param Swift_KeyCache             $cache
-     * @param Swift_EmailValidatorBridge $emailValidator
+     * @param Swift_IdGenerator          $idGenerator
      */
-    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_EmailValidatorBridge $emailValidator)
+    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_IdGenerator $idGenerator)
     {
         $this->_cacheKey = $this->_generateNewCacheKey();
         $this->_cache = $cache;
         $this->_headers = $headers;
-        $this->_emailValidator = $emailValidator;
+        $this->_idGenerator = $idGenerator;
         $this->setEncoder($encoder);
         $this->_headers->defineOrdering(array('Content-Type', 'Content-Transfer-Encoding'));
 
@@ -168,7 +168,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
             ),
         );
 
-        $this->_id = $this->getRandomId();
+        $this->_id = $this->_idGenerator->generateId();
     }
 
     /**
@@ -178,7 +178,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     public function generateId()
     {
-        $this->setId($this->getRandomId());
+        $this->setId($this->_idGenerator->generateId());
 
         return $this->_id;
     }
@@ -731,13 +731,11 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     }
 
     /**
-     * Get the email-validator.
-     *
-     * @return Swift_EmailValidatorBridge
+     * @return Swift_IdGenerator
      */
-    protected function _getEmailValidator()
+    protected function _getIdGenerator()
     {
-        return $this->_emailValidator;
+        return $this->_idGenerator;
     }
 
     /**
@@ -746,26 +744,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     protected function _clearCache()
     {
         $this->_cache->clearKey($this->_cacheKey, 'body');
-    }
-
-    /**
-     * Returns a random Content-ID or Message-ID.
-     *
-     * @return string
-     */
-    protected function getRandomId()
-    {
-        $idLeft = $this->_generateNewCacheKey();
-        $idRight = !empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'swift.generated';
-        $id = $idLeft . '@' . $idRight;
-
-        try {
-            $this->_assertValidId($id);
-        } catch (Swift_RfcComplianceException $e) {
-            $id = $idLeft . '@swift.generated';
-        }
-
-        return $id;
     }
 
     /**
@@ -875,7 +853,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     private function _createChild()
     {
-        return new self($this->_headers->newInstance(), $this->_encoder, $this->_cache, $this->_emailValidator);
+        return new self($this->_headers->newInstance(), $this->_encoder, $this->_cache, $this->_idGenerator);
     }
 
     /**
@@ -949,20 +927,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     public function __destruct()
     {
         $this->_cache->clearAll($this->_cacheKey);
-    }
-
-    /**
-     * Throws an Exception if the id passed does not comply with RFC 2822.
-     *
-     * @param string $id
-     *
-     * @throws Swift_RfcComplianceException
-     */
-    private function _assertValidId($id)
-    {
-        if ($this->_emailValidator->isValidWrapper($id) === false) {
-            throw new Swift_RfcComplianceException('Invalid ID given <' . $id . '>');
-        }
     }
 
     /**
