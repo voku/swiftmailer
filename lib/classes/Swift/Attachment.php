@@ -62,7 +62,8 @@ class Swift_Attachment extends Swift_Mime_Attachment
      */
     public static function fromPath($path, $contentType = null)
     {
-        return (new self())->setFile(
+        $self = new self();
+        return $self->setFile(
             new Swift_ByteStream_FileByteStream($path),
             $contentType
         );

@@ -16,8 +16,8 @@ class Swift_Smoke_AttachmentSmokeTest extends SwiftMailerSmokeTestCase
     public function testAttachmentSending()
     {
         $mailer = $this->_getMailer();
-        $message = (new Swift_Message())
-            ->setSubject('[Swift Mailer] AttachmentSmokeTest')
+        $message = new Swift_Message();
+        $message->setSubject('[Swift Mailer] AttachmentSmokeTest')
             ->setFrom(array(SWIFT_SMOKE_EMAIL_ADDRESS => 'Swift Mailer'))
             ->setTo(SWIFT_SMOKE_EMAIL_ADDRESS)
             ->setBody('This message should contain an attached ZIP file (named "textfile.zip").'.PHP_EOL.
