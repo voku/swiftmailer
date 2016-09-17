@@ -35,7 +35,7 @@ Swift_DependencyContainer::getInstance()
         'mime.headerset',
         'mime.qpcontentencoder',
         'cache',
-        'email.validator',
+        'mime.idgenerator',
         'properties.charset',
     ))
 
@@ -45,7 +45,7 @@ Swift_DependencyContainer::getInstance()
         'mime.headerset',
         'mime.base64contentencoder',
         'cache',
-        'email.validator',
+        'mime.idgenerator',
     ))
     ->addConstructorValue($swift_mime_types)
 
@@ -55,7 +55,7 @@ Swift_DependencyContainer::getInstance()
         'mime.headerset',
         'mime.base64contentencoder',
         'cache',
-        'email.validator',
+        'mime.idgenerator',
     ))
     ->addConstructorValue($swift_mime_types)
 

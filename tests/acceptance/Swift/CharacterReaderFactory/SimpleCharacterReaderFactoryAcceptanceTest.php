@@ -2,7 +2,14 @@
 
 class Swift_CharacterReaderFactory_SimpleCharacterReaderFactoryAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_CharacterReaderFactory
+     */
     private $_factory;
+
+    /**
+     * @var string
+     */
     private $_prefix = 'Swift_CharacterReader_';
 
     public function setUp()
