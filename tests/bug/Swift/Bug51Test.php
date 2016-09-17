@@ -109,7 +109,7 @@ class Swift_Bug51Test extends \SwiftMailerTestCase
     {
         $this->_fillFileWithRandomBytes($size, $attachmentPath);
 
-        $message = Swift_Message::newInstance()
+        $message = (new Swift_Message())
             ->setSubject('test')
             ->setBody('test')
             ->setFrom('a@b.c')

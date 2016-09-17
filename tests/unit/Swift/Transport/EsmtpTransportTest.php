@@ -156,7 +156,7 @@ class Swift_Transport_EsmtpTransportTest extends Swift_Transport_AbstractSmtpEve
         } catch (Exception $e) {
             $this->fail(
                 'Starting Esmtp should fallback to HELO if needed and accept 250 response'
-                );
+            );
         }
     }
 
@@ -291,7 +291,7 @@ class Swift_Transport_EsmtpTransportTest extends Swift_Transport_AbstractSmtpEve
             ->setPort(25)
             ->setEncryption('tls')
             ->setTimeout(30)
-            ;
+        ;
         $this->assertSame($ref, $smtp);
     }
 }
