@@ -19,7 +19,7 @@ class Swift_Signers_SMimeSignerTest extends \PHPUnit_Framework_TestCase
 
     public function testUnSingedMessage()
     {
-        $message = new Swift_Message('Wonderful Subject'); 
+        $message = new Swift_Message('Wonderful Subject');
         $message
           ->setFrom(array('john@doe.com' => 'John Doe'))
           ->setTo(array('receiver@domain.org', 'other@domain.org' => 'A name'))
