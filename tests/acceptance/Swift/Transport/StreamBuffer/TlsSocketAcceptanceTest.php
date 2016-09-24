@@ -2,12 +2,15 @@
 
 require_once __DIR__.'/AbstractStreamBufferAcceptanceTest.php';
 
+/**
+ * Class Swift_Transport_StreamBuffer_TlsSocketAcceptanceTest
+ */
 class Swift_Transport_StreamBuffer_TlsSocketAcceptanceTest extends Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
 {
     public function setUp()
     {
         $streams = stream_get_transports();
-        if (!in_array('tls', $streams)) {
+        if (!in_array('tls', $streams, true)) {
             $this->markTestSkipped(
                 'TLS is not configured for your system.  It is not possible to run this test'
              );

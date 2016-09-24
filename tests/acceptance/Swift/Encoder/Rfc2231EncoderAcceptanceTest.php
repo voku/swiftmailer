@@ -2,14 +2,26 @@
 
 use voku\helper\UTF8;
 
+/**
+ * Class Swift_Encoder_Rfc2231EncoderAcceptanceTest
+ */
 class Swift_Encoder_Rfc2231EncoderAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var string
+     */
     private $_samplesDir;
+
+    /**
+     * @var Swift_CharacterReaderFactory_SimpleCharacterReaderFactory
+     */
     private $_factory;
 
     public function setUp()
     {
+        /** @noinspection RealpathOnRelativePathsInspection */
         $this->_samplesDir = realpath(__DIR__ . '/../../../_samples/charsets');
+
         $this->_factory = new Swift_CharacterReaderFactory_SimpleCharacterReaderFactory();
     }
 
@@ -17,7 +29,7 @@ class Swift_Encoder_Rfc2231EncoderAcceptanceTest extends \PHPUnit_Framework_Test
     {
         $sampleFp = opendir($this->_samplesDir);
         while (false !== $encodingDir = readdir($sampleFp)) {
-            if (substr($encodingDir, 0, 1) == '.') {
+            if (0 === strpos($encodingDir, '.')) {
                 continue;
             }
 
@@ -32,7 +44,7 @@ class Swift_Encoder_Rfc2231EncoderAcceptanceTest extends \PHPUnit_Framework_Test
             if (is_dir($sampleDir)) {
                 $fileFp = opendir($sampleDir);
                 while (false !== $sampleFile = readdir($fileFp)) {
-                    if (substr($sampleFile, 0, 1) == '.') {
+                    if (0 === strpos($sampleFile, '.')) {
                         continue;
                     }
 

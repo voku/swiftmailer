@@ -15,7 +15,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testMailboxHeaderIsCorrectType()
     {
         $header = $this->_factory->createMailboxHeader('X-Foo');
-        $this->assertInstanceof('Swift_Mime_Headers_MailboxHeader', $header);
+        $this->assertInstanceOf('Swift_Mime_Headers_MailboxHeader', $header);
     }
 
     public function testMailboxHeaderHasCorrectName()
@@ -36,7 +36,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testDateHeaderHasCorrectType()
     {
         $header = $this->_factory->createDateHeader('X-Date');
-        $this->assertInstanceof('Swift_Mime_Headers_DateHeader', $header);
+        $this->assertInstanceOf('Swift_Mime_Headers_DateHeader', $header);
     }
 
     public function testDateHeaderHasCorrectName()
@@ -54,7 +54,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testTextHeaderHasCorrectType()
     {
         $header = $this->_factory->createTextHeader('X-Foo');
-        $this->assertInstanceof('Swift_Mime_Headers_UnstructuredHeader', $header);
+        $this->assertInstanceOf('Swift_Mime_Headers_UnstructuredHeader', $header);
     }
 
     public function testTextHeaderHasCorrectName()
@@ -72,7 +72,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testParameterizedHeaderHasCorrectType()
     {
         $header = $this->_factory->createParameterizedHeader('X-Foo');
-        $this->assertInstanceof('Swift_Mime_Headers_ParameterizedHeader', $header);
+        $this->assertInstanceOf('Swift_Mime_Headers_ParameterizedHeader', $header);
     }
 
     public function testParameterizedHeaderHasCorrectName()
@@ -99,7 +99,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testIdHeaderHasCorrectType()
     {
         $header = $this->_factory->createIdHeader('X-ID');
-        $this->assertInstanceof('Swift_Mime_Headers_IdentificationHeader', $header);
+        $this->assertInstanceOf('Swift_Mime_Headers_IdentificationHeader', $header);
     }
 
     public function testIdHeaderHasCorrectName()
@@ -117,7 +117,7 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testPathHeaderHasCorrectType()
     {
         $header = $this->_factory->createPathHeader('X-Path');
-        $this->assertInstanceof('Swift_Mime_Headers_PathHeader', $header);
+        $this->assertInstanceOf('Swift_Mime_Headers_PathHeader', $header);
     }
 
     public function testPathHeaderHasCorrectName()

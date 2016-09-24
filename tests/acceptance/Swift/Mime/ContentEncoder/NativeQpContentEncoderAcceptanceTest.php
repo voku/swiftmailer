@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest
+ */
 class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var string
+     */
     protected $_samplesDir;
 
     /**
@@ -11,7 +17,9 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest extends \PH
 
     public function setUp()
     {
+        /** @noinspection RealpathOnRelativePathsInspection */
         $this->_samplesDir = realpath(__DIR__.'/../../../../_samples/charsets');
+
         $this->_encoder = new Swift_Mime_ContentEncoder_NativeQpContentEncoder();
     }
 
@@ -19,7 +27,7 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest extends \PH
     {
         $sampleFp = opendir($this->_samplesDir);
         while (false !== $encodingDir = readdir($sampleFp)) {
-            if (substr($encodingDir, 0, 1) == '.') {
+            if (0 === strpos($encodingDir, '.')) {
                 continue;
             }
 
@@ -28,7 +36,7 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest extends \PH
             if (is_dir($sampleDir)) {
                 $fileFp = opendir($sampleDir);
                 while (false !== $sampleFile = readdir($fileFp)) {
-                    if (substr($sampleFile, 0, 1) == '.') {
+                    if (0 === strpos($sampleFile, '.')) {
                         continue;
                     }
 
@@ -79,6 +87,9 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest extends \PH
         $this->assertSame('quoted-printable', $this->_encoder->getName());
     }
 
+    /**
+     * @return mixed
+     */
     private function _createEncoderFromContainer()
     {
         return Swift_DependencyContainer::getInstance()

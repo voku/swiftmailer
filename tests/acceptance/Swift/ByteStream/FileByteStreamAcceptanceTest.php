@@ -1,8 +1,18 @@
 <?php
 
+/**
+ * Class Swift_ByteStream_FileByteStreamAcceptanceTest
+ */
 class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var string
+     */
     private $_tmpDir;
+
+    /**
+     * @var string
+     */
     private $_testFile;
 
     public function setUp()
@@ -145,6 +155,12 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
 
     // -- Creation methods
 
+    /**
+     * @param string|array $search
+     * @param string|array $replace
+     *
+     * @return Swift_StreamFilters_StringReplacementFilter
+     */
     private function _createFilter($search, $replace)
     {
         return new Swift_StreamFilters_StringReplacementFilter($search, $replace);
@@ -158,6 +174,12 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
         return $this->getMock('Swift_InputByteStream');
     }
 
+    /**
+     * @param string $file
+     * @param bool   $writable
+     *
+     * @return Swift_ByteStream_FileByteStream
+     */
     private function _createFileStream($file, $writable = false)
     {
         return new Swift_ByteStream_FileByteStream($file, $writable);

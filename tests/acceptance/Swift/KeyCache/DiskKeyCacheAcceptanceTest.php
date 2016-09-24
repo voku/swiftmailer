@@ -1,9 +1,23 @@
 <?php
 
+/**
+ * Class Swift_KeyCache_DiskKeyCacheAcceptanceTest
+ */
 class Swift_KeyCache_DiskKeyCacheAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_KeyCache_DiskKeyCache
+     */
     private $_cache;
+
+    /**
+     * @var string
+     */
     private $_key1;
+
+    /**
+     * @var string
+     */
     private $_key2;
 
     public function setUp()

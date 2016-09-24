@@ -2,6 +2,9 @@
 
 use voku\helper\UTF8;
 
+/**
+ * Class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest
+ */
 class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
   /**

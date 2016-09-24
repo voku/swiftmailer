@@ -2,6 +2,9 @@
 
 require_once __DIR__.'/AbstractStreamBufferAcceptanceTest.php';
 
+/**
+ * Class Swift_Transport_StreamBuffer_BasicSocketAcceptanceTest
+ */
 class Swift_Transport_StreamBuffer_BasicSocketAcceptanceTest extends Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
 {
     public function setUp()

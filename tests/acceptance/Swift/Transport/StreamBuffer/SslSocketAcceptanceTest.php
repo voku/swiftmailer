@@ -2,12 +2,15 @@
 
 require_once __DIR__.'/AbstractStreamBufferAcceptanceTest.php';
 
+/**
+ * Class Swift_Transport_StreamBuffer_SslSocketAcceptanceTest
+ */
 class Swift_Transport_StreamBuffer_SslSocketAcceptanceTest extends Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
 {
     public function setUp()
     {
         $streams = stream_get_transports();
-        if (!in_array('ssl', $streams)) {
+        if (!in_array('ssl', $streams, true)) {
             $this->markTestSkipped(
                 'SSL is not configured for your system.  It is not possible to run this test'
              );

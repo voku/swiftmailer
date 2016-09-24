@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class Swift_Mime_HeaderEncoder_Base64HeaderEncoderAcceptanceTest
+ */
 class Swift_Mime_HeaderEncoder_Base64HeaderEncoderAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_Mime_HeaderEncoder_Base64HeaderEncoder
+     */
     private $_encoder;
 
     public function setUp()

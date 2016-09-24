@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Swift_Transport_StreamBuffer_SocketTimeoutTest
+ */
 class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -27,7 +30,7 @@ class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_
         }
 
         for ($i = 0; $i < 5; ++$i) {
-            $this->_randomHighPort = rand(50000, 65000);
+            $this->_randomHighPort = mt_rand(50000, 65000);
             $this->_server = stream_socket_server('tcp://127.0.0.1:'.$this->_randomHighPort);
         }
 
@@ -61,7 +64,7 @@ class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_
             $line = $this->_buffer->readLine(0);
         } catch (Exception $e) {
         }
-        $this->assertInstanceof('Swift_IoException', $e, 'IO Exception Not Thrown On Connection Timeout');
+        $this->assertInstanceOf('Swift_IoException', $e, 'IO Exception Not Thrown On Connection Timeout');
         $this->assertRegExp('/Connection to .* Timed Out/', $e->getMessage());
     }
 

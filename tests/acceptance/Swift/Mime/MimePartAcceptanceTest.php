@@ -1,11 +1,33 @@
 <?php
 
+/**
+ * Class Swift_Mime_MimePartAcceptanceTest
+ */
 class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_Mime_ContentEncoder_QpContentEncoder
+     */
     private $_contentEncoder;
+
+    /**
+     * @var Swift_KeyCache_ArrayKeyCache
+     */
     private $_cache;
+
+    /**
+     * @var Swift_EmailValidatorBridge
+     */
     private $_emailValidator;
+
+    /**
+     * @var Swift_Mime_IdGenerator
+     */
     private $_idGenerator;
+
+    /**
+     * @var Swift_Mime_SimpleHeaderSet
+     */
     private $_headers;
 
     public function setUp()
@@ -117,6 +139,9 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
 
     // -- Private helpers
 
+    /**
+     * @return Swift_Mime_MimePart
+     */
     protected function _createMimePart()
     {
         $entity = new Swift_Mime_MimePart(

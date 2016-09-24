@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
+ */
 abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -7,6 +10,9 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest e
      */
     protected $_buffer;
 
+    /**
+     * @return mixed
+     */
     abstract protected function _initializeBuffer();
 
     public function setUp()

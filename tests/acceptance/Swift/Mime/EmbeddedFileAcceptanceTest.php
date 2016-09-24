@@ -1,11 +1,33 @@
 <?php
 
+/**
+ * Class Swift_Mime_EmbeddedFileAcceptanceTest
+ */
 class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Swift_Mime_ContentEncoder_Base64ContentEncoder
+     */
     private $_contentEncoder;
+
+    /**
+     * @var Swift_KeyCache_ArrayKeyCache
+     */
     private $_cache;
+
+    /**
+     * @var Swift_EmailValidatorBridge
+     */
     private $_emailValidator;
+
+    /**
+     * @var Swift_Mime_IdGenerator
+     */
     private $_idGenerator;
+
+    /**
+     * @var Swift_Mime_SimpleHeaderSet
+     */
     private $_headers;
 
     public function setUp()
@@ -126,6 +148,9 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
 
     // -- Private helpers
 
+    /**
+     * @return Swift_Mime_EmbeddedFile
+     */
     protected function _createEmbeddedFile()
     {
         $entity = new Swift_Mime_EmbeddedFile(

@@ -1,13 +1,25 @@
 <?php
 
+/**
+ * Class Swift_Encoder_Base64EncoderAcceptanceTest
+ */
 class Swift_Encoder_Base64EncoderAcceptanceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var string
+     */
     private $_samplesDir;
+
+    /**
+     * @var Swift_Encoder_Base64Encoder
+     */
     private $_encoder;
 
     public function setUp()
     {
+        /** @noinspection RealpathOnRelativePathsInspection */
         $this->_samplesDir = realpath(__DIR__.'/../../../_samples/charsets');
+
         $this->_encoder = new Swift_Encoder_Base64Encoder();
     }
 
@@ -15,7 +27,7 @@ class Swift_Encoder_Base64EncoderAcceptanceTest extends \PHPUnit_Framework_TestC
     {
         $sampleFp = opendir($this->_samplesDir);
         while (false !== $encodingDir = readdir($sampleFp)) {
-            if (substr($encodingDir, 0, 1) == '.') {
+            if (0 === strpos($encodingDir, '.')) {
                 continue;
             }
 
@@ -24,7 +36,7 @@ class Swift_Encoder_Base64EncoderAcceptanceTest extends \PHPUnit_Framework_TestC
             if (is_dir($sampleDir)) {
                 $fileFp = opendir($sampleDir);
                 while (false !== $sampleFile = readdir($fileFp)) {
-                    if (substr($sampleFile, 0, 1) == '.') {
+                    if (0 === strpos($sampleFile, '.')) {
                         continue;
                     }
 
