@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class Swift_Mime_SimpleMessageAcceptanceTest
+ * Class Swift_Mime_SimpleMessageAcceptanceUtf8Test
  */
-class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
+class Swift_Mime_SimpleMessageAcceptanceUtf8Test extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
