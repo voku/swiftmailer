@@ -31,12 +31,17 @@ matrix:
       env: extension='true'
     - php: 7.0
       env: extension='false'
+    - php: 7.1
+      env: extension='true'
+    - php: 7.1
+      env: extension='false'
     - php: hhvm
       env: extension='true'
     - php: hhvm
       env: extension='false'
   allow_failures:
     - php: hhvm
+    - php: 7.1
 
 before_script:
     - php --version

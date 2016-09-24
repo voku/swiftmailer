@@ -7,7 +7,6 @@
 [![Latest Stable Version](https://poser.pugx.org/voku/swiftmailer/v/stable)](https://packagist.org/packages/voku/swiftmailer) 
 [![Total Downloads](https://poser.pugx.org/voku/swiftmailer/downloads)](https://packagist.org/packages/voku/swiftmailer) 
 [![Latest Unstable Version](https://poser.pugx.org/voku/swiftmailer/v/unstable)](https://packagist.org/packages/voku/swiftmailer)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/voku/swiftmailer/badge.svg)](https://travis-ci.org/voku/swiftmailer)
 [![License](https://poser.pugx.org/voku/swiftmailer/license)](https://packagist.org/packages/voku/swiftmailer)
 
 # Swift Mailer
