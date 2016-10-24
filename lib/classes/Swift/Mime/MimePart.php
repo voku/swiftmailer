@@ -71,7 +71,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      * @param string $contentType optional
      * @param string $charset     optional
      *
-     * @return Swift_Mime_MimePart
+     * @return $this
      */
     public function setBody($body, $contentType = null, $charset = null)
     {
@@ -103,7 +103,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      *
      * @param string $charset
      *
-     * @return Swift_Mime_MimePart
+     * @return $this
      */
     public function setCharset($charset)
     {
@@ -135,7 +135,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      *
      * @param string $format
      *
-     * @return Swift_Mime_MimePart
+     * @return $this
      */
     public function setFormat($format)
     {
@@ -160,7 +160,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      *
      * @param bool $delsp
      *
-     * @return Swift_Mime_MimePart
+     * @return $this
      */
     public function setDelSp($delsp = true)
     {

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Swift_Mime_SimpleMessageTest
+ */
 class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
 {
   public function testNestingLevelIsSubpart()
@@ -91,7 +94,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
             ->setTo(array('chris@site.tld', 'mark@site.tld'))
             ->setCc('john@somewhere.tld')
             ->setBcc(array('one@site', 'two@site' => 'Two'))
-            ->setPriority(4)
+            ->setPriority($message::PRIORITY_LOW)
             ->setReadReceiptTo('a@b')
             ->attach($child)
             ->detach($child)
@@ -843,7 +846,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createEncoder(), $this->_createCache()
     );
 
-    $message->setPriority(5);
+    $message->setPriority($message::PRIORITY_LOWEST);
   }
 
   public function testPriorityHeaderIsAddedIfNoneSet()
@@ -861,7 +864,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
         $this->_createCache()
     );
 
-    $message->setPriority(4);
+    $message->setPriority($message::PRIORITY_LOW);
   }
 
   public function testReadReceiptAddressReadFromHeader()
