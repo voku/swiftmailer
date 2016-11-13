@@ -227,9 +227,9 @@ class Swift_Message extends Swift_Mime_SimpleMessage
         $this->savedMessage['children'] = $this->getChildren();
 
         if (
-            count($this->savedMessage['children']) > 0
-            &&
             $this->getBody() != ''
+            &&
+            count($this->savedMessage['children']) > 0
         ) {
             $this->setChildren(array_merge(array($this->_becomeMimePart()), $this->savedMessage['children']));
             $this->setBody('');
@@ -290,11 +290,11 @@ class Swift_Message extends Swift_Mime_SimpleMessage
         parent::__clone();
 
         foreach ($this->bodySigners as $key => $bodySigner) {
-            $this->bodySigners[$key] = clone($bodySigner);
+            $this->bodySigners[$key] = clone $bodySigner;
         }
 
         foreach ($this->headerSigners as $key => $headerSigner) {
-            $this->headerSigners[$key] = clone($headerSigner);
+            $this->headerSigners[$key] = clone $headerSigner;
         }
     }
 }
