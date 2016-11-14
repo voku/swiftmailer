@@ -15,6 +15,7 @@ $preferences->setCharset('utf-8');
 // If possible, use a disk cache to enable attaching large attachments etc.
 // You can override the default temporary directory by setting the TMPDIR environment variable.
 $tmpDir = sys_get_temp_dir();
+/** @noinspection PhpUsageOfSilenceOperatorInspection */
 if (@is_writable($tmpDir)) {
     $preferences->setTempDir($tmpDir)->setCacheType('disk');
 }
