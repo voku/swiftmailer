@@ -154,7 +154,7 @@ function generateUpToDateMimeArray()
             $extension = strtolower(trim($node->glob['ddpattern'][0], '*.'));
 
             // skip none glob extensions
-            if (strpos($extension, '.') !== false ) {
+            if (strpos($extension, '.') !== false) {
                 continue;
             }
 
