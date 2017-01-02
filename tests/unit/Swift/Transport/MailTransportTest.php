@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Swift_Transport_MailTransportTest
+ */
 class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
 {
     public function testTransportUsesToFieldBodyInSending()
@@ -176,6 +179,30 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport->shouldReceive('mail')
                   ->once()
                   ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), 'Subject: Stuff' . PHP_EOL, \Mockery::any());
+        $transport->send($message);
+    }
+
+    public function testTransportSettingInvalidFromEmail()
+    {
+        $dispatcher = $this->_createEventDispatcher();
+        $transport = $this->_createTransport($dispatcher);
+
+        $headers = $this->_createHeaders();
+        $message = $this->_createMessageWithRecipient($headers);
+        $message->shouldReceive('getReturnPath')
+            ->zeroOrMoreTimes()
+            ->andReturn(
+                '"attacker\" -oQ/tmp/ -X/var/www/cache/phpcode.php "@email.com'
+            );
+        $message->shouldReceive('getSender')
+            ->zeroOrMoreTimes()
+            ->andReturn(null);
+        $message->shouldReceive('getFrom')
+            ->zeroOrMoreTimes()
+            ->andReturn(null);
+        $transport->shouldReceive('mail')
+            ->once()
+            ->with(\Mockery::any(), \Mockery::any(), \Mockery::any(), \Mockery::any(), null);
         $transport->send($message);
     }
 
@@ -378,6 +405,9 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport->send($message);
     }
 
+    /**
+     * @return array
+     */
     public function noExceptionWhenRecipientsExistProvider()
     {
         return array(
