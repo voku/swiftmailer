@@ -38,7 +38,7 @@ class Swift_Transport_StreamBufferTest extends \PHPUnit_Framework_TestCase
      */
     private function _createFactory()
     {
-        return $this->getMock('Swift_ReplacementFilterFactory');
+        return $this->getMockBuilder('Swift_ReplacementFilterFactory')->getMock();
     }
 
     /**
@@ -46,6 +46,6 @@ class Swift_Transport_StreamBufferTest extends \PHPUnit_Framework_TestCase
      */
     public function _createFilter()
     {
-        return $this->getMock('Swift_StreamFilter');
+        return $this->getMockBuilder('Swift_StreamFilter')->getMock();
     }
 }

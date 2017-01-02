@@ -109,7 +109,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
         );
         $this->assertIdenticalBinary(pack('C*', 0xD1, 0x85), $stream->read(1));
 
-        $this->assertSame(false, $stream->read(1));
+        $this->assertFalse($stream->read(1));
     }
 
     public function testCharactersCanBeReadAsByteArrays()
@@ -154,7 +154,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
         );
         $this->assertSame(array(0xD1, 0x85), $stream->readBytes(1));
 
-        $this->assertSame(false, $stream->readBytes(1));
+        $this->assertFalse($stream->readBytes(1));
     }
 
     public function testRequestingLargeCharCountPastEndOfStream()
@@ -178,7 +178,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
             $stream->read(100)
         );
 
-        $this->assertSame(false, $stream->read(1));
+        $this->assertFalse($stream->read(1));
     }
 
     public function testRequestingByteArrayCountPastEndOfStream()
@@ -202,7 +202,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
             $stream->readBytes(100)
         );
 
-        $this->assertSame(false, $stream->readBytes(1));
+        $this->assertFalse($stream->readBytes(1));
     }
 
     public function testPointerOffsetCanBeSet()
@@ -250,7 +250,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
 
         $stream->flushContents();
 
-        $this->assertSame(false, $stream->read(1));
+        $this->assertFalse($stream->read(1));
     }
 
     public function testByteStreamCanBeImportingUsesValidator()
@@ -318,7 +318,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
         $this->assertIdenticalBinary(pack('C*', 0xD0, 0xB6), $stream->read(1));
         $this->assertIdenticalBinary(pack('C*', 0xD0, 0xBE), $stream->read(1));
 
-        $this->assertSame(false, $stream->read(1));
+        $this->assertFalse($stream->read(1));
     }
 
     public function testAlgorithmWithFixedWidthCharsets()
@@ -342,7 +342,7 @@ class Swift_CharacterStream_ArrayCharacterStreamTest extends \SwiftMailerTestCas
         $this->assertIdenticalBinary(pack('C*', 0xD0, 0xBB), $stream->read(1));
         $this->assertIdenticalBinary(pack('C*', 0xD0, 0xB0), $stream->read(1));
 
-        $this->assertSame(false, $stream->read(1));
+        $this->assertFalse($stream->read(1));
     }
 
     // -- Creation methods
