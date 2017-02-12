@@ -24,11 +24,11 @@
     "require": {
         "php": ">=5.3.3",
         "voku/email-check": "~1.1",
-        "voku/portable-utf8": "~3.0"
+        "voku/portable-utf8": "~3.1"
     },
     "require-dev": {
         "mockery/mockery": "~0.9.1",
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0|~5.0"
     },
     "autoload": {
         "files": ["lib/swift_required.php"]
