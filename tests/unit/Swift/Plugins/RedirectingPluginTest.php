@@ -169,8 +169,6 @@ class Swift_Plugins_RedirectingPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($message->getBcc(), array('fabien@example.com' => 'Fabien'));
     }
 
-    // -- Creation Methods
-
     /**
      * @param Swift_Mime_Message $message
      *

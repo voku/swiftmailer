@@ -19,12 +19,10 @@ class Swift_Bug76Test extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-
-
-        $this->_inputFile = sys_get_temp_dir().'/in.bin';
+        $this->_inputFile = sys_get_temp_dir() . '/in.bin';
         file_put_contents($this->_inputFile, '');
 
-        $this->_outputFile = sys_get_temp_dir().'/out.bin';
+        $this->_outputFile = sys_get_temp_dir() . '/out.bin';
         file_put_contents($this->_outputFile, '');
 
         $this->_encoder = $this->_createEncoder();

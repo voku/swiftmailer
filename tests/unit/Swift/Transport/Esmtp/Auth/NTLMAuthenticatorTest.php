@@ -11,7 +11,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         if (!function_exists('openssl_encrypt') || !function_exists('openssl_random_pseudo_bytes') || !function_exists('bcmul') || !function_exists('iconv')) {
             $this->markTestSkipped(
                 'One of the required functions is not available.'
-             );
+            );
         }
     }
 
@@ -27,7 +27,9 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         $message1 = $this->_invokePrivateMethod('createMessage1', $login);
 
         self::assertSame(
-            $this->_message1, bin2hex($message1), '%s: We send the smallest ntlm message which should never fail.');
+            $this->_message1, bin2hex($message1),
+            '%s: We send the smallest ntlm message which should never fail.'
+        );
     }
 
     public function testLMv1Generator()
@@ -47,7 +49,9 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         );
 
         self::assertSame(
-            $lmv1, bin2hex($lmv1Result), '%s: The keys should be the same cause we use the same values to generate them.');
+            $lmv1, bin2hex($lmv1Result),
+            '%s: The keys should be the same cause we use the same values to generate them.'
+        );
     }
 
     public function testLMv2Generator()
@@ -72,7 +76,9 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         );
 
         self::assertSame(
-            $lmv2, bin2hex($lmv2Result), '%s: The keys should be the same cause we use the same values to generate them.');
+            $lmv2, bin2hex($lmv2Result),
+            '%s: The keys should be the same cause we use the same values to generate them.'
+        );
     }
 
     public function testMessage3v1Generator()
@@ -98,7 +104,9 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         );
 
         self::assertSame(
-            $message3T, bin2hex($message3), '%s: We send the same information as the example is created with so this should be the same');
+            $message3T, bin2hex($message3),
+            '%s: We send the same information as the example is created with so this should be the same'
+        );
     }
 
     public function testMessage3v2Generator()
@@ -123,7 +131,9 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         );
 
         self::assertSame(
-            $this->_message3, bin2hex($message3), '%s: We send the same information as the example is created with so this should be the same');
+            $this->_message3, bin2hex($message3),
+            '%s: We send the same information as the example is created with so this should be the same'
+        );
     }
 
     public function testGetDomainAndUsername()
@@ -201,19 +211,12 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
         $login = $this->_getAuthenticator();
         list($domain, $user) = $this->_invokePrivateMethod('getDomainAndUsername', $login, array($username));
 
-        $this->assertEquals('', $domain, '%s: the fetched domain did not match');
-        $this->assertEquals('user', $user, '%s: the fetched user did not match');
-    }
-
-    public function testGetDomainAndUsernameWithoutDomain()
-    {
-        $username = 'user';
-
-        $login = $this->_getAuthenticator();
-        list($domain, $user) = $this->_invokePrivateMethod('getDomainAndUsername', $login, array($username));
-
-        $this->assertEquals('', $domain, '%s: the fetched domain did not match');
-        $this->assertEquals('user', $user, '%s: the fetched user did not match');
+        $this->assertEquals('', $domain,
+            '%s: the fetched domain did not match'
+        );
+        $this->assertEquals('user', $user,
+            '%s: the fetched user did not match'
+        );
     }
 
     public function testSuccessfulAuthentication()
@@ -251,7 +254,9 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
             );
 
         self::assertTrue(
-            $ntlm->authenticate($agent, $username . '@' . $domain, $secret, $this->hex2bin('30fa7e3c677bc301'), $this->hex2bin('f5ce3d2401c8f6e9')), '%s: The buffer accepted all commands authentication should succeed');
+            $ntlm->authenticate($agent, $username . '@' . $domain, $secret, $this->hex2bin('30fa7e3c677bc301'), $this->hex2bin('f5ce3d2401c8f6e9')),
+            '%s: The buffer accepted all commands authentication should succeed'
+        );
     }
 
     public function testAuthenticationFailureSendRsetAndReturnFalse()
@@ -275,7 +280,9 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
             ->with("RSET\r\n", array(250));
 
         self::assertFalse(
-            $ntlm->authenticate($agent, $username . '@' . $domain, $secret, $this->hex2bin('30fa7e3c677bc301'), $this->hex2bin('f5ce3d2401c8f6e9')), '%s: Authentication fails, so RSET should be sent');
+            $ntlm->authenticate($agent, $username . '@' . $domain, $secret, $this->hex2bin('30fa7e3c677bc301'), $this->hex2bin('f5ce3d2401c8f6e9')),
+            '%s: Authentication fails, so RSET should be sent'
+        );
     }
 
     private function _getAuthenticator()

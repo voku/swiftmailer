@@ -1263,8 +1263,6 @@ class Swift_Mime_SimpleMessageAcceptanceUtf8Test extends \PHPUnit_Framework_Test
         );
     }
 
-    // -- Private helpers
-
     protected function _createMessage()
     {
         return new Swift_Message();

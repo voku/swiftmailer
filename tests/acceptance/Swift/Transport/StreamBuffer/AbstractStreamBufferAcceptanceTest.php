@@ -134,8 +134,6 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest e
         $this->_buffer->write('y');
     }
 
-    // -- Creation Methods
-
     /**
      * @return Swift_InputByteStream|PHPUnit_Framework_MockObject_MockObject
      */

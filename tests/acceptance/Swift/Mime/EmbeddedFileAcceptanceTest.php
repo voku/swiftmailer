@@ -146,8 +146,6 @@ class Swift_Mime_EmbeddedFileAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    // -- Private helpers
-
     /**
      * @return Swift_Mime_EmbeddedFile
      */

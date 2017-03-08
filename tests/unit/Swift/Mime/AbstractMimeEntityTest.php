@@ -1108,8 +1108,6 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
     $entity->setChildren(array());
   }
 
-  // -- Private helpers
-
   public function testBodyIsReadFromCacheWhenUsingToStringIfPresent()
   {
     $headers = $this->_createHeaderSet(array(), false);

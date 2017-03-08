@@ -123,8 +123,6 @@ class Swift_Plugins_LoggerPluginTest extends \SwiftMailerTestCase
         }
     }
 
-    // -- Creation Methods
-
     /**
      * @return Swift_Plugins_Logger|PHPUnit_Framework_MockObject_MockObject
      */

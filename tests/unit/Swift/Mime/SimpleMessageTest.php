@@ -943,10 +943,6 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
     $this->assertSame(array($child1, $child2), $message->getChildren());
   }
 
-  // -- Private helpers
-
-  //abstract
-
   public function testChildrenCanBeDetached()
   {
     $child1 = $this->_createChild();

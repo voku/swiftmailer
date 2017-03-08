@@ -88,11 +88,13 @@ class Swift_Bug666Test extends \PHPUnit_Framework_TestCase
         $this->assertPatternInStream($pattern, $streamB);
     }
 
-    // -- Helpers
-
+    /**
+     * @param $pattern
+     * @param $stream
+     * @param string $message
+     */
     public function assertPatternInStream($pattern, $stream, $message = '%s')
     {
-
         $string = '';
         while (false !== $bytes = $stream->read(8192)) {
             $string .= $bytes;

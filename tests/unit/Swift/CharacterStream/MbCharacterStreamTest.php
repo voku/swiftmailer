@@ -290,8 +290,6 @@ class Swift_CharacterStream_MbCharacterStreamTest extends \SwiftMailerTestCase
         self::assertSame(false, $stream->read(1));
     }
 
-    // -- Creation methods
-
     private function _getReader()
     {
         return $this->getMockery('Swift_CharacterReader');

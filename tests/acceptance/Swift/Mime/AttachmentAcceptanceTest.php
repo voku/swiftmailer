@@ -133,8 +133,6 @@ class Swift_Mime_AttachmentAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    // -- Private helpers
-
     /**
      * @return Swift_Mime_Attachment
      */

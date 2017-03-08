@@ -7,10 +7,10 @@ class Swift_Bug51Test extends \SwiftMailerTestCase
 
     protected function setUp()
     {
-        $this->_attachmentFile = sys_get_temp_dir().'/attach.rand.bin';
+        $this->_attachmentFile = sys_get_temp_dir() . '/attach.rand.bin';
         file_put_contents($this->_attachmentFile, '');
 
-        $this->_outputFile = sys_get_temp_dir().'/attach.out.bin';
+        $this->_outputFile = sys_get_temp_dir() . '/attach.out.bin';
         file_put_contents($this->_outputFile, '');
     }
 

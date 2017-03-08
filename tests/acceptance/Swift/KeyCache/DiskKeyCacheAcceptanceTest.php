@@ -27,7 +27,7 @@ class Swift_KeyCache_DiskKeyCacheAcceptanceTest extends \PHPUnit_Framework_TestC
         $this->_cache = new Swift_KeyCache_DiskKeyCache(
             new Swift_KeyCache_SimpleKeyCacheInputStream(),
             sys_get_temp_dir()
-            );
+        );
     }
 
     public function testStringDataCanBeSetAndFetched()

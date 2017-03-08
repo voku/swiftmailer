@@ -90,7 +90,7 @@ class Swift_Message extends Swift_Mime_SimpleMessage
                 $body,
                 $contentType,
                 $charset
-            )
+            )->setEncoder($this->getEncoder())
         );
     }
 

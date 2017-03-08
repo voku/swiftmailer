@@ -137,8 +137,6 @@ class Swift_Mime_MimePartAcceptanceTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    // -- Private helpers
-
     /**
      * @return Swift_Mime_MimePart
      */

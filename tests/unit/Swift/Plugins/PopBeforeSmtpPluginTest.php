@@ -69,8 +69,6 @@ class Swift_Plugins_PopBeforeSmtpPluginTest extends \PHPUnit_Framework_TestCase
         $plugin->beforeTransportStarted($evt);
     }
 
-    // -- Creation Methods
-
     /**
      * @return Swift_Transport|PHPUnit_Framework_MockObject_MockObject
      */

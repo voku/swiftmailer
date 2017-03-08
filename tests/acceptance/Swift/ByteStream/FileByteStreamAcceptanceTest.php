@@ -17,7 +17,7 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
 
     protected function setUp()
     {
-        $this->_testFile = sys_get_temp_dir().'/swift-test-file'.__CLASS__;
+        $this->_testFile = sys_get_temp_dir() . '/swift-test-file'.__CLASS__;
         file_put_contents($this->_testFile, 'abcdefghijklm');
     }
 
@@ -153,8 +153,6 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
 
         $file->write('y');
     }
-
-    // -- Creation methods
 
     /**
      * @param string|array $search

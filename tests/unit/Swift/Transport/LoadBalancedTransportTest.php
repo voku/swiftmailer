@@ -734,8 +734,6 @@ class Swift_Transport_LoadBalancedTransportTest extends \SwiftMailerTestCase
         return $isRef;
     }
 
-    // -- Private helpers
-
     /**
      * @param array $transports
      *

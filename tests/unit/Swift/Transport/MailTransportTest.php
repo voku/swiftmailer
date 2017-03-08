@@ -434,8 +434,6 @@ class Swift_Transport_MailTransportTest extends \SwiftMailerTestCase
         $transport->send($message);
     }
 
-    // -- Creation Methods
-
     /**
      * @param $dispatcher
      * @return \Mockery\Mock|Swift_Transport_MailTransport

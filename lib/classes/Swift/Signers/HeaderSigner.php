@@ -41,7 +41,7 @@ interface Swift_Signers_HeaderSigner extends Swift_Signer, Swift_InputByteStream
     /**
      * Give the headers already given.
      *
-     * @param Swift_Mime_SimpleHeaderSet $headers
+     * @param Swift_Mime_HeaderSet $headers
      *
      * @return self
      */
