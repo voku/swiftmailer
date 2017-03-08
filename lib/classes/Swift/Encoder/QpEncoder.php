@@ -239,8 +239,8 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
     /**
      * Encode the given byte array into a verbatim QP form.
      *
-     * @param integer[] $bytes
-     * @param int       $size
+     * @param int[] $bytes
+     * @param int   $size
      *
      * @return string
      */

@@ -392,8 +392,6 @@ class Swift_Encoder_QpEncoderTest extends \SwiftMailerTestCase
         );
     }
 
-    // -- Creation methods
-
     private function _createCharStream()
     {
         return $this->getMockery('Swift_CharacterStream')->shouldIgnoreMissing();

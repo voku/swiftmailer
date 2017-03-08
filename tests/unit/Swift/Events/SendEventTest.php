@@ -79,8 +79,6 @@ class Swift_Events_SendEventTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array(), $evt->getFailedRecipients());
     }
 
-    // -- Creation Methods
-
     private function _createEvent(Swift_Transport $source,
         Swift_Mime_Message $message)
     {

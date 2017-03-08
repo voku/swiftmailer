@@ -17,17 +17,16 @@ class Swift_Mime_ContentEncoder_QpContentEncoderAcceptanceTest extends \PHPUnit_
    */
   private $_factory;
 
-  public function setUp()
-  {
-    /** @noinspection RealpathOnRelativePathsInspection */
-    $this->_samplesDir = realpath(__DIR__ . '/../../../../_samples/charsets');
-    $this->_factory = new Swift_CharacterReaderFactory_SimpleCharacterReaderFactory();
-  }
+    protected function setUp()
+    {
+    /** @noinspection RealpathOnRelativePathsInspection */    $this->_samplesDir = realpath(__DIR__.'/../../../../_samples/charsets');
+        $this->_factory = new Swift_CharacterReaderFactory_SimpleCharacterReaderFactory();
+    }
 
-  public function tearDown()
-  {
-    Swift_Preferences::getInstance()->setQPDotEscape(false);
-  }
+    protected function tearDown()
+    {
+        Swift_Preferences::getInstance()->setQPDotEscape(false);
+    }
 
   public function testEncodingAndDecodingSamples()
   {

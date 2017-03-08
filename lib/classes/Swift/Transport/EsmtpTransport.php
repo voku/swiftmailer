@@ -64,7 +64,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @param string $host
      *
-     * @return Swift_Transport_EsmtpTransport
+     * @return $this
      */
     public function setHost($host)
     {
@@ -88,7 +88,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @param int $port
      *
-     * @return Swift_Transport_EsmtpTransport
+     * @return $this
      */
     public function setPort($port)
     {
@@ -112,7 +112,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @param int $timeout seconds
      *
-     * @return Swift_Transport_EsmtpTransport
+     * @return $this
      */
     public function setTimeout($timeout)
     {
@@ -137,7 +137,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @param string $encryption
      *
-     * @return Swift_Transport_EsmtpTransport
+     * @return $this
      */
     public function setEncryption($encryption)
     {
@@ -187,7 +187,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @param array $options
      *
-     * @return Swift_Transport_EsmtpTransport
+     * @return $this
      */
     public function setStreamOptions($options)
     {
@@ -211,7 +211,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @param string $source
      *
-     * @return Swift_Transport_EsmtpTransport
+     * @return $this
      */
     public function setSourceIp($source)
     {
@@ -235,7 +235,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      *
      * @param Swift_Transport_EsmtpHandler[] $handlers
      *
-     * @return Swift_Transport_EsmtpTransport
+     * @return $this
      */
     public function setExtensionHandlers(array $handlers)
     {

@@ -15,21 +15,13 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
      */
     private $_testFile;
 
-    public function setUp()
+    protected function setUp()
     {
-        if (!defined('SWIFT_TMP_DIR')) {
-            $this->markTestSkipped(
-                'Cannot run test without a writable directory to use ('.
-                'define SWIFT_TMP_DIR in tests/config.php if you wish to run this test)'
-             );
-        }
-
-        $this->_tmpDir = SWIFT_TMP_DIR;
-        $this->_testFile = $this->_tmpDir.'/swift-test-file'.__CLASS__;
+        $this->_testFile = sys_get_temp_dir().'/swift-test-file'.__CLASS__;
         file_put_contents($this->_testFile, 'abcdefghijklm');
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unlink($this->_testFile);
     }
@@ -82,6 +74,15 @@ class Swift_ByteStream_FileByteStreamAcceptanceTest extends \PHPUnit_Framework_T
         $file->write("\nzip\r\ntest\r");
         $file->flushBuffers();
         $this->assertSame("foo\nbar\nzip\ntest\n", file_get_contents($this->_testFile));
+    }
+
+    public function testWritingWithFulleMessageLengthOfAMultipleOf8192()
+    {
+        $file = $this->_createFileStream($this->_testFile, true);
+        $file->addFilter($this->_createFilter(array("\r\n", "\r"), "\n"), 'allToLF');
+        $file->write('');
+        $file->flushBuffers();
+        $this->assertEquals('', file_get_contents($this->_testFile));
     }
 
     public function testBindingOtherStreamsMirrorsWriteOperations()

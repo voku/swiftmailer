@@ -2,8 +2,6 @@
 
 class Swift_Mime_SimpleMimeEntityTest extends Swift_Mime_AbstractMimeEntityTest
 {
-    // -- Private helpers
-
     protected function _createEntity($headerFactory, $encoder, $cache)
     {
         $idGenerator = new Swift_Mime_IdGenerator('example.com');

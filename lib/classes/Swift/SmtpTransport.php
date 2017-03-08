@@ -48,7 +48,7 @@ class Swift_SmtpTransport extends Swift_Transport_EsmtpTransport
      * @param int    $port
      * @param string $security
      *
-     * @return Swift_SmtpTransport
+     * @return self
      */
     public static function newInstance($host = 'localhost', $port = 25, $security = null)
     {

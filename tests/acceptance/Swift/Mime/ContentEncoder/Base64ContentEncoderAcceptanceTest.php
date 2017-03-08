@@ -15,7 +15,7 @@ class Swift_Mime_ContentEncoder_Base64ContentEncoderAcceptanceTest extends \PHPU
      */
     private $_encoder;
 
-    public function setUp()
+    protected function setUp()
     {
         /** @noinspection RealpathOnRelativePathsInspection */
         $this->_samplesDir = realpath(__DIR__.'/../../../../_samples/charsets');

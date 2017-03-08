@@ -23,6 +23,6 @@ unset($tmpDir);
 
 // this should only be done when Swiftmailer won't use the native QP content encoder
 // see mime_deps.php
-if (version_compare(phpversion(), '5.4.7', '<')) {
+if (PHP_VERSION_ID < 50407) {
     $preferences->setQPDotEscape(false);
 }

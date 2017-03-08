@@ -1,7 +1,10 @@
-.idea/
+/.idea
+/.php_cs.cache
+/.phpunit
+/build
+/phpunit.xml
 /tests/acceptance.conf.php
 /tests/smoke.conf.php
-/build
 /vendor
-composer.lock
-Gemfile.lock
+/composer.lock
+/Gemfile.lock

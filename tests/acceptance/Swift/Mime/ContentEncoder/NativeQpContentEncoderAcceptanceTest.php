@@ -15,7 +15,7 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest extends \PH
      */
     protected $_encoder;
 
-    public function setUp()
+    protected function setUp()
     {
         /** @noinspection RealpathOnRelativePathsInspection */
         $this->_samplesDir = realpath(__DIR__.'/../../../../_samples/charsets');
@@ -73,7 +73,7 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoderAcceptanceTest extends \PH
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testCharsetChangeNotImplemented()
     {

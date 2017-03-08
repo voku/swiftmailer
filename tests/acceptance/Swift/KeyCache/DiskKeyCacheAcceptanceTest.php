@@ -20,21 +20,14 @@ class Swift_KeyCache_DiskKeyCacheAcceptanceTest extends \PHPUnit_Framework_TestC
      */
     private $_key2;
 
-    public function setUp()
+    protected function setUp()
     {
-        if (!defined('SWIFT_TMP_DIR')) {
-            $this->markTestSkipped(
-                'Cannot run test without a writable directory to use ('.
-                'define SWIFT_TMP_DIR in tests/config.php if you wish to run this test)'
-             );
-        }
-
         $this->_key1 = uniqid(microtime(true), true);
         $this->_key2 = uniqid(microtime(true), true);
         $this->_cache = new Swift_KeyCache_DiskKeyCache(
             new Swift_KeyCache_SimpleKeyCacheInputStream(),
-            SWIFT_TMP_DIR
-        );
+            sys_get_temp_dir()
+            );
     }
 
     public function testStringDataCanBeSetAndFetched()

@@ -68,7 +68,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
      *
      * @param string $params
      *
-     * @return Swift_Transport_MailTransport
+     * @return $this
      */
     public function setExtraParams($params)
     {
@@ -173,7 +173,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
             $headers = str_replace("\r\n.", "\r\n..", $headers);
             $subject = str_replace("\r\n.", "\r\n..", $subject);
             $body = str_replace("\r\n.", "\r\n..", $body);
-            $to = str_replace("\r\n", "\r\n", $to);
+            $to = str_replace("\r\n.", "\r\n..", $to);
         }
 
         if ($this->mail($to, $subject, $body, $headers, $this->_formatExtraParams($this->_extraParams, $reversePath))) {

@@ -108,7 +108,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
     public function setCharset($charset)
     {
         $this->_setHeaderParameter('Content-Type', 'charset', $charset);
-        
+
         if ($charset !== $this->_userCharset) {
             $this->_clearCache();
 

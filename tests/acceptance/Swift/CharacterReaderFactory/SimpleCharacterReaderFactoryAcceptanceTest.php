@@ -15,7 +15,7 @@ class Swift_CharacterReaderFactory_SimpleCharacterReaderFactoryAcceptanceTest ex
      */
     private $_prefix = 'Swift_CharacterReader_';
 
-    public function setUp()
+    protected function setUp()
     {
         $this->_factory = new Swift_CharacterReaderFactory_SimpleCharacterReaderFactory();
     }

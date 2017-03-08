@@ -815,7 +815,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
                       return $headerSet;
                     }
                 );
-      
+
       $entity = $this->_createEntity(
           $headerSet,
           $this->_createEncoder(),

@@ -15,7 +15,7 @@ class Swift_Encoder_Base64EncoderAcceptanceTest extends \PHPUnit_Framework_TestC
      */
     private $_encoder;
 
-    public function setUp()
+    protected function setUp()
     {
         /** @noinspection RealpathOnRelativePathsInspection */
         $this->_samplesDir = realpath(__DIR__.'/../../../_samples/charsets');
