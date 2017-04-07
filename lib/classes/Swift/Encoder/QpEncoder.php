@@ -120,6 +120,9 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
         $this->_filter = $filter;
     }
 
+    /**
+     * @return array
+     */
     public function __sleep()
     {
         return array('_charStream', '_filter');
@@ -135,6 +138,9 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getSafeMapShareId()
     {
         return get_class($this);

@@ -95,6 +95,8 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
      * Writes $bytes to the end of the stream.
      *
      * @param string $bytes
+     *
+     * @return void
      */
     public function write($bytes)
     {

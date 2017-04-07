@@ -90,9 +90,9 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
 
         if ($read !== false) {
             return array_map('ord', str_split($read, 1));
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

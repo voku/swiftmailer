@@ -48,6 +48,8 @@ class Swift_Encoder_Base64Encoder implements Swift_Encoder
 
     /**
      * Does nothing.
+     *
+     * @param string $charset
      */
     public function charsetChanged($charset)
     {
