@@ -647,9 +647,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     {
         if ($this->_headers->has($field)) {
             return $this->_headers->get($field)->getFieldBodyModel();
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -682,9 +682,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     {
         if ($this->_headers->has($field)) {
             return $this->_headers->get($field)->getParameter($parameter);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -898,34 +898,25 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
         // Sort in order of preference, if there is one
         if ($shouldSort) {
-            usort($this->_immediateChildren, array($this, '_childSortAlgorithm'));
-        }
-    }
+            // Group the messages by order of preference
+            $sorted = array();
+            foreach ($this->_immediateChildren as $child) {
+                $type = $child->getContentType();
+                $level = array_key_exists($type, $this->_alternativePartOrder) ?
+                    $this->_alternativePartOrder[$type] :
+                    max($this->_alternativePartOrder) + 1;
 
-    /**
-     * @param Swift_Mime_MimeEntity $a
-     * @param Swift_Mime_MimeEntity $b
-     *
-     * @return int
-     */
-    private function _childSortAlgorithm($a, $b)
-    {
-        $typePrefs = array();
+                if (empty($sorted[$level])) {
+                    $sorted[$level] = array();
+                }
 
-        $types = array(
-            Swift::strtolowerWithStaticCache($a->getContentType()),
-            Swift::strtolowerWithStaticCache($b->getContentType())
-        );
-
-        foreach ($types as $type) {
-            if (isset($this->_alternativePartOrder[$type])) {
-                $typePrefs[] = $this->_alternativePartOrder[$type];
-            } else {
-                $typePrefs[] = max($this->_alternativePartOrder) + 1;
+                $sorted[$level][] = $child;
             }
-        }
 
-        return $typePrefs[0] >= $typePrefs[1] ? 1 : -1;
+            ksort($sorted);
+
+            $this->_immediateChildren = array_reduce($sorted, 'array_merge', array());
+        }
     }
 
     /**
