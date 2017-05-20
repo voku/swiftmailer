@@ -88,7 +88,7 @@ interface Swift_Mime_Message extends Swift_Mime_MimeEntity
      *
      * This has a higher significance than the From address.
      *
-     * @return string
+     * @return string[]
      */
     public function getSender();
 

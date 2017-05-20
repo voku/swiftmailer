@@ -1188,14 +1188,19 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
   {
       $buf = $this->_getBuffer();
       $smtp = $this->_getTransport($buf);
+
       $smtp->setLocalDomain('example.com');
       $this->assertEquals('example.com', $smtp->getLocalDomain());
+
       $smtp->setLocalDomain('192.168.0.1');
       $this->assertEquals('[192.168.0.1]', $smtp->getLocalDomain());
+
       $smtp->setLocalDomain('[192.168.0.1]');
       $this->assertEquals('[192.168.0.1]', $smtp->getLocalDomain());
+
       $smtp->setLocalDomain('fd00::');
       $this->assertEquals('[IPv6:fd00::]', $smtp->getLocalDomain());
+
       $smtp->setLocalDomain('[IPv6:fd00::]');
       $this->assertEquals('[IPv6:fd00::]', $smtp->getLocalDomain());
   }

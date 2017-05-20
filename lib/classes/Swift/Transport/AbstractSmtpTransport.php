@@ -8,8 +8,6 @@
  * file that was distributed with this source code.
  */
 
-use voku\helper\UTF8;
-
 /**
  * Sends Messages over SMTP.
  *
@@ -87,7 +85,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
      */
     public function setLocalDomain($domain)
     {
-        if (UTF8::substr($domain, 0, 1) !== '[') {
+        if ($domain[0] !== '[') {
             if (filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                 $domain = '['.$domain.']';
             } elseif (filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
@@ -95,7 +93,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
             }
         }
 
-        $this->domain = $domain;
+        $this->_domain = $domain;
 
         return $this;
     }
