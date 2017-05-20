@@ -1,25 +1,41 @@
 <?php
 
+/**
+ * Class Swift_Transport_SendmailTransportTest
+ */
 class Swift_Transport_SendmailTransportTest extends Swift_Transport_AbstractSmtpEventSupportTest
 {
+    /**
+     * @param Swift_Transport_IoBuffer|\Mockery\Mock $buf
+     * @param Swift_Events_EventDispatcher|null      $dispatcher
+     * @param string                                 $command
+     *
+     * @return Swift_Transport_SendmailTransport
+     */
     protected function _getTransport($buf, $dispatcher = null, $command = '/usr/sbin/sendmail -bs')
     {
         if (!$dispatcher) {
             $dispatcher = $this->_createEventDispatcher();
         }
-        $transport = new Swift_Transport_SendmailTransport($buf, $dispatcher);
+        $transport = new Swift_Transport_SendmailTransport($buf, $dispatcher, 'example.org');
         $transport->setCommand($command);
 
         return $transport;
     }
 
+    /**
+     * @param      $buf
+     * @param null $dispatcher
+     *
+     * @return Swift_Transport_SendmailTransport
+     */
     protected function _getSendmail($buf, $dispatcher = null)
     {
         if (!$dispatcher) {
             $dispatcher = $this->_createEventDispatcher();
         }
 
-        return new Swift_Transport_SendmailTransport($buf, $dispatcher);
+        return new Swift_Transport_SendmailTransport($buf, $dispatcher, 'example.org');
     }
 
     public function testCommandCanBeSetAndFetched()

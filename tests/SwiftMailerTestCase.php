@@ -7,6 +7,11 @@
  */
 class SwiftMailerTestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @param $pattern
+     *
+     * @return PHPUnit_Framework_Constraint_PCREMatch
+     */
     public static function regExp($pattern)
     {
         if (!is_string($pattern)) {
@@ -16,6 +21,11 @@ class SwiftMailerTestCase extends \PHPUnit_Framework_TestCase
         return new PHPUnit_Framework_Constraint_PCREMatch($pattern);
     }
 
+    /**
+     * @param        $expected
+     * @param        $actual
+     * @param string $message
+     */
     public function assertIdenticalBinary($expected, $actual, $message = '')
     {
         $constraint = new IdenticalBinaryConstraint($expected);
@@ -27,6 +37,11 @@ class SwiftMailerTestCase extends \PHPUnit_Framework_TestCase
         \Mockery::close();
     }
 
+    /**
+     * @param $class
+     *
+     * @return \Mockery\MockInterface
+     */
     protected function getMockery($class)
     {
         return \Mockery::mock($class);

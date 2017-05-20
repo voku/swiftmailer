@@ -25,7 +25,7 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
     /**
      * ESMTP capabilities.
      *
-     * @var string[]
+     * @var string[][]
      */
     private $_capabilities = array();
 
@@ -52,10 +52,11 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
      * @param Swift_Transport_IoBuffer       $buf
      * @param Swift_Transport_EsmtpHandler[] $extensionHandlers
      * @param Swift_Events_EventDispatcher   $dispatcher
+     * @param string                         $localDomain
      */
-    public function __construct(Swift_Transport_IoBuffer $buf, array $extensionHandlers, Swift_Events_EventDispatcher $dispatcher)
+    public function __construct(Swift_Transport_IoBuffer $buf, array $extensionHandlers, Swift_Events_EventDispatcher $dispatcher, $localDomain)
     {
-        parent::__construct($buf, $dispatcher);
+        parent::__construct($buf, $dispatcher, $localDomain);
         $this->setExtensionHandlers($extensionHandlers);
     }
 
@@ -245,11 +246,12 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         }
 
         /** @noinspection PhpUsageOfSilenceOperatorInspection */
+        /** @noinspection UsageOfSilenceOperatorInspection */
         @uasort($assoc, array($this, '_sortHandlers'));
-        $this->_handlers = $assoc;
-        $this->_setHandlerParams();
+          $this->_handlers = $assoc;
+          $this->_setHandlerParams();
 
-        return $this;
+          return $this;
     }
 
     /**
@@ -321,11 +323,12 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
                     0 === strpos($method, 'set')
                 ) {
                     return $this;
-                } else {
-                    return $return;
                 }
+
+              return $return;
             }
         }
+
         trigger_error('Call to undefined method ' . $method, E_USER_ERROR);
     }
 

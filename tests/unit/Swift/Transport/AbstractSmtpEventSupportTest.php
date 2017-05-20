@@ -2,6 +2,9 @@
 
 require_once __DIR__.'/AbstractSmtpTest.php';
 
+/**
+ * Class Swift_Transport_AbstractSmtpEventSupportTest
+ */
 abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transport_AbstractSmtpTest
 {
     public function testRegisterPluginLoadsPluginInEventDispatcher()
@@ -551,6 +554,11 @@ abstract class Swift_Transport_AbstractSmtpEventSupportTest extends Swift_Transp
         $smtp->start();
     }
 
+  /**
+   * @param bool $stub
+   *
+   * @return \Mockery\Mock|Swift_Events_EventDispatcher
+   */
     protected function _createEventDispatcher($stub = true)
     {
         return $this->getMockery('Swift_Events_EventDispatcher')->shouldIgnoreMissing();

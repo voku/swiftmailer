@@ -1,14 +1,23 @@
 <?php
 
+/**
+ * Class Swift_Transport_EsmtpTransportTest
+ */
 class Swift_Transport_EsmtpTransportTest extends Swift_Transport_AbstractSmtpEventSupportTest
 {
+    /**
+     * @param Swift_Transport_IoBuffer|\Mockery\Mock $buf
+     * @param Swift_Events_EventDispatcher|null      $dispatcher
+     *
+     * @return Swift_Transport_EsmtpTransport
+     */
     protected function _getTransport($buf, $dispatcher = null)
     {
         if (!$dispatcher) {
             $dispatcher = $this->_createEventDispatcher();
         }
 
-        return new Swift_Transport_EsmtpTransport($buf, array(), $dispatcher);
+        return new Swift_Transport_EsmtpTransport($buf, array(), $dispatcher, 'example.org');
     }
 
     public function testHostCanBeSetAndFetched()

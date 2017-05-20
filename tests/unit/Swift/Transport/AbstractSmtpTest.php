@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Swift_Transport_AbstractSmtpTest
+ */
 abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
 {
     /**
@@ -7,7 +10,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
      *
      * @param $buf
      *
-     * @return Swift_Transport
+     * @return Swift_Transport_AbstractSmtpTransport
      */
     abstract protected function _getTransport($buf);
 
@@ -110,7 +113,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
             ->andReturn("220 some.server.tld bleh\r\n");
         $buf->shouldReceive('write')
             ->once()
-            ->with('~^HELO .*?\r\n$~D')
+            ->with('~^HELO example.org\r\n$~D')
             ->andReturn(1);
         $buf->shouldReceive('readLine')
             ->once()
@@ -138,7 +141,7 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
             ->andReturn("220 some.server.tld bleh\r\n");
         $buf->shouldReceive('write')
             ->once()
-            ->with('~^HELO .*?\r\n$~D')
+            ->with('~^HELO example.org\r\n$~D')
             ->andReturn(1);
         $buf->shouldReceive('readLine')
             ->once()
@@ -1181,6 +1184,22 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
         $smtp->send($message);
     }
 
+  public function testSetLocalDomain()
+  {
+      $buf = $this->_getBuffer();
+      $smtp = $this->_getTransport($buf);
+      $smtp->setLocalDomain('example.com');
+      $this->assertEquals('example.com', $smtp->getLocalDomain());
+      $smtp->setLocalDomain('192.168.0.1');
+      $this->assertEquals('[192.168.0.1]', $smtp->getLocalDomain());
+      $smtp->setLocalDomain('[192.168.0.1]');
+      $this->assertEquals('[192.168.0.1]', $smtp->getLocalDomain());
+      $smtp->setLocalDomain('fd00::');
+      $this->assertEquals('[IPv6:fd00::]', $smtp->getLocalDomain());
+      $smtp->setLocalDomain('[IPv6:fd00::]');
+      $this->assertEquals('[IPv6:fd00::]', $smtp->getLocalDomain());
+  }
+
     protected function _getBuffer()
     {
         return $this->getMockery('Swift_Transport_IoBuffer')->shouldIgnoreMissing();
@@ -1191,6 +1210,9 @@ abstract class Swift_Transport_AbstractSmtpTest extends \SwiftMailerTestCase
         return $this->getMockery('Swift_Mime_Message')->shouldIgnoreMissing();
     }
 
+    /**
+     * @param \Mockery\Mock $buf
+     */
     protected function _finishBuffer($buf)
     {
         $buf->shouldReceive('readLine')

@@ -2,6 +2,11 @@
 
 require_once dirname(__DIR__).'/EsmtpTransportTest.php';
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
+
+/**
+ * Interface Swift_Transport_EsmtpHandlerMixin
+ */
 interface Swift_Transport_EsmtpHandlerMixin extends Swift_Transport_EsmtpHandler
 {
     public function setUsername($user);
@@ -9,6 +14,11 @@ interface Swift_Transport_EsmtpHandlerMixin extends Swift_Transport_EsmtpHandler
     public function setPassword($pass);
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
+
+/**
+ * Class Swift_Transport_EsmtpTransport_ExtensionSupportTest
+ */
 class Swift_Transport_EsmtpTransport_ExtensionSupportTest extends Swift_Transport_EsmtpTransportTest
 {
     public function testExtensionHandlersAreSortedAsNeeded()
@@ -141,7 +151,7 @@ class Swift_Transport_EsmtpTransport_ExtensionSupportTest extends Swift_Transpor
     {
         $buf = $this->_getBuffer();
         $dispatcher = $this->_createEventDispatcher();
-        $smtp = new Swift_Transport_EsmtpTransport($buf, array(), $dispatcher);
+        $smtp = new Swift_Transport_EsmtpTransport($buf, array(), $dispatcher, 'example.org');
         $ext1 = $this->getMockery('Swift_Transport_EsmtpHandler')->shouldIgnoreMissing();
         $ext2 = $this->getMockery('Swift_Transport_EsmtpHandler')->shouldIgnoreMissing();
         $ext3 = $this->getMockery('Swift_Transport_EsmtpHandler')->shouldIgnoreMissing();
@@ -243,7 +253,7 @@ class Swift_Transport_EsmtpTransport_ExtensionSupportTest extends Swift_Transpor
     {
         $buf = $this->_getBuffer();
         $dispatcher = $this->_createEventDispatcher();
-        $smtp = new Swift_Transport_EsmtpTransport($buf, array(), $dispatcher);
+        $smtp = new Swift_Transport_EsmtpTransport($buf, array(), $dispatcher, 'example.org');
         $ext1 = $this->getMockery('Swift_Transport_EsmtpHandler')->shouldIgnoreMissing();
         $ext2 = $this->getMockery('Swift_Transport_EsmtpHandler')->shouldIgnoreMissing();
         $ext3 = $this->getMockery('Swift_Transport_EsmtpHandler')->shouldIgnoreMissing();
