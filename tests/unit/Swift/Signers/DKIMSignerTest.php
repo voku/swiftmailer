@@ -161,7 +161,7 @@ class Swift_Signers_DKIMSignerTest extends \SwiftMailerTestCase
     }
 
     /**
-     * @return Swift_Mime_Headers
+     * @return Swift_Mime_HeaderSet
      */
     private function _createHeaders()
     {

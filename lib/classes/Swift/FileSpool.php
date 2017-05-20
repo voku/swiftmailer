@@ -37,7 +37,8 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     {
         $this->_path = $path;
 
-        if (
+      /** @noinspection PhpUsageOfSilenceOperatorInspection */
+      if (
             !file_exists($this->_path)
             &&
             !@mkdir($this->_path, 0777, true)
@@ -99,17 +100,17 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         $fileName = $this->_path . '/' . $this->getRandomString();
         for ($i = 0; $i < $this->_retryLimit; ++$i) {
             /* We try an exclusive creation of the file. This is an atomic operation, it avoid locking mechanism */
-            $fp = @fopen($fileName . '.message', 'x');
-            if (false !== $fp) {
-                if (false === fwrite($fp, $ser)) {
-                    return false;
-                }
+            /** @noinspection PhpUsageOfSilenceOperatorInspection */
+            $fp = @fopen($fileName . '.message', 'xb');
+                if (false !== $fp) {
+                    if (false === fwrite($fp, $ser)) {
+                        return false;
+                    }
+                    return fclose($fp);
+              }
 
-                return fclose($fp);
-            } else {
-                /* The file already exists, we try a longer fileName */
-                $fileName .= $this->getRandomString(1);
-            }
+            /* The file already exists, we try a longer fileName */
+            $fileName .= $this->getRandomString(1);
         }
 
         throw new Swift_IoException(sprintf('Unable to create a file for enqueuing Message in "%s".', $this->_path));
@@ -168,6 +169,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
 
             /* We try a rename, it's an atomic operation, and avoid locking the file */
             if (rename($file, $file . '.sending')) {
+                // TODO: -> SECURITY | Perhaps it's possible to exploit the unserialize via: file_get_contents(...)
                 $message = unserialize(file_get_contents($file . '.sending'));
 
                 $count += $transport->send($message, $failedRecipients);

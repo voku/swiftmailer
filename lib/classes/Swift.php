@@ -99,10 +99,10 @@ abstract class Swift
 
         if (isset($staticStrtolowerCache[$string])) {
             return $staticStrtolowerCache[$string];
-        } else {
-            $staticStrtolowerCache[$string] = strtolower($string);
-
-            return $staticStrtolowerCache[$string];
         }
+
+      $staticStrtolowerCache[$string] = strtolower($string);
+
+      return $staticStrtolowerCache[$string];
     }
 }
