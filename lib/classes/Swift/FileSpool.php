@@ -196,7 +196,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
      * Returns a random string needed to generate a fileName for the queue.
      *
      * @param int|null $count <strong>null</strong> use only "uniqid()"<br />
-     *                        <strong>int</strong> use "mt_rand()" with a fixed- / fs-safe string
+     *                        <strong>int</strong> use "random_int()" with a fixed- / fs-safe string
      *
      * @return string
      */
@@ -211,7 +211,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
         $ret = '';
         $strlen = strlen($base) - 1;
         for ($i = 0; $i < $count; ++$i) {
-            $ret .= $base[(int)mt_rand(0, $strlen)];
+            $ret .= $base[\random_int(0, $strlen - 1)];
         }
 
         return $ret;

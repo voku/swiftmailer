@@ -56,7 +56,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
 
             // extra parameters for our unit cases
             $timestamp = func_num_args() > 3 ? func_get_arg(3) : $this->getCorrectTimestamp(bcmul(microtime(true), '1000'));
-            $client = func_num_args() > 4 ? func_get_arg(4) : $this->getRandomBytes(8);
+            $client = func_num_args() > 4 ? func_get_arg(4) : \random_bytes(8);
 
             // Message 3 response
             $this->sendMessage3($response, $username, $password, $timestamp, $client, $agent);
@@ -71,6 +71,9 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
 
     /**
      * @param string $si
+     * @param int    $bits
+     *
+     * @return null|string
      */
     protected function si2bin($si, $bits = 32)
     {
@@ -124,10 +127,10 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
         $responseHex = bin2hex($response);
         $length = floor(hexdec(substr($responseHex, 28, 4)) / 256) * 2;
         $offset = floor(hexdec(substr($responseHex, 32, 4)) / 256) * 2;
-        $challenge = $this->hex2bin(substr($responseHex, 48, 16));
-        $context = $this->hex2bin(substr($responseHex, 64, 16));
-        $targetInfoH = $this->hex2bin(substr($responseHex, 80, 16));
-        $targetName = $this->hex2bin(substr($responseHex, $offset, $length));
+        $challenge = \hex2bin(substr($responseHex, 48, 16));
+        $context = \hex2bin(substr($responseHex, 64, 16));
+        $targetInfoH = \hex2bin(substr($responseHex, 80, 16));
+        $targetName = \hex2bin(substr($responseHex, $offset, $length));
         $offset = floor(hexdec(substr($responseHex, 88, 4)) / 256) * 2;
         $targetInfoBlock = substr($responseHex, $offset);
         list($domainName, $serverName, $DNSDomainName, $DNSServerName, $terminatorByte) = $this->readSubBlock($targetInfoBlock);
@@ -141,7 +144,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
             $serverName,
             $DNSDomainName,
             $DNSServerName,
-            $this->hex2bin($targetInfoBlock),
+            \hex2bin($targetInfoBlock),
             $terminatorByte,
         );
     }
@@ -164,7 +167,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
         while ($offset < $length) {
             $blockLength = hexdec(substr(substr($block, $offset, 8), -4)) / 256;
             $offset += 8;
-            $data[] = $this->hex2bin(substr($block, $offset, $blockLength * 2));
+            $data[] = \hex2bin(substr($block, $offset, $blockLength * 2));
             $offset += $blockLength * 2;
         }
 
@@ -470,7 +473,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
             }
         }
 
-        return $this->hex2bin(implode('', $material));
+        return \hex2bin(implode('', $material));
     }
 
     /** HELPER FUNCTIONS */
@@ -550,30 +553,12 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
     protected function createByte($input, $bytes = 4, $isHex = true)
     {
         if ($isHex) {
-            $byte = $this->hex2bin(str_pad($input, $bytes * 2, '00'));
+            $byte = \hex2bin(str_pad($input, $bytes * 2, '00'));
         } else {
             $byte = str_pad($input, $bytes, "\x00");
         }
 
         return $byte;
-    }
-
-    /**
-     * Create random bytes.
-     *
-     * @param integer $length
-     *
-     * @return string
-     */
-    protected function getRandomBytes($length)
-    {
-        $bytes = openssl_random_pseudo_bytes($length, $strong);
-
-        if (false !== $bytes && true === $strong) {
-            return $bytes;
-        }
-
-        throw new RuntimeException('OpenSSL did not produce a secure random number.');
     }
 
     /** ENCRYPTION ALGORITHMS */
@@ -627,7 +612,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
     {
         $input = $this->convertTo16bit($input);
 
-        return function_exists('hash') ? $this->hex2bin(hash('md4', $input)) : mhash(MHASH_MD4, $input);
+        return function_exists('hash') ? \hex2bin(hash('md4', $input)) : mhash(MHASH_MD4, $input);
     }
 
     /**
@@ -640,27 +625,6 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
     protected function convertTo16bit($input)
     {
         return iconv('UTF-8', 'UTF-16LE', $input);
-    }
-
-    /**
-     * Hex2bin replacement for < PHP 5.4.
-     *
-     * TODO: use the next code, when the bug-fix, is tagged
-     * -> https://github.com/symfony/polyfill/commit/ad8296bf38a40b0b3e8cdfc31e0a04f025f0d99a
-     *
-     * if (function_exists('hex2bin')) {
-     *   return hex2bin($hex);
-     * } else {
-     *   return pack('H*', $hex);
-     * }
-     *
-     * @param string $hex
-     *
-     * @return string Binary
-     */
-    public function hex2bin($hex)
-    {
-        return pack('H*', $hex);
     }
 
     /**
@@ -687,7 +651,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
                 'Target Information Terminator',
             );
 
-            $data = $this->parseMessage2($this->hex2bin($message));
+            $data = $this->parseMessage2(\hex2bin($message));
 
             foreach ($map as $key => $value) {
                 echo bin2hex($data[$key]) . ' - ' . $data[$key] . ' ||| ' . $value . "<br />\n";
@@ -733,7 +697,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticator implements Swift_Transport_Es
             );
 
             foreach ($map as $key => $value) {
-                echo $data[$key] . ' - ' . $this->hex2bin($data[$key]) . ' ||| ' . $value . "<br />\n";
+                echo $data[$key] . ' - ' . \hex2bin($data[$key]) . ' ||| ' . $value . "<br />\n";
             }
         }
 

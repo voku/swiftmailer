@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+use voku\helper\UTF8;
+
 /**
  * An abstract base MIME Header.
  *
@@ -25,7 +27,7 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
     /**
      * The Encoder used to encode the parameters.
      *
-     * @var Swift_Encoder
+     * @var Swift_Mime_HeaderEncoder_Base64HeaderEncoder
      */
     private $_paramEncoder;
 
@@ -124,9 +126,11 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
     /**
      * Get the value of this header prepared for rendering.
      *
+     * //TODO: Check caching here
+     *
      * @return string
      */
-    public function getFieldBody() //TODO: Check caching here
+    public function getFieldBody()
     {
         $body = parent::getFieldBody();
         foreach ($this->_params as $name => $value) {
@@ -185,17 +189,19 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
         $maxValueLength = $this->getMaxLineLength() - strlen($name . '=*N"";') - 1;
         $firstLineOffset = 0;
 
-        // If it's not already a valid parameter value ...
-        if (!preg_match('/^' . self::TOKEN_REGEX . '$/D', $value)) {
-            // TODO: text, or something else??
-            // ... and it's not ascii
-            if (!preg_match('/^[\x00-\x08\x0B\x0C\x0E-\x7F]*$/D', $value)) {
-                $encoded = true;
 
-                // Allow space for the indices, charset and language.
-                $maxValueLength = $this->getMaxLineLength() - strlen($name . '*N*="";') - 1;
-                $firstLineOffset = strlen($this->getCharset() . "'" . $this->getLanguage() . "'");
-            }
+        if (
+            // If it's not already a valid parameter value ...
+            !preg_match('/^' . self::TOKEN_REGEX . '$/D', $value)
+            &&
+            // ... and it's not ascii
+            !UTF8::is_ascii($value)
+        ) {
+            $encoded = true;
+
+            // Allow space for the indices, charset and language.
+            $maxValueLength = $this->getMaxLineLength() - strlen($name . '*N*="";') - 1;
+            $firstLineOffset = strlen($this->getCharset() . "'" . $this->getLanguage() . "'");
         }
 
         // Encode if we need to ...

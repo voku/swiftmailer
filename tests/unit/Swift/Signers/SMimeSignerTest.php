@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Swift_Signers_SMimeSignerTest
+ */
 class Swift_Signers_SMimeSignerTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -499,8 +502,9 @@ OEL;
     /**
      * Strips of the sender headers and Mime-Version.
      *
-     * @param Swift_ByteStream_TemporaryFileByteStream $messageStream
-     * @param Swift_ByteStream_TemporaryFileByteStream $inputStream
+     * @param string $content
+     *
+     * @return string
      */
     protected function cleanMessage($content)
     {
@@ -549,6 +553,7 @@ OEL;
 
         foreach ($headerLines as $headerLine) {
             if (ctype_space($headerLines[0]) || false === strpos($headerLine, ':')) {
+                // TODO; $currentHeaderName is undefined, maybe ...
                 $headers[$currentHeaderName] .= ' '.trim($headerLine);
                 continue;
             }
