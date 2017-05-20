@@ -5,13 +5,14 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7eea923d-f7f4-4ec4-9f13-820f4f10edcc/mini.png)](https://insight.sensiolabs.com/projects/7eea923d-f7f4-4ec4-9f13-820f4f10edcc)
 [![Reference Status](https://www.versioneye.com/php/voku:swiftmailer/reference_badge.svg?style=flat)](https://www.versioneye.com/php/voku:swiftmailer/references)
 [![Latest Stable Version](https://poser.pugx.org/voku/swiftmailer/v/stable)](https://packagist.org/packages/voku/swiftmailer) 
-[![Total Downloads](https://poser.pugx.org/voku/swiftmailer/downloads)](https://packagist.org/packages/voku/swiftmailer) 
-[![Latest Unstable Version](https://poser.pugx.org/voku/swiftmailer/v/unstable)](https://packagist.org/packages/voku/swiftmailer)
+[![Total Downloads](https://poser.pugx.org/voku/swiftmailer/downloads)](https://packagist.org/packages/voku/swiftmailer)
 [![License](https://poser.pugx.org/voku/swiftmailer/license)](https://packagist.org/packages/voku/swiftmailer)
 
 # Swift Mailer
 
-WARNING: this is only a Fork of "https://github.com/swiftmailer/swiftmailer"
+WARNING!: this is only a maintained fork of "https://github.com/swiftmailer/swiftmailer"
+
+WHY?: because I want to learn how it works
 
 > Comprehensive mailing tools for PHP http://swiftmailer.org/
 
