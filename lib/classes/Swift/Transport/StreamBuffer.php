@@ -108,6 +108,9 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         $this->_params[$param] = $value;
     }
 
+    /**
+     * @return mixed <p>Return <strong>true</strong> on success, <strong>false</strong> if negotiation has failed or <strong>0</strong> if there isn't enough data and you should try again.</p>
+     */
     public function startTLS()
     {
         return stream_socket_enable_crypto($this->_stream, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
@@ -178,17 +181,24 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
      */
     public function readLine($sequence)
     {
-        if (isset($this->_out) && !feof($this->_out)) {
-            $line = fgets($this->_out);
-            if (!$line) {
-                $metas = stream_get_meta_data($this->_out);
-                if ($metas['timed_out']) {
-                    throw new Swift_IoException('Connection to ' . $this->_getReadConnectionDescription() . ' Timed Out');
-                }
-            }
-
-            return $line;
+        if (
+            !isset($this->_out)
+            ||
+            feof($this->_out)
+        ) {
+          // TODO?
+          return;
         }
+
+        $line = fgets($this->_out);
+        if (!$line) {
+            $metas = stream_get_meta_data($this->_out);
+            if ($metas['timed_out']) {
+                throw new Swift_IoException('Connection to ' . $this->_getReadConnectionDescription() . ' Timed Out');
+            }
+        }
+
+        return $line;
     }
 
     /**
@@ -206,22 +216,33 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
      */
     public function read($length)
     {
-        if (isset($this->_out) && !feof($this->_out)) {
-            $ret = fread($this->_out, $length);
-            if (!$ret) {
-                $metas = stream_get_meta_data($this->_out);
-                if ($metas['timed_out']) {
-                    throw new Swift_IoException(
-                        'Connection to ' . $this->_getReadConnectionDescription() . ' Timed Out'
-                    );
-                }
-            }
-
-            return $ret;
+        if (
+            !isset($this->_out)
+            ||
+            feof($this->_out)
+        ) {
+            // TODO?
+            return;
         }
+
+        $ret = fread($this->_out, $length);
+        if (!$ret) {
+            $metas = stream_get_meta_data($this->_out);
+            if ($metas['timed_out']) {
+                throw new Swift_IoException(
+                    'Connection to ' . $this->_getReadConnectionDescription() . ' Timed Out'
+                );
+            }
+        }
+
+        return $ret;
     }
 
-    /** Not implemented */
+    /**
+     * WARNING: Not implemented
+     *
+     * @param int $byteOffset
+     */
     public function setReadPointer($byteOffset)
     {
     }
@@ -245,25 +266,31 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
      */
     protected function _commit($bytes)
     {
-        if (isset($this->_in)) {
-            $bytesToWrite = strlen($bytes);
-            $totalBytesWritten = 0;
-
-            while ($totalBytesWritten < $bytesToWrite) {
-                $bytesWritten = fwrite($this->_in, substr($bytes, $totalBytesWritten));
-                if (false === $bytesWritten || 0 === $bytesWritten) {
-                    throw new Swift_IoException(
-                        'Connection to ' . $this->_getReadConnectionDescription() . ' has gone away'
-                    );
-                }
-
-                $totalBytesWritten += $bytesWritten;
-            }
-
-            if ($totalBytesWritten > 0) {
-                return ++$this->_sequence;
-            }
+        if (!isset($this->_in)) {
+            // TODO?
+            return;
         }
+
+        $bytesToWrite = strlen($bytes);
+        $totalBytesWritten = 0;
+
+        while ($totalBytesWritten < $bytesToWrite) {
+            $bytesWritten = fwrite($this->_in, substr($bytes, $totalBytesWritten));
+            if (false === $bytesWritten || 0 === $bytesWritten) {
+                throw new Swift_IoException(
+                    'Connection to ' . $this->_getReadConnectionDescription() . ' has gone away'
+                );
+            }
+
+            $totalBytesWritten += $bytesWritten;
+        }
+
+        if ($totalBytesWritten > 0) {
+            return ++$this->_sequence;
+        }
+
+        // TODO?
+        return;
     }
 
     /**
@@ -343,6 +370,9 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
         $this->_out = &$pipes[1];
     }
 
+    /**
+     * @return string
+     */
     private function _getReadConnectionDescription()
     {
         switch ($this->_params['type']) {
