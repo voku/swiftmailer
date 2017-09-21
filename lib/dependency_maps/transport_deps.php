@@ -7,7 +7,7 @@ Swift_DependencyContainer::getInstance()
     // preg_replace() instead of preg_match() to prevent DoS attacks with long host names.
     //
     // TODO: -> SECURITY | https://github.com/kalessil/phpinspectionsea/issues/302
-    ->asValue(!empty($_SERVER['SERVER_NAME']) && preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/', '', $_SERVER['SERVER_NAME']) === '' ? trim($_SERVER['SERVER_NAME'], '[]') : '127.0.0.1')
+    ->asValue(!empty($_SERVER['SERVER_NAME']) && '' === preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/', '', $_SERVER['SERVER_NAME']) ? trim($_SERVER['SERVER_NAME'], '[]') : (gethostname() ?: '127.0.0.1' ))
 
     ->register('transport.smtp')
     ->asNewInstanceOf('Swift_Transport_EsmtpTransport')
