@@ -47,6 +47,7 @@ matrix:
       env: extension='false'
   allow_failures:
     - php: hhvm
+    - php: 7.2
 
 before_script:
     - php --version
