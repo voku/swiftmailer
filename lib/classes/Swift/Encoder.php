@@ -24,5 +24,5 @@ interface Swift_Encoder extends Swift_Mime_CharsetObserver
      *
      * @return string
      */
-    public function encodeString($string, $firstLineOffset = 0, $maxLineLength = 0);
+    public function encodeString(string $string, int $firstLineOffset = 0, int $maxLineLength = 0);
 }

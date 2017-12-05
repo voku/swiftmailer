@@ -143,19 +143,19 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      */
     protected function getSafeMapShareId()
     {
-        return get_class($this);
+        return \get_class($this);
     }
 
     protected function initSafeMap()
     {
         foreach (
-            array_merge(
+            \array_merge(
                 array(0x09, 0x20),
-                range(0x21, 0x3C),
-                range(0x3E, 0x7E)
+                \range(0x21, 0x3C),
+                \range(0x3E, 0x7E)
             ) as $byte
         ) {
-            $this->_safeMap[$byte] = chr($byte);
+            $this->_safeMap[$byte] = \chr($byte);
         }
     }
 
@@ -172,7 +172,7 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      *
      * @return string
      */
-    public function encodeString($string, $firstLineOffset = 0, $maxLineLength = 0)
+    public function encodeString(string $string, int $firstLineOffset = 0, int $maxLineLength = 0)
     {
         if ($maxLineLength > 76 || $maxLineLength <= 0) {
             $maxLineLength = 76;
@@ -209,7 +209,7 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
 
             $enc = $this->_encodeByteSequence($bytes, $size);
 
-            $i = strpos($enc, '=0D=0A');
+            $i = \strpos($enc, '=0D=0A');
             $newLineLength = $lineLen + ($i === false ? $size : $i);
 
             if ($currentLine && $newLineLength >= $thisLineLength) {
@@ -225,17 +225,17 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
                 $lineLen += $size;
             } else {
                 // 6 is the length of '=0D=0A'.
-                $lineLen = $size - strrpos($enc, '=0D=0A') - 6;
+                $lineLen = $size - \strrpos($enc, '=0D=0A') - 6;
             }
         }
 
-        return $this->_standardize(implode("=\r\n", $lines));
+        return $this->_standardize(\implode("=\r\n", $lines));
     }
 
     /**
      * Updates the charset used.
      *
-     * @param string $charset
+     * @param string|null $charset
      */
     public function charsetChanged($charset)
     {
@@ -250,7 +250,7 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      *
      * @return string
      */
-    protected function _encodeByteSequence(array $bytes, &$size)
+    protected function _encodeByteSequence(array $bytes, &$size): string
     {
         $ret = '';
         $size = 0;
@@ -282,9 +282,9 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      *
      * @param int $size number of bytes to read
      *
-     * @return int[]
+     * @return int[]|false
      */
-    protected function _nextSequence($size = 72)
+    protected function _nextSequence(int $size = 72)
     {
         return $this->_charStream->readBytes($size);
     }
@@ -296,18 +296,18 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
      *
      * @return string
      */
-    protected function _standardize($string)
+    protected function _standardize(string $string): string
     {
-        $string = str_replace(
+        $string = \str_replace(
             array("\t=0D=0A", ' =0D=0A', '=0D=0A'),
             array("=09\r\n", "=20\r\n", "\r\n"),
             $string
         );
 
-        switch ($end = ord(substr($string, -1))) {
+        switch ($end = \ord(\substr($string, -1))) {
             case 0x09:
             case 0x20:
-                $string = substr_replace($string, self::$_qpMap[$end], -1);
+                $string = \substr_replace($string, self::$_qpMap[$end], -1);
         }
 
         return $string;

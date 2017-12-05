@@ -56,7 +56,7 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoder extends Swift_Encoder_QpEncoder i
      *
      * @return string
      */
-    public function encodeString($string, $firstLineOffset = 0, $maxLineLength = 0)
+    public function encodeString(string $string, int $firstLineOffset = 0, int $maxLineLength = 0)
     {
         return str_replace(array(' ', '=20', "=\r\n"), array('_', '_', "\r\n"),
             parent::encodeString($string, $firstLineOffset, $maxLineLength)

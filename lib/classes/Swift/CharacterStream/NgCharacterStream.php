@@ -228,7 +228,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
     {
         $read = $this->read($length);
         if ($read !== false) {
-            return array_map('ord', str_split($read, 1));
+            return \array_map('\ord', \str_split($read, 1));
         }
 
         return false;

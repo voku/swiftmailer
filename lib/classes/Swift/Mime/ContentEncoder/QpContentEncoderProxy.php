@@ -83,7 +83,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoderProxy implements Swift_Mime_Cont
     /**
      * {@inheritdoc}
      */
-    public function encodeString($string, $firstLineOffset = 0, $maxLineLength = 0)
+    public function encodeString(string $string, int $firstLineOffset = 0, int $maxLineLength = 0)
     {
         return $this->getEncoder()->encodeString($string, $firstLineOffset, $maxLineLength);
     }

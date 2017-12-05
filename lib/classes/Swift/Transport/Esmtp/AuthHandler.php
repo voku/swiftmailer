@@ -27,21 +27,21 @@ class Swift_Transport_Esmtp_AuthHandler implements Swift_Transport_EsmtpHandler
      *
      * @var string
      */
-    private $_username;
+    private $_username = '';
 
     /**
      * The password for authentication.
      *
      * @var string
      */
-    private $_password;
+    private $_password = '';
 
     /**
      * The auth mode for authentication.
      *
      * @var string
      */
-    private $_auth_mode;
+    private $_auth_mode = '';
 
     /**
      * The ESMTP AUTH parameters available.

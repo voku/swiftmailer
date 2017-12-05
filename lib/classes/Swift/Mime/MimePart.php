@@ -95,7 +95,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      */
     public function getCharset()
     {
-        return $this->_getHeaderParameter('Content-Type', 'charset');
+        return (string)$this->_getHeaderParameter('Content-Type', 'charset');
     }
 
     /**
@@ -186,7 +186,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      * Receive notification that the charset has changed on this document, or a
      * parent document.
      *
-     * @param string $charset
+     * @param string|null $charset
      */
     public function charsetChanged($charset)
     {
@@ -215,7 +215,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      *
      * @param int $level
      */
-    protected function _setNestingLevel($level)
+    protected function _setNestingLevel(int $level)
     {
         $this->_nestingLevel = $level;
     }
@@ -227,7 +227,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
      *
      * @return string
      */
-    protected function _convertString($string)
+    protected function _convertString(string $string): string
     {
         return UTF8::encode($this->getCharset(), $string, false);
     }

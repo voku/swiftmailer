@@ -31,7 +31,7 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoder implements Swift_Mime_Con
     /**
      * Notify this observer that the entity's charset has changed.
      *
-     * @param string $charset
+     * @param string|null $charset
      */
     public function charsetChanged($charset)
     {
@@ -85,7 +85,7 @@ class Swift_Mime_ContentEncoder_NativeQpContentEncoder implements Swift_Mime_Con
      *
      * @return string
      */
-    public function encodeString($string, $firstLineOffset = 0, $maxLineLength = 0)
+    public function encodeString(string $string, int $firstLineOffset = 0, int $maxLineLength = 0)
     {
         if ($this->charset !== 'utf-8') {
             throw new RuntimeException(

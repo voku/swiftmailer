@@ -41,7 +41,7 @@ interface Swift_Mime_MimeEntity extends Swift_Mime_CharsetObserver, Swift_Mime_E
     /**
      * Get the qualified content-type of this mime entity.
      *
-     * @return string
+     * @return string|null
      */
     public function getContentType();
 

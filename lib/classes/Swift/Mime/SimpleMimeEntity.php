@@ -495,7 +495,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      * Receive notification that the charset of this entity, or a parent entity
      * has changed.
      *
-     * @param string $charset
+     * @param string|null $charset
      */
     public function charsetChanged($charset)
     {
@@ -846,7 +846,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         }
 
         $realLevel = $child->getNestingLevel();
-        $lowercaseType = Swift::strtolowerWithStaticCache($child->getContentType());
+        $lowercaseType = Swift::strtolowerWithStaticCache((string)$child->getContentType());
 
         if (isset($filter[$realLevel], $filter[$realLevel][$lowercaseType])) {
             return (int)$filter[$realLevel][$lowercaseType];

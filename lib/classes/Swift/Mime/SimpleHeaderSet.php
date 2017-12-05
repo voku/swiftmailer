@@ -321,7 +321,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
     /**
      * Notify this observer that the entity's charset has changed.
      *
-     * @param string $charset
+     * @param string|null $charset
      */
     public function charsetChanged($charset)
     {

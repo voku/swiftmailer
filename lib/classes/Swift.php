@@ -46,7 +46,7 @@ abstract class Swift
      *
      * @param string $class
      */
-    public static function autoload($class)
+    public static function autoload(string $class)
     {
         // "maybe" don't interfere with other autoloaders
         if (0 !== strpos($class, 'Swift_')) {
@@ -91,9 +91,9 @@ abstract class Swift
      *
      * @param $string
      *
-     * @return mixed
+     * @return string
      */
-    public static function strtolowerWithStaticCache($string)
+    public static function strtolowerWithStaticCache(string $string): string
     {
         static $staticStrtolowerCache = array();
 

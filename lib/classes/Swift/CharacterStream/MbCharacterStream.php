@@ -70,7 +70,7 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
             return false;
         }
 
-        $readChars = min($length, $this->_strlen - $this->_strpos);
+        $readChars = \min($length, $this->_strlen - $this->_strpos);
 
         $ret = \mb_substr($this->_buffer, $this->_strpos, $readChars, $this->_charset);
 
@@ -89,7 +89,7 @@ class Swift_CharacterStream_MbCharacterStream implements Swift_CharacterStream
         $read = $this->read($length);
 
         if ($read !== false) {
-            return array_map('ord', str_split($read, 1));
+            return \array_map('\ord', \str_split($read, 1));
         }
 
         return false;

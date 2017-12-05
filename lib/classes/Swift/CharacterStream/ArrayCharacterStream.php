@@ -146,7 +146,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                 false !== $bytes = $os->read($need)
             ) {
 
-                $len = strlen($bytes);
+                $len = \strlen($bytes);
                 for ($i = 0; $i < $len; ++$i) {
                     $c[] = self::$_byteMap[$bytes[$i]];
                 }
@@ -198,7 +198,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
         $chars = false;
         foreach ($arrays as $array) {
-            $chars .= implode('', array_map('chr', $array));
+            $chars .= \implode('', \array_map('\chr', $array));
         }
 
         return $chars;
@@ -229,7 +229,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
         $this->_offset += ($i - $this->_offset); // Limit function calls
 
-        return call_user_func_array('array_merge', $arrays);
+        return \array_merge(...$arrays);
     }
 
     /**
@@ -243,10 +243,10 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
         $startLength = $this->_charReader->getInitialByteSize();
 
-        $fp = fopen('php://memory', 'w+b');
-        fwrite($fp, $chars);
+        $fp = \fopen('php://memory', 'w+b');
+        \fwrite($fp, $chars);
         unset($chars);
-        fseek($fp, 0, SEEK_SET);
+        \fseek($fp, 0, SEEK_SET);
 
         $buffer = array(0);
         $buf_pos = 1;
@@ -257,12 +257,12 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
             // Buffer Filing
             if ($buf_len - $buf_pos < $startLength) {
-                $buf = array_splice($buffer, $buf_pos);
+                $buf = \array_splice($buffer, $buf_pos);
                 $new = $this->_reloadBuffer($fp, 100);
 
                 if ($new) {
-                    $buffer = array_merge($buf, $new);
-                    $buf_len = count($buffer);
+                    $buffer = \array_merge($buf, $new);
+                    $buf_len = \count($buffer);
                     $buf_pos = 0;
                 } else {
                     $has_data = false;
@@ -283,8 +283,8 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                         $new = $this->_reloadBuffer($fp, $need);
 
                         if ($new) {
-                            $buffer = array_merge($buffer, $new);
-                            $buf_len = count($buffer);
+                            $buffer = \array_merge($buffer, $new);
+                            $buf_len = \count($buffer);
                         }
                     }
 
@@ -298,7 +298,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
             }
         } while ($has_data);
 
-        fclose($fp);
+        \fclose($fp);
     }
 
     /**
@@ -335,12 +335,12 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
      */
     private function _reloadBuffer($fp, $len)
     {
-        if (!feof($fp)) {
-            $bytes = fread($fp, $len);
+        if (!\feof($fp)) {
+            $bytes = \fread($fp, $len);
 
             if ($bytes !== false) {
                 $buf = array();
-                $len = strlen($bytes);
+                $len = \strlen($bytes);
 
                 for ($i = 0; $i < $len; ++$i) {
                     $buf[] = self::$_byteMap[$bytes[$i]];
@@ -362,7 +362,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
                 self::$_charMap[$byte] = chr($byte);
             }
 
-            self::$_byteMap = array_flip(self::$_charMap);
+            self::$_byteMap = \array_flip(self::$_charMap);
         }
     }
 }

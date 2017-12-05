@@ -39,7 +39,7 @@ class Swift_Mime_HeaderEncoder_Base64HeaderEncoder extends Swift_Encoder_Base64E
      *
      * @return string
      */
-    public function encodeString($string, $firstLineOffset = 0, $maxLineLength = 0, $charset = 'utf-8')
+    public function encodeString(string $string, int $firstLineOffset = 0, int $maxLineLength = 0, string $charset = 'utf-8')
     {
         if (Swift::strtolowerWithStaticCache($charset) === 'iso-2022-jp') {
             $old = \mb_internal_encoding();

@@ -43,7 +43,7 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
      *
      * @return int
      */
-    public function getCharPositions($string, $startOffset, &$currentMap, &$ignoredChars)
+    public function getCharPositions($string, $startOffset, &$currentMap, &$ignoredChars): int
     {
         $strlen = strlen($string);
         // % and / are CPU intensive, so, maybe find a better way
@@ -59,7 +59,7 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
      *
      * @return int
      */
-    public function getMapType()
+    public function getMapType(): int
     {
         return self::MAP_TYPE_FIXED_LEN;
     }
@@ -78,7 +78,7 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
      *
      * @return int
      */
-    public function validateByteSequence($bytes, $size)
+    public function validateByteSequence($bytes, $size): int
     {
         $needed = $this->_width - $size;
 
@@ -90,7 +90,7 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
      *
      * @return int
      */
-    public function getInitialByteSize()
+    public function getInitialByteSize(): int
     {
         return $this->_width;
     }
