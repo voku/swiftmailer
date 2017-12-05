@@ -1,46 +1,47 @@
 {
-    "name": "voku/swiftmailer",
-    "type": "library",
-    "description": "Swiftmailer, free feature-rich PHP mailer",
-    "keywords": ["mail","mailer","email"],
-    "homepage": "http://swiftmailer.org",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Chris Corbyn"
-        },
-        {
-            "name": "Fabien Potencier",
-            "email": "fabien@symfony.com",
-            "role": "Developer"
-        },
-        {
-            "name": "Lars Moelleken",
-            "email": "lars@moelleken.org",
-            "homepage": "https://github.com/voku",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.3",
-        "voku/email-check": "~1.1",
-        "voku/portable-utf8": "~3.1"
+  "name": "voku/swiftmailer",
+  "type": "library",
+  "description": "Swiftmailer, free feature-rich PHP mailer",
+  "keywords": [
+    "mail",
+    "mailer",
+    "email"
+  ],
+  "homepage": "http://swiftmailer.org",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Chris Corbyn"
     },
-    "require-dev": {
-        "mockery/mockery": "~0.9.1",
-        "phpunit/phpunit": "~4.0|~5.0"
+    {
+      "name": "Fabien Potencier",
+      "email": "fabien@symfony.com",
+      "role": "Developer"
     },
-    "autoload": {
-        "files": ["lib/swift_required.php"]
-    },
-    "autoload-dev": {
-        "psr-0": {
-            "Swift_": "tests/unit"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "5.5-dev"
-        }
+    {
+      "name": "Lars Moelleken",
+      "email": "lars@moelleken.org",
+      "homepage": "https://github.com/voku",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": ">=7.0.0",
+    "voku/email-check": "~2.0",
+    "voku/portable-utf8": "~4.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "~0.9.1",
+    "phpunit/phpunit": "~6.0"
+  },
+  "autoload": {
+    "files": [
+      "lib/swift_required.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Swift_": "tests/unit"
+    }
+  }
 }
