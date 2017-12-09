@@ -271,7 +271,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
             return;
         }
 
-        $bytesToWrite = strlen($bytes);
+        $bytesToWrite = \strlen($bytes);
         $totalBytesWritten = 0;
 
         while ($totalBytesWritten < $bytesToWrite) {

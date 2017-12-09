@@ -132,12 +132,12 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
         while (false !== $bytes = $os->read($startLength)) {
 
             $c = array();
-            $len = strlen($bytes);
+            $len = \strlen($bytes);
             for ($i = 0; $i < $len; ++$i) {
                 $c[] = self::$_byteMap[$bytes[$i]];
             }
 
-            $size = count($c);
+            $size = \count($c);
             $need = $this->_charReader->validateByteSequence($c, $size);
 
             if (

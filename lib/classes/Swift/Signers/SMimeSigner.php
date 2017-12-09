@@ -108,7 +108,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
 
         $this->signOptions = $signOptions;
         if (null !== $extraCerts) {
-            $this->extraCerts = str_replace('\\', '/', realpath($extraCerts));
+            $this->extraCerts = \str_replace('\\', '/', realpath($extraCerts));
         }
 
         return $this;
@@ -370,8 +370,8 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
 
         $headersPosEnd = strpos($headerData, "\r\n\r\n");
         $headerData = trim($headerData);
-        $headerData = substr($headerData, 0, $headersPosEnd);
-        $headerLines = explode("\r\n", $headerData);
+        $headerData = \substr($headerData, 0, $headersPosEnd);
+        $headerLines = \explode("\r\n", $headerData);
         unset($headerData);
 
         $headers = array();
@@ -384,7 +384,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
                 continue;
             }
 
-            $header = explode(':', $headerLine, 2);
+            $header = \explode(':', $headerLine, 2);
             $currentHeaderName = Swift::strtolowerWithStaticCache($header[0]);
             $headers[$currentHeaderName] = trim($header[1]);
         }
@@ -396,7 +396,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
         $messageHeaders = $message->getHeaders();
 
         // No need to check for 'application/pkcs7-mime', as this is always base64
-        if ('multipart/signed;' === substr($headers['content-type'], 0, 17)) {
+        if ('multipart/signed;' === \substr($headers['content-type'], 0, 17)) {
             if (!preg_match('/boundary=("[^"]+"|(?:[^\s]+|$))/is', $headers['content-type'], $contentTypeData)) {
                 throw new Swift_SwiftException('Failed to find Boundary parameter');
             }

@@ -67,7 +67,7 @@ class Swift_MessageTest extends \PHPUnit_Framework_TestCase
 
         foreach ($obj1_properties as $property => $value) {
             // collect and format information from where the property is
-            $property_parts = explode("\x0", $property);
+            $property_parts = \explode("\x0", $property);
             $property_name = array_pop($property_parts);
             $property_origin = array_pop($property_parts);
             $this->_stack[] = array('property' => $property_name, 'origin' => $property_origin, 'parent_type' => gettype($obj1));

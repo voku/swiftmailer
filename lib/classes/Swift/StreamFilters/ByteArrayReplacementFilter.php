@@ -119,9 +119,9 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
             }
             $this->_replace[] = $rep;
         }
-        for ($i = count($this->_replace) - 1; $i >= 0; --$i) {
+        for ($i = \count($this->_replace) - 1; $i >= 0; --$i) {
             $this->_replace[$i] = $rep = $this->filter($this->_replace[$i], $i);
-            $this->_repSize[$i] = count($rep);
+            $this->_repSize[$i] = \count($rep);
         }
     }
 
@@ -155,7 +155,7 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
 
         $last_size = 0;
         $newBuffer = array();
-        $buf_size = count($buffer);
+        $buf_size = \count($buffer);
         $last_size = 0;
         for ($i = 0; $i < $buf_size; ++$i) {
             $search_pos = $this->_tree;

@@ -46,7 +46,7 @@ class Swift_StreamFilters_StringReplacementFilter implements Swift_StreamFilter
             return false;
         }
 
-        $endOfBuffer = substr($buffer, -1);
+        $endOfBuffer = \substr($buffer, -1);
         if (!$endOfBuffer) {
             return false;
         }

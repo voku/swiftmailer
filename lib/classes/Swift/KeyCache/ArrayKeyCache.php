@@ -123,7 +123,7 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
         $is->setKeyCache($this);
         $is->setNsKey($nsKey);
         $is->setItemKey($itemKey);
-        if (isset($writeThrough)) {
+        if (null !== $writeThrough) {
             $is->setWriteThroughStream($writeThrough);
         }
 
@@ -141,9 +141,12 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
     public function getString($nsKey, $itemKey)
     {
         $this->_prepareCache($nsKey);
-        if ($this->hasKey($nsKey, $itemKey)) {
-            return $this->_contents[$nsKey][$itemKey];
+
+        if (!$this->hasKey($nsKey, $itemKey)) {
+            return '';
         }
+
+        return $this->_contents[$nsKey][$itemKey];
     }
 
     /**

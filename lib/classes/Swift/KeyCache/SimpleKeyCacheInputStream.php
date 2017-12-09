@@ -38,6 +38,7 @@ class Swift_KeyCache_SimpleKeyCacheInputStream implements Swift_KeyCache_KeyCach
 
     /**
      * A stream to write through on each write()
+     *
      * @var null|Swift_InputByteStream
      */
     private $_writeThrough = null;
@@ -77,11 +78,11 @@ class Swift_KeyCache_SimpleKeyCacheInputStream implements Swift_KeyCache_KeyCach
             Swift_KeyCache::MODE_APPEND
         );
 
-        if (isset($is)) {
+        if (null !== $is) {
             $is->write($bytes);
         }
 
-        if (isset($this->_writeThrough)) {
+        if (null !== $this->_writeThrough) {
             $this->_writeThrough->write($bytes);
         }
     }

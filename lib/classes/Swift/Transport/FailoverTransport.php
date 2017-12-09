@@ -42,7 +42,7 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
-        $maxTransports = count($this->_transports);
+        $maxTransports = \count($this->_transports);
         $sent = 0;
         $this->_lastUsedTransport = null;
 

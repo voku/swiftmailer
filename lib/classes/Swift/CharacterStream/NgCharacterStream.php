@@ -175,7 +175,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
         switch ($this->_mapType) {
             case Swift_CharacterReader::MAP_TYPE_FIXED_LEN:
                 $len = $length * $this->_map;
-                $ret = substr($this->_datas, $this->_currentPos * $this->_map, $len);
+                $ret = \substr($this->_datas, $this->_currentPos * $this->_map, $len);
                 $this->_currentPos += $length;
                 break;
 
@@ -203,14 +203,14 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
                 $to = $start;
                 for (; $this->_currentPos < $end; ++$this->_currentPos) {
                     if (isset($this->_map['i'], $this->_map['i'][$this->_currentPos])) {
-                        $ret .= substr($this->_datas, $start, $to - $start) . '?';
+                        $ret .= \substr($this->_datas, $start, $to - $start) . '?';
                         $start = $this->_map['p'][$this->_currentPos];
                     } else {
                         $to = $this->_map['p'][$this->_currentPos];
                     }
                 }
 
-                $ret .= substr($this->_datas, $start, $to - $start);
+                $ret .= \substr($this->_datas, $start, $to - $start);
                 break;
         }
 
@@ -271,16 +271,16 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
         $ignored = '';
         $this->_datas .= $chars;
         $this->_charCount += $this->_charReader->getCharPositions(
-            substr($this->_datas, $this->_datasSize),
+            \substr($this->_datas, $this->_datasSize),
             $this->_datasSize,
             $this->_map,
             $ignored
         );
 
         if ($ignored !== false) {
-            $this->_datasSize = strlen($this->_datas) - strlen($ignored);
+            $this->_datasSize = \strlen($this->_datas) - \strlen($ignored);
         } else {
-            $this->_datasSize = strlen($this->_datas);
+            $this->_datasSize = \strlen($this->_datas);
         }
     }
 }

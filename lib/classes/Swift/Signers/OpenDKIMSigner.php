@@ -237,7 +237,7 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
                 &&
                 $string[1] === "\n"
             ) {
-                $string = substr($string, 2);
+                $string = \substr($string, 2);
             }
         }
 

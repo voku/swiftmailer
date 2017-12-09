@@ -36,7 +36,8 @@ class Swift_ByteStream_TemporaryFileByteStream extends Swift_ByteStream_FileByte
     public function __destruct()
     {
         if (file_exists($this->getPath())) {
-            @unlink($this->getPath());
+          /** @noinspection PhpUsageOfSilenceOperatorInspection */
+          @unlink($this->getPath());
         }
     }
 }

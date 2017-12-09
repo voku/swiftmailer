@@ -228,7 +228,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
 
         if ($evt) {
 
-            if ($sent === count($to) + count($cc) + count($bcc)) {
+            if ($sent === \count($to) + count($cc) + count($bcc)) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_SUCCESS);
             } elseif ($sent > 0) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_TENTATIVE);

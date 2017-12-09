@@ -108,7 +108,7 @@ function generateUpToDateMimeArray()
         // all extensions from second match
         foreach ($matches[2] as $i => $extensions) {
             // explode multiple extensions from string
-            $extensions = explode(' ', strtolower($extensions));
+            $extensions = \explode(' ', strtolower($extensions));
 
             // force array for foreach
             if (!is_array($extensions)) {
@@ -132,46 +132,48 @@ function generateUpToDateMimeArray()
 
     $xml = simplexml_load_string($mime_xml);
 
-    foreach ($xml as $node) {
-        // check if there is no pattern
-        if (!isset($node->glob['pattern'])) {
-            continue;
-        }
-
-        // get all matching extensions from match
-        foreach ((array) $node->glob['pattern'] as $extension) {
-            // skip none glob extensions
-            if (strpos($extension, '.') === false) {
-                continue;
-            }
-        }
-
-        if (isset($node->glob['pattern'][0])) {
-            // mime type
-            $mime_type = strtolower((string) $node['type']);
-
-            // get first extension
-            $extension = strtolower(trim($node->glob['ddpattern'][0], '*.'));
-
-            // skip none glob extensions
-            if (strpos($extension, '.') !== false) {
+    if ($xml instanceof \SimpleXMLElement) {
+        foreach ($xml as $node) {
+            // check if there is no pattern
+            if (!isset($node->glob['pattern'])) {
                 continue;
             }
 
-            // check if string length between 1 and 10
-            $extensionLength = strlen($extension);
-            if (
-                $extensionLength < 1
-                ||
-                $extensionLength > 9
-            ) {
-                continue;
+            // get all matching extensions from match
+            foreach ((array) $node->glob['pattern'] as $extension) {
+                // skip none glob extensions
+                if (strpos($extension, '.') === false) {
+                    continue;
+                }
             }
 
-            // check if string length lower than 10
-            if (!isset($valid_mime_types[$mime_type])) {
-                // generate array for mimetype to extension resolver (only first match)
-                $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
+            if (isset($node->glob['pattern'][0])) {
+                // mime type
+                $mime_type = strtolower((string) $node['type']);
+
+                // get first extension
+                $extension = strtolower(trim($node->glob['ddpattern'][0], '*.'));
+
+                // skip none glob extensions
+                if (strpos($extension, '.') !== false) {
+                    continue;
+                }
+
+                // check if string length between 1 and 10
+                $extensionLength = \strlen($extension);
+                if (
+                    $extensionLength < 1
+                    ||
+                    $extensionLength > 9
+                ) {
+                    continue;
+                }
+
+                // check if string length lower than 10
+                if (!isset($valid_mime_types[$mime_type])) {
+                    // generate array for mimetype to extension resolver (only first match)
+                    $valid_mime_types[$extension] = "'{$extension}' => '{$mime_type}'";
+                }
             }
         }
     }

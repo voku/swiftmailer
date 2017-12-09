@@ -201,7 +201,7 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
 
             // Allow space for the indices, charset and language.
             $maxValueLength = $this->getMaxLineLength() - strlen($name . '*N*="";') - 1;
-            $firstLineOffset = strlen($this->getCharset() . "'" . $this->getLanguage() . "'");
+            $firstLineOffset = \strlen($this->getCharset() . "'" . $this->getLanguage() . "'");
         }
 
         // Encode if we need to ...
@@ -221,7 +221,7 @@ class Swift_Mime_Headers_ParameterizedHeader extends Swift_Mime_Headers_Unstruct
         }
 
         if (null !== $this->_paramEncoder) {
-            $valueLines = explode("\r\n", $value);
+            $valueLines = \explode("\r\n", $value);
         } else {
             $valueLines = array($value);
         }

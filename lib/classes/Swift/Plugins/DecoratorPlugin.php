@@ -109,7 +109,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
             $body = $message->getBody();
             $search = array_keys($replacements);
             $replace = array_values($replacements);
-            $bodyReplaced = str_replace($search, $replace, $body);
+            $bodyReplaced = \str_replace($search, $replace, $body);
 
             if ($body != $bodyReplaced) {
                 $this->_originalBody = $body;
@@ -133,7 +133,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
                         }
                     }
                 } else {
-                    $bodyReplaced = str_replace($search, $replace, $body, $count);
+                    $bodyReplaced = \str_replace($search, $replace, $body, $count);
                 }
 
                 if ($count) {
@@ -148,7 +148,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
                 list($type) = sscanf($child->getContentType(), '%[^/]/%s');
                 if ('text' === $type) {
                     $body = $child->getBody();
-                    $bodyReplaced = str_replace(
+                    $bodyReplaced = \str_replace(
                         $search, $replace, $body
                         );
                     if ($body != $bodyReplaced) {

@@ -241,7 +241,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
                 // ... otherwise it needs encoding
                 // Determine space remaining on line if first line
                 if ($shorten) {
-                    $usedLength = strlen($header->getFieldName() . ': ');
+                    $usedLength = \strlen($header->getFieldName() . ': ');
                 } else {
                     $usedLength = 0;
                 }
@@ -263,7 +263,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
     protected function escapeSpecials($token, array $include = array())
     {
         foreach (array_merge(array('\\'), $include) as $char) {
-            $token = str_replace($char, '\\' . $char, $token);
+            $token = \str_replace($char, '\\' . $char, $token);
         }
 
         return $token;
@@ -286,15 +286,15 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             // See RFC 2822, Sect 2.2 (really 2.2 ??)
             if ($this->tokenNeedsEncoding($token)) {
                 // Don't encode starting WSP
-                $firstChar = substr($token, 0, 1);
+                $firstChar = \substr($token, 0, 1);
                 switch ($firstChar) {
                     case ' ':
                     case "\t":
                         $value .= $firstChar;
-                        $token = substr($token, 1);
+                        $token = \substr($token, 1);
                 }
                 if (-1 == $usedLength) {
-                    $usedLength = strlen($header->getFieldName().': ') + strlen($value);
+                    $usedLength = \strlen($header->getFieldName().': ') + strlen($value);
                 }
                 $value .= $this->getTokenAsEncodedWord($token, $usedLength);
                 $header->setMaxLineLength(76); // Forcefully override
@@ -371,7 +371,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             $charsetDecl .= '*' . $this->_lang;
         }
 
-        $encodingWrapperLength = strlen('=?' . $charsetDecl . '?' . $this->_encoder->getName() . '??=');
+        $encodingWrapperLength = \strlen('=?' . $charsetDecl . '?' . $this->_encoder->getName() . '??=');
 
         if ($firstLineOffset >= 75) {
             // Does this logic need to be here?
@@ -379,7 +379,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
         }
 
         /** @noinspection PhpMethodParametersCountMismatchInspection */
-        $encodedTextLines = explode(
+        $encodedTextLines = \explode(
             "\r\n",
             $this->_encoder->encodeString($token, $firstLineOffset, 75 - $encodingWrapperLength, $this->_charset)
         );

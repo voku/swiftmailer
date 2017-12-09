@@ -84,12 +84,12 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
      */
     public function getCharPositions($string, $startOffset, &$currentMap, &$ignoredChars): int
     {
-        if (!isset($currentMap['i']) || !isset($currentMap['p'])) {
+        if (!isset($currentMap['i'], $currentMap['p'])) {
             $currentMap['p'] = $currentMap['i'] = array();
         }
 
-        $strlen = strlen($string);
-        $charPos = count($currentMap['p']);
+        $strlen = \strlen($string);
+        $charPos = \count($currentMap['p']);
         $foundChars = 0;
         $invalid = false;
 
@@ -112,7 +112,7 @@ class Swift_CharacterReader_Utf8Reader implements Swift_CharacterReader
             }
 
             if (($i + $size) > $strlen) {
-                $ignoredChars = substr($string, $i);
+                $ignoredChars = \substr($string, $i);
                 break;
             }
 

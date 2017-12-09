@@ -54,7 +54,7 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
     {
         if (is_array($stack)) {
             $this->_array = $stack;
-            $this->_arraySize = count($stack);
+            $this->_arraySize = \count($stack);
         } elseif (is_string($stack)) {
             $this->write($stack);
         } else {
@@ -72,7 +72,7 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
      *
      * @param int $length
      *
-     * @return string
+     * @return string|false
      */
     public function read($length)
     {
@@ -100,12 +100,12 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
      */
     public function write($bytes)
     {
-        $to_add = str_split($bytes);
+        $to_add = \str_split($bytes);
         foreach ($to_add as $value) {
             $this->_array[] = $value;
         }
 
-        $this->_arraySize = count($this->_array);
+        $this->_arraySize = \count($this->_array);
 
         foreach ($this->_mirrors as $stream) {
             $stream->write($bytes);
@@ -154,8 +154,6 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
      * Move the internal read pointer to $byteOffset in the stream.
      *
      * @param int $byteOffset
-     *
-     * @return bool
      */
     public function setReadPointer($byteOffset)
     {

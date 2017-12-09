@@ -67,7 +67,7 @@ class Swift_Mime_HeaderEncoder_Base64HeaderEncoder extends Swift_Encoder_Base64E
             }
             $chunk = mb_strcut($string, $cursorPosition, $maxChunkLength);
             $encoded .= base64_encode($chunk);
-            $cursorPosition += strlen($chunk);
+            $cursorPosition += \strlen($chunk);
         }
 
         return $encoded;

@@ -644,10 +644,10 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
         switch ($this->_headerCanon) {
             case 'relaxed':
                 // Prepare Header and cascade
-                $exploded = explode(':', $header, 2);
+                $exploded = \explode(':', $header, 2);
                 $name = Swift::strtolowerWithStaticCache(trim($exploded[0]));
-                $value = str_replace("\r\n", '', $exploded[1]);
-                $value = preg_replace("/[ \t][ \t]+/", ' ', $value);
+                $value = \str_replace("\r\n", '', $exploded[1]);
+                $value = \preg_replace("/[ \t][ \t]+/", ' ', $value);
                 $header = $name . ':' . trim($value) . ($is_sig ? '' : "\r\n");
             case 'simple':
                 // Nothing to do
@@ -669,7 +669,7 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     protected function _canonicalizeBody($string)
     {
-        $len = strlen($string);
+        $len = \strlen($string);
         $canon = '';
         $method = ($this->_bodyCanon === 'relaxed');
         for ($i = 0; $i < $len; ++$i) {
@@ -737,10 +737,10 @@ class Swift_Signers_DKIMSigner implements Swift_Signers_HeaderSigner
      */
     private function _addToBodyHash($string)
     {
-        $len = strlen($string);
+        $len = \strlen($string);
         if ($len > ($new_len = ($this->_maxLen - $this->_bodyLen))) {
           /** @noinspection CallableParameterUseCaseInTypeContextInspection */
-          $string = substr($string, 0, $new_len);
+          $string = \substr($string, 0, $new_len);
             $len = $new_len;
         }
         hash_update($this->_bodyHashHandler, $string);

@@ -17,7 +17,7 @@ class Swift_Signers_SMimeSignerTest extends \PHPUnit_Framework_TestCase
         $this->replacementFactory = Swift_DependencyContainer::getInstance()
             ->lookup('transport.replacementfactory');
 
-        $this->samplesDir = str_replace('\\', '/', realpath(__DIR__.'/../../../_samples/')).'/';
+        $this->samplesDir = \str_replace('\\', '/', realpath(__DIR__.'/../../../_samples/')).'/';
     }
 
     public function testUnSingedMessage()
@@ -426,7 +426,7 @@ OEL;
             return false;
         }
 
-        $expectedBody = str_replace("\n", "\r\n", $expectedBody);
+        $expectedBody = \str_replace("\n", "\r\n", $expectedBody);
         if (!preg_match('%'.$expectedBody.'*%m', $entityString, $entities)) {
             $this->fail('Failed regex match.');
 
@@ -451,7 +451,7 @@ OEL;
         $actual = $messageStream->getContent();
 
         // File is UNIX encoded so convert them to correct line ending
-        $expected = str_replace("\n", "\r\n", $expected);
+        $expected = \str_replace("\n", "\r\n", $expected);
 
         $actual = trim(self::getBodyOfMessage($actual));
         if (!$this->assertRegExp('%^'.$expected.'$\s*%m', $actual)) {
@@ -516,7 +516,7 @@ OEL;
                 continue;
             }
 
-            $headerName = explode('-', $headerName);
+            $headerName = \explode('-', $headerName);
             $headerName = array_map('ucfirst', $headerName);
             $headerName = implode('-', $headerName);
 
@@ -542,8 +542,8 @@ OEL;
     protected static function getHeadersOfMessage($message)
     {
         $headersPosEnd = strpos($message, "\r\n\r\n");
-        $headerData = substr($message, 0, $headersPosEnd);
-        $headerLines = explode("\r\n", $headerData);
+        $headerData = \substr($message, 0, $headersPosEnd);
+        $headerLines = \explode("\r\n", $headerData);
 
         if (empty($headerLines)) {
             return array();
@@ -558,7 +558,7 @@ OEL;
                 continue;
             }
 
-            $header = explode(':', $headerLine, 2);
+            $header = \explode(':', $headerLine, 2);
             $currentHeaderName = strtolower($header[0]);
             $headers[$currentHeaderName] = trim($header[1]);
         }

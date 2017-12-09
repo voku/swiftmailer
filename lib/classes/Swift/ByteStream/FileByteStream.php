@@ -39,14 +39,14 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     /**
      * A lazy-loaded resource handle for reading the file
      *
-     * @var resource
+     * @var null|resource
      */
     private $_reader;
 
     /**
      * A lazy-loaded resource handle for writing the file
      *
-     * @var resource
+     * @var null|resource
      */
     private $_writer;
 
@@ -81,7 +81,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
         if (strpos($path, '?') !== false) {
             $parameter = parse_url($path, PHP_URL_QUERY);
 
-            $this->_path = str_replace('?' . $parameter, '', $path);
+            $this->_path = \str_replace('?' . $parameter, '', $path);
         } else {
             $this->_path = $path;
         }
@@ -161,12 +161,10 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
      * Move the internal read pointer to $byteOffset in the stream.
      *
      * @param int $byteOffset
-     *
-     * @return bool
      */
     public function setReadPointer($byteOffset)
     {
-        if (isset($this->_reader)) {
+        if (null !== $this->_reader) {
             $this->_seekReadStreamToPosition($byteOffset);
         }
         $this->_offset = $byteOffset;
@@ -198,7 +196,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
      */
     private function _getReadHandle()
     {
-        if (!isset($this->_reader)) {
+        if (null === $this->_reader) {
 
             $opts = array(
                 'ssl' => array(
@@ -229,7 +227,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     /** Get the resource for writing */
     private function _getWriteHandle()
     {
-        if (!isset($this->_writer)) {
+        if (null === $this->_writer) {
             /** @noinspection PhpUsageOfSilenceOperatorInspection */
             $pointer = @fopen($this->_path, $this->_mode);
 
@@ -246,7 +244,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
     /** Force a reload of the resource for reading */
     private function _resetReadHandle()
     {
-        if (isset($this->_reader)) {
+        if (null !== $this->_reader) {
             fclose($this->_reader);
             $this->_reader = null;
         }

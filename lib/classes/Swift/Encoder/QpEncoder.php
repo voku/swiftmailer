@@ -27,7 +27,7 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
     /**
      * A filter used if input should be canonicalized.
      *
-     * @var Swift_StreamFilter
+     * @var null|Swift_StreamFilter
      */
     protected $_filter;
 
@@ -191,7 +191,7 @@ class Swift_Encoder_QpEncoder implements Swift_Encoder
 
         while (false !== $bytes = $this->_nextSequence()) {
             // if we're filtering the input
-            if (isset($this->_filter)) {
+            if (null !== $this->_filter) {
                 // if we can't filter because we need more bytes
                 while ($this->_filter->shouldBuffer($bytes)) {
                     // then collect bytes into the buffer

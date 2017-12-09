@@ -78,9 +78,9 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
             }
 
             $wrapped = $this->_safeWordwrap($toencode, $maxLineLength, "\r\n");
-            $lastLinePos = strrpos($wrapped, "\r\n");
-            $leftOver = substr($wrapped, $lastLinePos);
-            $wrapped = substr($wrapped, 0, $lastLinePos);
+            $lastLinePos = \strrpos($wrapped, "\r\n");
+            $leftOver = \substr($wrapped, $lastLinePos);
+            $wrapped = \substr($wrapped, 0, $lastLinePos);
 
             $is->write($wrapped);
         }
@@ -124,7 +124,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
             return $string;
         }
 
-        $originalLines = explode($le, $string);
+        $originalLines = \explode($le, $string);
 
         $lines = array();
         $lineCount = 0;
@@ -133,14 +133,14 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
             $lines[] = '';
             $currentLine = &$lines[$lineCount++];
 
-            //$chunks = preg_split('/(?<=[\ \t,\.!\?\-&\+\/])/', $originalLine); // old-code?
-            $chunks = preg_split('/(?<=\s)/', $originalLine);
+            //$chunks = \preg_split('/(?<=[\ \t,\.!\?\-&\+\/])/', $originalLine); // old-code?
+            $chunks = \preg_split('/(?<=\s)/', $originalLine);
 
             foreach ($chunks as $chunk) {
                 if (
                     $currentLine !== ''
                     &&
-                    strlen($currentLine . $chunk) > $length
+                    \strlen($currentLine . $chunk) > $length
                 ) {
                     $lines[] = '';
                     $currentLine = &$lines[$lineCount++];
@@ -149,7 +149,7 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
             }
         }
 
-        return implode("\r\n", $lines);
+        return \implode("\r\n", $lines);
     }
 
     /**
@@ -161,10 +161,10 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder implements Swift_Mime_Conten
      */
     private function _canonicalize($string)
     {
-        return str_replace(
+        return \str_replace(
             array("\r\n", "\r", "\n"),
             array("\n", "\n", "\r\n"),
             $string
-            );
+        );
     }
 }

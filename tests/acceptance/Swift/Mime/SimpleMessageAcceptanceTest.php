@@ -870,7 +870,7 @@ class Swift_Mime_SimpleMessageAcceptanceTest extends \PHPUnit_Framework_TestCase
 
         $message->attach($part);
 
-        $cid = str_replace('=2E', '.', $file->getId()); // hack for "Swift_CharacterStream_MbCharacterStream"
+        $cid = \str_replace('=2E', '.', $file->getId()); // hack for "Swift_CharacterStream_MbCharacterStream"
 
         $this->assertRegExp(
             '~^' .

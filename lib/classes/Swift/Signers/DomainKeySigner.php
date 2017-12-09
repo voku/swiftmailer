@@ -442,10 +442,10 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
         switch ($this->_canon) {
             case 'nofws':
                 // Prepare Header and cascade
-                $exploded = explode(':', $header, 2);
+                $exploded = \explode(':', $header, 2);
                 $name = Swift::strtolowerWithStaticCache(trim($exploded[0]));
-                $value = str_replace("\r\n", '', $exploded[1]);
-                $value = preg_replace("/[ \t][ \t]+/", ' ', $value);
+                $value = \str_replace("\r\n", '', $exploded[1]);
+                $value = \preg_replace("/[ \t][ \t]+/", ' ', $value);
                 $header = $name . ':' . trim($value) . "\r\n";
             case 'simple':
                 // Nothing to do
@@ -463,7 +463,7 @@ class Swift_Signers_DomainKeySigner implements Swift_Signers_HeaderSigner
      */
     protected function _canonicalizeBody($string)
     {
-        $len = strlen($string);
+        $len = \strlen($string);
         $canon = '';
         $nofws = ($this->_canon === 'nofws');
         for ($i = 0; $i < $len; ++$i) {

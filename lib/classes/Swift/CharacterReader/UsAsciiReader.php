@@ -27,7 +27,7 @@ class Swift_CharacterReader_UsAsciiReader implements Swift_CharacterReader
      */
     public function getCharPositions($string, $startOffset, &$currentMap, &$ignoredChars): int
     {
-        $strlen = strlen($string);
+        $strlen = \strlen($string);
         $ignoredChars = '';
         for ($i = 0; $i < $strlen; ++$i) {
             if ($string[$i] > "\x07F") {
@@ -66,11 +66,11 @@ class Swift_CharacterReader_UsAsciiReader implements Swift_CharacterReader
     {
         $byte = reset($bytes);
         if (
-            1 === count($bytes)
-            &&
             $byte >= 0x00
             &&
             $byte <= 0x7F
+            &&
+            1 === \count($bytes)
         ) {
             return 0;
         }

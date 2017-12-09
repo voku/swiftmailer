@@ -153,8 +153,8 @@ class Swift_Transport_MailTransport implements Swift_Transport
 
         // Separate headers from body
         if (false !== $endHeaders = strpos($messageStr, "\r\n\r\n")) {
-            $headers = substr($messageStr, 0, $endHeaders) . "\r\n"; // Keep last EOL
-            $body = substr($messageStr, $endHeaders + 4);
+            $headers = \substr($messageStr, 0, $endHeaders) . "\r\n"; // Keep last EOL
+            $body = \substr($messageStr, $endHeaders + 4);
         } else {
             $headers = $messageStr . "\r\n";
             $body = '';
@@ -164,16 +164,16 @@ class Swift_Transport_MailTransport implements Swift_Transport
 
         if ("\r\n" !== PHP_EOL) {
             // Non-windows (not using SMTP)
-            $headers = str_replace("\r\n", PHP_EOL, $headers);
-            $subject = str_replace("\r\n", PHP_EOL, $subject);
-            $body = str_replace("\r\n", PHP_EOL, $body);
-            $to = str_replace("\r\n", PHP_EOL, $to);
+            $headers = \str_replace("\r\n", PHP_EOL, $headers);
+            $subject = \str_replace("\r\n", PHP_EOL, $subject);
+            $body = \str_replace("\r\n", PHP_EOL, $body);
+            $to = \str_replace("\r\n", PHP_EOL, $to);
         } else {
             // Windows, using SMTP
-            $headers = str_replace("\r\n.", "\r\n..", $headers);
-            $subject = str_replace("\r\n.", "\r\n..", $subject);
-            $body = str_replace("\r\n.", "\r\n..", $body);
-            $to = str_replace("\r\n.", "\r\n..", $to);
+            $headers = \str_replace("\r\n.", "\r\n..", $headers);
+            $subject = \str_replace("\r\n.", "\r\n..", $subject);
+            $body = \str_replace("\r\n.", "\r\n..", $body);
+            $to = \str_replace("\r\n.", "\r\n..", $to);
         }
 
         if ($this->mail($to, $subject, $body, $headers, $this->_formatExtraParams($this->_extraParams, $reversePath))) {
@@ -307,7 +307,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
             return false;
         }
 
-        $length = strlen($string);
+        $length = \strlen($string);
         for ($i = 0; $i < $length; ++$i) {
             $c = $string[$i];
             // All other characters have a special meaning in at least one common shell, including = and +.
@@ -337,7 +337,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
                 ||
                 false === $this->_isShellSafe($reversePath)
             ) {
-                $extraParams = str_replace('-f%s', '', $extraParams);
+                $extraParams = \str_replace('-f%s', '', $extraParams);
             } else {
                 $extraParams = sprintf($extraParams, $reversePath);
             }

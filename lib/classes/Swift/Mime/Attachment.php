@@ -161,9 +161,9 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
      */
     private function getFileExtension($str)
     {
-        $extension = substr($str, strrpos($str, '.') + 1);
+        $extension = \substr($str, strrpos($str, '.') + 1);
         if (strpos($extension, '?') !== false) {
-            $extension = preg_replace("/(\?.*)/", '', $extension);
+            $extension = \preg_replace("/(\?.*)/", '', $extension);
         }
         $extension = Swift::strtolowerWithStaticCache($extension);
 
