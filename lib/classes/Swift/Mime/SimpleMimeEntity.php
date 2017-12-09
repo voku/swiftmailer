@@ -468,7 +468,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     public function getBoundary()
     {
         if (!isset($this->_boundary)) {
-            $this->_boundary = '_=_swift_v5_' . time() . '_' . md5(getmypid() . mt_rand() . uniqid('', true)) . '_=_';
+            $this->_boundary = '_=_swift_v5_' . time() . '_' . bin2hex(random_bytes(16)) . '_=_';
         }
 
         return $this->_boundary;
@@ -753,7 +753,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      */
     private function _generateNewCacheKey()
     {
-        return md5(getmypid() . '.' . time() . '.' . uniqid(mt_rand(), true));
+        return bin2hex(random_bytes(16)); // set 32 hex values
     }
 
     /**

@@ -116,9 +116,9 @@ class Swift_Transport_MailTransport implements Swift_Transport
         }
 
         $count = (
-            count((array)$message->getTo())
-            + count((array)$message->getCc())
-            + count((array)$message->getBcc())
+            \count((array)$message->getTo())
+            + \count((array)$message->getCc())
+            + \count((array)$message->getBcc())
         );
 
         /*
@@ -152,7 +152,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
         $message->getHeaders()->set($subjectHeader);
 
         // Separate headers from body
-        if (false !== $endHeaders = strpos($messageStr, "\r\n\r\n")) {
+        if (false !== $endHeaders = \strpos($messageStr, "\r\n\r\n")) {
             $headers = \substr($messageStr, 0, $endHeaders) . "\r\n"; // Keep last EOL
             $body = \substr($messageStr, $endHeaders + 4);
         } else {
@@ -183,11 +183,11 @@ class Swift_Transport_MailTransport implements Swift_Transport
                 $this->_eventDispatcher->dispatchEvent($evt, 'sendPerformed');
             }
         } else {
-            $failedRecipients = array_merge(
+            $failedRecipients = \array_merge(
                 $failedRecipients,
-                array_keys((array)$message->getTo()),
-                array_keys((array)$message->getCc()),
-                array_keys((array)$message->getBcc())
+                \array_keys((array)$message->getTo()),
+                \array_keys((array)$message->getCc()),
+                \array_keys((array)$message->getBcc())
             );
 
             if ($evt) {
@@ -277,11 +277,11 @@ class Swift_Transport_MailTransport implements Swift_Transport
         if (!empty($return)) {
             $path = $return;
         } elseif (!empty($sender)) {
-            $keys = array_keys($sender);
-            $path = array_shift($keys);
+            $keys = \array_keys($sender);
+            $path = \array_shift($keys);
         } elseif (!empty($from)) {
-            $keys = array_keys($from);
-            $path = array_shift($keys);
+            $keys = \array_keys($from);
+            $path = \array_shift($keys);
         }
 
         return $path;
@@ -300,9 +300,9 @@ class Swift_Transport_MailTransport implements Swift_Transport
     {
         // Future-proof
         if (
-            escapeshellcmd($string) !== $string
+            \escapeshellcmd($string) !== $string
             ||
-            !in_array(escapeshellarg($string), array("'$string'", "\"$string\""), true)
+            !\in_array(\escapeshellarg($string), array("'$string'", "\"$string\""), true)
         ) {
             return false;
         }
@@ -313,7 +313,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
             // All other characters have a special meaning in at least one common shell, including = and +.
             // Full stop (.) has a special meaning in cmd.exe, but its impact should be negligible here.
             // Note that this does permit non-Latin alphanumeric characters based on the current locale.
-            if (!ctype_alnum($c) && strpos('@_-.', $c) === false) {
+            if (!\ctype_alnum($c) && \strpos('@_-.', $c) === false) {
                 return false;
             }
         }
@@ -331,7 +331,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
      */
     private function _formatExtraParams($extraParams, $reversePath)
     {
-        if (strpos($extraParams, '-f%s') !== false) {
+        if (\strpos($extraParams, '-f%s') !== false) {
             if (
                 empty($reversePath)
                 ||
@@ -339,7 +339,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
             ) {
                 $extraParams = \str_replace('-f%s', '', $extraParams);
             } else {
-                $extraParams = sprintf($extraParams, $reversePath);
+                $extraParams = \sprintf($extraParams, $reversePath);
             }
         }
 
