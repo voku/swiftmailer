@@ -132,8 +132,8 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
                             $count = 1;
                         }
                     }
-                } else {
-                    $bodyReplaced = \str_replace($search, $replace, $body, $count);
+                } elseif (is_string($body)) {
+                    $bodyReplaced = str_replace($search, $replace, $body, $count);
                 }
 
                 if ($count) {
@@ -181,7 +181,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
             return $this->_replacements->getReplacementsFor($address);
         }
 
-        return isset($this->_replacements[$address]) ? $this->_replacements[$address] : null;
+        return $this->replacements[$address] ?? null;
     }
 
     /**
@@ -195,7 +195,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
     }
 
     /** Restore a changed message back to its original state */
-    private function _restoreMessage(Swift_Mime_Message $message)
+    private function _restoreMessage(Swift_Mime_SimpleMessage $message)
     {
         if ($this->_lastMessage === $message) {
             if (isset($this->_originalBody)) {

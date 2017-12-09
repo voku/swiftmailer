@@ -94,8 +94,10 @@ class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
      */
     public function setTimestamp($timestamp)
     {
-        if (null !== $timestamp) {
-            $timestamp = (int) $timestamp;
+        $this->clearCachedValueIf($this->getCachedValue() != $dateTime->format(DateTime::RFC2822));
+        if ($dateTime instanceof DateTime) {
+            $immutable = new DateTimeImmutable('@'.$dateTime->getTimestamp());
+            $dateTime = $immutable->setTimezone($dateTime->getTimezone());
         }
 
         $this->clearCachedValueIf($this->_timestamp != $timestamp);

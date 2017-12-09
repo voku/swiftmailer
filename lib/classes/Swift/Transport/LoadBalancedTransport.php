@@ -101,19 +101,33 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function ping()
+    {
+        foreach ($this->transports as $transport) {
+            if (!$transport->ping()) {
+                $this->killCurrentTransport();
+            }
+        }
+
+        return count($this->transports) > 0;
+    }
+
+    /**
      * Send the given Message.
      *
      * Recipient/sender data will be retrieved from the Message API.
      * The return value is the number of recipients who were accepted for delivery.
      *
-     * @param Swift_Mime_Message $message
+     * @param Swift_Mime_SimpleMessage $message
      * @param string[]           $failedRecipients An array of failures by-reference
      *
      * @return int
      *
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
+    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
     {
         $maxTransports = \count($this->_transports);
         $sent = 0;

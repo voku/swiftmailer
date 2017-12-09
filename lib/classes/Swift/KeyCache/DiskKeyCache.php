@@ -63,10 +63,6 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
     {
         $this->_stream = $stream;
         $this->_path = $path;
-
-        if (function_exists('get_magic_quotes_runtime') && @get_magic_quotes_runtime() === 1) {
-            $this->_quotes = true;
-        }
     }
 
     /**
@@ -180,27 +176,14 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
      */
     public function getString($nsKey, $itemKey)
     {
-        $this->_prepareCache($nsKey);
-
-        if (!$this->hasKey($nsKey, $itemKey)) {
-            return '';
-        }
-
-        $fp = $this->_getHandle($nsKey, $itemKey, self::POSITION_START);
-        if ($this->_quotes) {
-            ini_set('magic_quotes_runtime', 0);
-        }
-
-        $str = '';
-        while (!feof($fp) && false !== $bytes = fread($fp, 8192)) {
-            $str .= $bytes;
-        }
-
-        if ($this->_quotes) {
-            ini_set('magic_quotes_runtime', 1);
-        }
-
-        $this->_freeHandle($nsKey, $itemKey);
+        $this->prepareCache($nsKey);
+        if ($this->hasKey($nsKey, $itemKey)) {
+            $fp = $this->getHandle($nsKey, $itemKey, self::POSITION_START);
+            $str = '';
+            while (!feof($fp) && false !== $bytes = fread($fp, 8192)) {
+                $str .= $bytes;
+            }
+            $this->freeHandle($nsKey, $itemKey);
 
         return $str;
     }
@@ -215,21 +198,11 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
     public function exportToByteStream($nsKey, $itemKey, Swift_InputByteStream $is)
     {
         if ($this->hasKey($nsKey, $itemKey)) {
-            $fp = $this->_getHandle($nsKey, $itemKey, self::POSITION_START);
-
-            if ($this->_quotes) {
-                ini_set('magic_quotes_runtime', 0);
-            }
-
+            $fp = $this->getHandle($nsKey, $itemKey, self::POSITION_START);
             while (!feof($fp) && false !== $bytes = fread($fp, 8192)) {
                 $is->write($bytes);
             }
-
-            if ($this->_quotes) {
-                ini_set('magic_quotes_runtime', 1);
-            }
-
-            $this->_freeHandle($nsKey, $itemKey);
+            $this->freeHandle($nsKey, $itemKey);
         }
     }
 

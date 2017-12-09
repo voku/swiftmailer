@@ -1,6 +1,6 @@
 <?php
 
-class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit_Framework_TestCase
+class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit\Framework\TestCase
 {
     public function testBasicReplacementsAreMade()
     {
@@ -72,7 +72,7 @@ class Swift_StreamFilters_StringReplacementFilterTest extends \PHPUnit_Framework
 
     public function testShouldBufferReturnsFalseOnEmptyBuffer()
     {
-        $filter = $this->_createFilter("\r\n", "\n");
+        $filter = $this->createFilter("\r\n", "\n");
         $this->assertFalse($filter->shouldBuffer(''));
     }
 

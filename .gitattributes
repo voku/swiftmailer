@@ -6,7 +6,7 @@
 *.txt -crlf
 
 # ignore for export (download via zip or composer)
-/notes export-ignore
+/doc/notes export-ignore
 /tests export-ignore
 /.editorconfig export-ignore
 /.scrutinizer.yml export-ignore

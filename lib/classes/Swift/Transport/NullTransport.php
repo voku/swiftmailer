@@ -53,14 +53,22 @@ class Swift_Transport_NullTransport implements Swift_Transport
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function ping()
+    {
+        return true;
+    }
+
+    /**
      * Sends the given message.
      *
-     * @param Swift_Mime_Message $message
+     * @param Swift_Mime_SimpleMessage $message
      * @param string[]           $failedRecipients An array of failures by-reference
      *
      * @return int The number of sent emails
      */
-    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
+    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
     {
         $evt = $this->_eventDispatcher->createSendEvent($this, $message);
         if ($evt) {

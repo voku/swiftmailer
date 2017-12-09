@@ -1,7 +1,7 @@
 <?php
 
 
-class Swift_Bug206Test extends \PHPUnit_Framework_TestCase
+class Swift_Bug206Test extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Swift_Mime_HeaderFactory
