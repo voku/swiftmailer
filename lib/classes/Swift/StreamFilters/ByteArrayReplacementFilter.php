@@ -153,7 +153,6 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
             return $buffer;
         }
 
-        $last_size = 0;
         $newBuffer = array();
         $buf_size = \count($buffer);
         $last_size = 0;

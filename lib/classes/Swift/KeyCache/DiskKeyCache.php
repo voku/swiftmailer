@@ -176,16 +176,19 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
      */
     public function getString($nsKey, $itemKey)
     {
-        $this->prepareCache($nsKey);
+        $this->_prepareCache($nsKey);
         if ($this->hasKey($nsKey, $itemKey)) {
-            $fp = $this->getHandle($nsKey, $itemKey, self::POSITION_START);
-            $str = '';
-            while (!feof($fp) && false !== $bytes = fread($fp, 8192)) {
-                $str .= $bytes;
-            }
-            $this->freeHandle($nsKey, $itemKey);
+          $fp = $this->_getHandle($nsKey, $itemKey, self::POSITION_START);
+          $str = '';
+          while (!feof($fp) && false !== $bytes = fread($fp, 8192)) {
+            $str .= $bytes;
+          }
+          $this->_freeHandle($nsKey, $itemKey);
 
-        return $str;
+          return $str;
+        }
+
+        return '';
     }
 
     /**
@@ -198,11 +201,11 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
     public function exportToByteStream($nsKey, $itemKey, Swift_InputByteStream $is)
     {
         if ($this->hasKey($nsKey, $itemKey)) {
-            $fp = $this->getHandle($nsKey, $itemKey, self::POSITION_START);
+            $fp = $this->_getHandle($nsKey, $itemKey, self::POSITION_START);
             while (!feof($fp) && false !== $bytes = fread($fp, 8192)) {
                 $is->write($bytes);
             }
-            $this->freeHandle($nsKey, $itemKey);
+            $this->_freeHandle($nsKey, $itemKey);
         }
     }
 

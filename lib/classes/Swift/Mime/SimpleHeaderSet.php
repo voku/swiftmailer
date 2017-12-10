@@ -88,14 +88,14 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
     }
 
     /**
-     * Add a new Date header using $timestamp (UNIX time).
+     * Add a new Date header using $dateTime.
      *
      * @param string $name
-     * @param int    $timestamp
+     * @param DateTimeInterface|null $dateTime
      */
-    public function addDateHeader($name, $timestamp = null)
+    public function addDateHeader($name, DateTimeInterface $dateTime = null)
     {
-        $this->_storeHeader($name, $this->_factory->createDateHeader($name, $timestamp));
+        $this->_storeHeader($name, $this->_factory->createDateHeader($name, $dateTime));
     }
 
     /**
@@ -168,9 +168,9 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
 
         if (isset($this->_headers[$lowerName][$index])) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -223,7 +223,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
      *
      * @param string $name
      *
-     * @return array
+     * @return Swift_Mime_Header[]
      */
     public function getAll($name = null)
     {
@@ -414,7 +414,9 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
 
         if ($aPos === -1) {
             return 1;
-        } elseif ($bPos === -1) {
+        }
+
+        if ($bPos === -1) {
             return -1;
         }
 
@@ -432,9 +434,9 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
     {
         if (isset($this->_required[Swift::strtolowerWithStaticCache($header->getFieldName())])) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

@@ -54,6 +54,14 @@ class Swift_Transport_SendmailTransport extends Swift_Transport_AbstractSmtpTran
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function ping()
+    {
+        return true;
+    }
+
+    /**
      * Set the command to invoke.
      *
      * If using -t mode you are strongly advised to include -oi or -i in the flags.
@@ -93,7 +101,7 @@ class Swift_Transport_SendmailTransport extends Swift_Transport_AbstractSmtpTran
      * NOTE: If using 'sendmail -t' you will not be aware of any failures until
      * they bounce (i.e. send() will always return 100% success).
      *
-     * @param Swift_Mime_SimpleMessage $message
+     * @param Swift_Mime_Message $message
      * @param string[]           $failedRecipients An array of failures by-reference
      *
      * @return int
@@ -101,7 +109,7 @@ class Swift_Transport_SendmailTransport extends Swift_Transport_AbstractSmtpTran
      * @throws Exception (from "parent::send()")
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $failedRecipients = (array)$failedRecipients;
         $command = $this->getCommand();

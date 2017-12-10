@@ -86,7 +86,7 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
             ->setFormat('flowed')
             ->setDelSp(false)
             ->setSubject('subj')
-            ->setDate(123)
+            ->setDate(new DateTimeImmutable())
             ->setReturnPath('foo@bar')
             ->setSender('foo@bar')
             ->setFrom(array('x@y' => 'XY'))
@@ -139,61 +139,55 @@ class Swift_Mime_SimpleMessageTest extends Swift_Mime_MimePartTest
 
   public function testDateIsReturnedFromHeader()
   {
-    $date = $this->_createHeader('Date', 123);
-    $message = $this->_createMessage(
-        $this->_createHeaderSet(array('Date' => $date)),
-        $this->_createEncoder(), $this->_createCache()
-    );
-    $this->assertSame(123, $message->getDate());
+      $dateTime = new DateTimeImmutable();
+      $date = $this->_createHeader('Date', $dateTime);
+      $message = $this->_createMessage(
+          $this->_createHeaderSet(array('Date' => $date)),
+          $this->_createEncoder(), $this->_createCache()
+      );
+      $this->assertEquals($dateTime, $message->getDate());
   }
 
   public function testDateIsSetInHeader()
   {
-    $date = $this->_createHeader('Date', 123, array(), false);
-    $date->shouldReceive('setFieldBodyModel')
-         ->once()
-         ->with(1234);
-
-    $date->shouldReceive('setFieldBodyModel')
-         ->zeroOrMoreTimes();
-
-    $message = $this->_createMessage(
-        $this->_createHeaderSet(array('Date' => $date)),
-        $this->_createEncoder(), $this->_createCache()
-    );
-
-    $message->setDate(1234);
+      $dateTime = new DateTimeImmutable();
+      $date = $this->_createHeader('Date', new DateTimeImmutable(), array(), false);
+      $date->shouldReceive('setFieldBodyModel')
+          ->once()
+          ->with($dateTime);
+      $date->shouldReceive('setFieldBodyModel')
+          ->zeroOrMoreTimes();
+      $message = $this->_createMessage(
+          $this->_createHeaderSet(array('Date' => $date)),
+          $this->_createEncoder(), $this->_createCache()
+      );
+      $message->setDate($dateTime);
   }
 
   public function testDateHeaderIsCreatedIfNonePresent()
   {
-    $headers = $this->_createHeaderSet(array(), false);
-    $headers->shouldReceive('addDateHeader')
-            ->once()
-            ->with('Date', 1234);
-
-    $headers->shouldReceive('addDateHeader')
-            ->zeroOrMoreTimes();
-
-    $message = $this->_createMessage(
-        $headers, $this->_createEncoder(),
-        $this->_createCache()
-    );
-
-    $message->setDate(1234);
+      $dateTime = new DateTimeImmutable();
+      $headers = $this->_createHeaderSet(array(), false);
+      $headers->shouldReceive('addDateHeader')
+          ->once()
+          ->with('Date', $dateTime);
+      $headers->shouldReceive('addDateHeader')
+          ->zeroOrMoreTimes();
+      $message = $this->_createMessage($headers, $this->_createEncoder(),
+          $this->_createCache()
+      );
+      $message->setDate($dateTime);
   }
 
   public function testDateHeaderIsAddedDuringConstruction()
   {
-    $headers = $this->_createHeaderSet(array(), false);
-    $headers->shouldReceive('addDateHeader')
-            ->once()
-            ->with('Date', '/^[0-9]+$/D');
-
-    $message = $this->_createMessage(
-        $headers, $this->_createEncoder(),
-        $this->_createCache()
-    );
+      $headers = $this->_createHeaderSet(array(), false);
+      $headers->shouldReceive('addDateHeader')
+          ->once()
+          ->with('Date', Mockery::type('DateTimeImmutable'));
+      $message = $this->_createMessage($headers, $this->_createEncoder(),
+          $this->_createCache()
+      );
   }
 
   public function testSubjectIsReturnedFromHeader()

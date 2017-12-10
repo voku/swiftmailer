@@ -15,13 +15,25 @@
  */
 class Swift_Events_SimpleEventDispatcher implements Swift_Events_EventDispatcher
 {
-    /** A map of event types to their associated listener types */
+    /**
+     * A map of event types to their associated listener types
+     *
+     * @var array
+     */
     private $_eventMap = array();
 
-    /** Event listeners bound to this dispatcher */
+    /**
+     * Event listeners bound to this dispatcher
+     *
+     * @var array
+     */
     private $_listeners = array();
 
-    /** Listeners queued to have an Event bubbled up the stack to them */
+    /**
+     * Listeners queued to have an Event bubbled up the stack to them
+     *
+     * @var array
+     */
     private $_bubbleQueue = array();
 
     /**
@@ -42,11 +54,11 @@ class Swift_Events_SimpleEventDispatcher implements Swift_Events_EventDispatcher
      * Create a new SendEvent for $source and $message.
      *
      * @param Swift_Transport $source
-     * @param Swift_Mime_SimpleMessage
+     * @param Swift_Mime_Message $message
      *
      * @return Swift_Events_SendEvent
      */
-    public function createSendEvent(Swift_Transport $source, Swift_Mime_SimpleMessage $message)
+    public function createSendEvent(Swift_Transport $source, Swift_Mime_Message $message)
     {
         return new Swift_Events_SendEvent($source, $message);
     }
@@ -132,7 +144,11 @@ class Swift_Events_SimpleEventDispatcher implements Swift_Events_EventDispatcher
         $this->_bubble($evt, $target);
     }
 
-    /** Queue listeners on a stack ready for $evt to be bubbled up it */
+    /**
+     * Queue listeners on a stack ready for $evt to be bubbled up it
+     *
+     * @param Swift_Events_EventObject $evt
+     */
     private function _prepareBubbleQueue(Swift_Events_EventObject $evt)
     {
         $this->_bubbleQueue = array();
@@ -145,7 +161,12 @@ class Swift_Events_SimpleEventDispatcher implements Swift_Events_EventDispatcher
         }
     }
 
-    /** Bubble $evt up the stack calling $target() on each listener */
+    /**
+     * Bubble $evt up the stack calling $target() on each listener
+     *
+     * @param Swift_Events_EventObject $evt
+     * @param $target
+     */
     private function _bubble(Swift_Events_EventObject $evt, $target)
     {
         if (!$evt->bubbleCancelled() && $listener = array_shift($this->_bubbleQueue)) {

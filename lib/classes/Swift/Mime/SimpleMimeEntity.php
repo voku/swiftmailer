@@ -641,7 +641,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
      *
      * @param string $field
      *
-     * @return null|string[]|string
+     * @return null|mixed
      */
     protected function _getHeaderFieldModel($field)
     {

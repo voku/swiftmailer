@@ -33,17 +33,17 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
      */
     public function ping()
     {
-        $maxTransports = count($this->transports);
+        $maxTransports = count($this->_transports);
         for ($i = 0; $i < $maxTransports
-            && $transport = $this->getNextTransport(); ++$i) {
+            && $transport = $this->_getNextTransport(); ++$i) {
             if ($transport->ping()) {
                 return true;
-            } else {
-                $this->killCurrentTransport();
             }
+
+            $this->_killCurrentTransport();
         }
 
-        return count($this->transports) > 0;
+        return count($this->_transports) > 0;
     }
 
     /**
@@ -52,13 +52,13 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
      * Recipient/sender data will be retrieved from the Message API.
      * The return value is the number of recipients who were accepted for delivery.
      *
-     * @param Swift_Mime_SimpleMessage $message
+     * @param Swift_Mime_Message $message
      * @param string[]           $failedRecipients An array of failures by-reference
      *
      * @return int
      * @throws Swift_TransportException
      */
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $maxTransports = \count($this->_transports);
         $sent = 0;

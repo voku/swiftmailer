@@ -123,6 +123,15 @@ class Swift_Transport_EsmtpTransport extends Swift_Transport_AbstractSmtpTranspo
         return $this;
     }
 
+
+    /**
+     * @return bool
+     */
+    public function ping()
+    {
+        return true;
+    }
+
     /**
      * Get the connection timeout.
      *

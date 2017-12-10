@@ -101,14 +101,14 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
     {
         $message = $evt->getMessage();
         $this->_restoreMessage($message);
-        $to = array_keys($message->getTo());
-        $address = array_shift($to);
+        $to = \array_keys($message->getTo());
+        $address = \array_shift($to);
 
         $replacements = $this->getReplacementsFor($address);
         if ($replacements) {
             $body = $message->getBody();
-            $search = array_keys($replacements);
-            $replace = array_values($replacements);
+            $search = \array_keys($replacements);
+            $replace = \array_values($replacements);
             $bodyReplaced = \str_replace($search, $replace, $body);
 
             if ($body != $bodyReplaced) {
@@ -119,21 +119,21 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
             foreach ($message->getHeaders()->getAll() as $header) {
                 $body = $header->getFieldBodyModel();
                 $count = 0;
-                if (is_array($body)) {
+                if (\is_array($body)) {
                     $bodyReplaced = array();
                     foreach ($body as $key => $value) {
                         $count1 = 0;
                         $count2 = 0;
-                        $key = is_string($key) ? str_replace($search, $replace, $key, $count1) : $key;
-                        $value = is_string($value) ? str_replace($search, $replace, $value, $count2) : $value;
+                        $key = \is_string($key) ? \str_replace($search, $replace, $key, $count1) : $key;
+                        $value = \is_string($value) ? \str_replace($search, $replace, $value, $count2) : $value;
                         $bodyReplaced[$key] = $value;
 
                         if (!$count && ($count1 || $count2)) {
                             $count = 1;
                         }
                     }
-                } elseif (is_string($body)) {
-                    $bodyReplaced = str_replace($search, $replace, $body, $count);
+                } elseif (\is_string($body)) {
+                    $bodyReplaced = \str_replace($search, $replace, $body, $count);
                 }
 
                 if ($count) {
@@ -145,7 +145,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
             $children = (array) $message->getChildren();
             foreach ($children as $child) {
                 /* @var $child Swift_Mime_MimeEntity */
-                list($type) = sscanf($child->getContentType(), '%[^/]/%s');
+                list($type) = \sscanf($child->getContentType(), '%[^/]/%s');
                 if ('text' === $type) {
                     $body = $child->getBody();
                     $bodyReplaced = \str_replace(
@@ -194,17 +194,21 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
         $this->_restoreMessage($evt->getMessage());
     }
 
-    /** Restore a changed message back to its original state */
-    private function _restoreMessage(Swift_Mime_SimpleMessage $message)
+    /**
+     * Restore a changed message back to its original state
+     *
+     * @param Swift_Mime_Message $message
+     */
+    private function _restoreMessage(Swift_Mime_Message $message)
     {
         if ($this->_lastMessage === $message) {
-            if (isset($this->_originalBody)) {
+            if (null !== $this->_originalBody) {
                 $message->setBody($this->_originalBody);
                 $this->_originalBody = null;
             }
             if (!empty($this->_originalHeaders)) {
                 foreach ($message->getHeaders()->getAll() as $header) {
-                    if (array_key_exists($header->getFieldName(), $this->_originalHeaders)) {
+                    if (\array_key_exists($header->getFieldName(), $this->_originalHeaders)) {
                         $header->setFieldBodyModel($this->_originalHeaders[$header->getFieldName()]);
                     }
                 }
@@ -215,7 +219,7 @@ class Swift_Plugins_DecoratorPlugin implements Swift_Events_SendListener, Swift_
                 /* @var $child Swift_Mime_MimeEntity */
                 foreach ($children as $child) {
                     $id = $child->getId();
-                    if (array_key_exists($id, $this->_originalChildBodies)) {
+                    if (\array_key_exists($id, $this->_originalChildBodies)) {
                         $child->setBody($this->_originalChildBodies[$id]);
                     }
                 }

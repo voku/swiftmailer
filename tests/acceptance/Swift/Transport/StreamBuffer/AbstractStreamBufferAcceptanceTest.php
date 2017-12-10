@@ -26,7 +26,7 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest e
 
         /** @noinspection PhpParamsInspection */
         $this->_buffer = new Swift_Transport_StreamBuffer(
-            $this->getMock('Swift_ReplacementFilterFactory')
+            $this->getMockBuilder('Swift_ReplacementFilterFactory')->getMock()
         );
     }
 
@@ -139,6 +139,6 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest e
      */
     private function _createMockInputStream()
     {
-        return $this->getMock('Swift_InputByteStream');
+        return $this->getMockBuilder('Swift_InputByteStream')->getMock();
     }
 }

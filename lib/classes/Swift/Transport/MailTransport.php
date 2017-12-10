@@ -55,6 +55,14 @@ class Swift_Transport_MailTransport implements Swift_Transport
     }
 
     /**
+     * @return bool
+     */
+    public function ping()
+    {
+        return true;
+    }
+
+    /**
      * Not used.
      */
     public function stop()

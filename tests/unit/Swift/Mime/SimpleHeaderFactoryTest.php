@@ -47,8 +47,9 @@ class Swift_Mime_SimpleHeaderFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testDateHeaderHasCorrectModel()
     {
-        $header = $this->_factory->createDateHeader('X-Date', 123);
-        $this->assertSame(123, $header->getFieldBodyModel());
+        $dateTime = new \DateTimeImmutable();
+        $header = $this->_factory->createDateHeader('X-Date', $dateTime);
+        $this->assertSame($dateTime, $header->getFieldBodyModel());
     }
 
     public function testTextHeaderHasCorrectType()

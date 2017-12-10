@@ -33,7 +33,7 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
     /**
      * The Message being sent.
      *
-     * @var Swift_Mime_SimpleMessage
+     * @var Swift_Mime_Message
      */
     private $_message;
 
@@ -55,9 +55,9 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
      * Create a new SendEvent for $source and $message.
      *
      * @param Swift_Transport          $source
-     * @param Swift_Mime_SimpleMessage $message
+     * @param Swift_Mime_Message $message
      */
-    public function __construct(Swift_Transport $source, Swift_Mime_SimpleMessage $message)
+    public function __construct(Swift_Transport $source, Swift_Mime_Message $message)
     {
         parent::__construct($source);
         $this->_message = $message;
@@ -77,7 +77,7 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
     /**
      * Get the Message being sent.
      *
-     * @return Swift_Mime_SimpleMessage
+     * @return Swift_Mime_Message
      */
     public function getMessage()
     {

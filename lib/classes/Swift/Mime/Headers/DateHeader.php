@@ -16,23 +16,16 @@
 class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
 {
     /**
-     * The UNIX timestamp value of this Header.
+     * Date-time value of this Header.
      *
-     * @var int|null
+     * @var DateTimeImmutable
      */
-    private $_timestamp;
+    private $dateTime;
 
     /**
-     * Creates a new DateHeader with $name and $timestamp.
+     * Creates a new DateHeader with $name.
      *
-     * Example:
-     * <code>
-     * <?php
-     * $header = new Swift_Mime_Headers_DateHeader('Date', time());
-     * ?>
-     * </code>
-     *
-     * @param string $name    of Header
+     * @param string $name of Header
      */
     public function __construct($name)
     {
@@ -56,52 +49,48 @@ class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
     /**
      * Set the model for the field body.
      *
-     * This method takes a UNIX timestamp.
-     *
-     * @param int $model
+     * @param DateTimeInterface $model
      */
     public function setFieldBodyModel($model)
     {
-        $this->setTimestamp($model);
+        $this->setDateTime($model);
     }
 
     /**
      * Get the model for the field body.
      *
-     * This method returns a UNIX timestamp.
-     *
-     * @return mixed
+     * @return DateTimeImmutable
      */
     public function getFieldBodyModel()
     {
-        return $this->getTimestamp();
+        return $this->getDateTime();
     }
 
     /**
-     * Get the UNIX timestamp of the Date in this Header.
+     * Get the date-time representing the Date in this Header.
      *
-     * @return int
+     * @return DateTimeImmutable
      */
-    public function getTimestamp()
+    public function getDateTime()
     {
-        return $this->_timestamp;
+        return $this->dateTime;
     }
 
     /**
-     * Set the UNIX timestamp of the Date in this Header.
+     * Set the date-time of the Date in this Header.
      *
-     * @param int $timestamp
+     * If a DateTime instance is provided, it is converted to DateTimeImmutable.
+     *
+     * @param DateTimeInterface $dateTime
      */
-    public function setTimestamp($timestamp)
+    public function setDateTime(DateTimeInterface $dateTime)
     {
         $this->clearCachedValueIf($this->getCachedValue() != $dateTime->format(DateTime::RFC2822));
         if ($dateTime instanceof DateTime) {
             $immutable = new DateTimeImmutable('@'.$dateTime->getTimestamp());
             $dateTime = $immutable->setTimezone($dateTime->getTimezone());
         }
-
-        $this->clearCachedValueIf($this->_timestamp != $timestamp);
-        $this->_timestamp = $timestamp;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -117,11 +106,11 @@ class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
     public function getFieldBody()
     {
         if (
-            !$this->getCachedValue()
+            null !== $this->dateTime
             &&
-            isset($this->_timestamp)
+            !$this->getCachedValue()
         ) {
-            $this->setCachedValue(date('r', $this->_timestamp));
+            $this->setCachedValue($this->dateTime->format(DateTime::RFC2822));
         }
 
         return $this->getCachedValue();

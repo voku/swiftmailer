@@ -82,19 +82,19 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
     }
 
     /**
-     * Create a new Date header using $timestamp (UNIX time).
+     * Create a new Date header using $dateTime.
      *
      * @param string   $name
-     * @param int|null $timestamp
+     * @param DateTimeInterface|null $dateTime
      *
      * @return Swift_Mime_Header
      */
-    public function createDateHeader($name, $timestamp = null)
+    public function createDateHeader($name, DateTimeInterface $dateTime = null)
     {
         $header = new Swift_Mime_Headers_DateHeader($name);
         
-        if ($timestamp !== null) {
-            $header->setFieldBodyModel($timestamp);
+        if ($dateTime !== null) {
+            $header->setFieldBodyModel($dateTime);
         }
         
         $this->_setHeaderCharset($header);
@@ -130,7 +130,7 @@ class Swift_Mime_SimpleHeaderFactory implements Swift_Mime_HeaderFactory
      * @param string $value
      * @param array  $params
      *
-     * @return Swift_Mime_ParameterizedHeader
+     * @return Swift_Mime_Headers_ParameterizedHeader
      */
     public function createParameterizedHeader($name, $value = null, $params = array())
     {

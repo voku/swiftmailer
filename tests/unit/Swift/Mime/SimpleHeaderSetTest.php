@@ -16,14 +16,14 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
 
     public function testAddDateHeaderDelegatesToFactory()
     {
+        $dateTime = new DateTimeImmutable();
         $factory = $this->_createFactory();
-        $factory->expects(self::once())
-                ->method('createDateHeader')
-                ->with('Date', 1234)
-                ->will(self::returnValue($this->_createHeader('Date')));
-
+        $factory->expects($this->once())
+            ->method('createDateHeader')
+            ->with('Date', $dateTime)
+            ->will($this->returnValue($this->_createHeader('Date')));
         $set = $this->_createSet($factory);
-        $set->addDateHeader('Date', 1234);
+        $set->addDateHeader('Date', $dateTime);
     }
 
     public function testAddTextHeaderDelegatesToFactory()
@@ -98,15 +98,15 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
 
     public function testAddedDateHeaderIsSeenByHas()
     {
+        $dateTime = new DateTimeImmutable();
         $factory = $this->_createFactory();
-        $factory->expects(self::once())
-                ->method('createDateHeader')
-                ->with('Date', 1234)
-                ->will(self::returnValue($this->_createHeader('Date')));
-
+        $factory->expects($this->once())
+            ->method('createDateHeader')
+            ->with('Date', $dateTime)
+            ->will($this->returnValue($this->_createHeader('Date')));
         $set = $this->_createSet($factory);
-        $set->addDateHeader('Date', 1234);
-        self::assertTrue($set->has('Date'));
+        $set->addDateHeader('Date', $dateTime);
+        $this->assertTrue($set->has('Date'));
     }
 
     public function testAddedTextHeaderIsSeenByHas()
@@ -726,7 +726,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
      */
     private function _createFactory()
     {
-        return $this->getMock('Swift_Mime_HeaderFactory');
+        return $this->getMockBuilder('Swift_Mime_HeaderFactory')->getMock();
     }
 
     /**
@@ -737,7 +737,7 @@ class Swift_Mime_SimpleHeaderSetTest extends \PHPUnit_Framework_TestCase
      */
     private function _createHeader($name, $body = '')
     {
-        $header = $this->getMock('Swift_Mime_Header');
+        $header = $this->getMockBuilder('Swift_Mime_Header')->getMock();
         $header->expects(self::any())
                ->method('getFieldName')
                ->will(self::returnValue($name));

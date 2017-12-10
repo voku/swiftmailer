@@ -13,7 +13,7 @@
  *
  * @author Chris Corbyn
  */
-class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
+class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart implements Swift_Mime_Message
 {
     const PRIORITY_HIGHEST = 1;
     const PRIORITY_HIGH = 2;
@@ -24,13 +24,13 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
     /**
      * Create a new SimpleMessage with $headers, $encoder and $cache.
      *
-     * @param Swift_Mime_SimpleHeaderSet $headers
+     * @param Swift_Mime_HeaderSet       $headers
      * @param Swift_Mime_ContentEncoder  $encoder
      * @param Swift_KeyCache             $cache
      * @param Swift_IdGenerator          $idGenerator
      * @param string                     $charset
      */
-    public function __construct(Swift_Mime_SimpleHeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_IdGenerator $idGenerator, $charset = null)
+    public function __construct(Swift_Mime_HeaderSet $headers, Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_IdGenerator $idGenerator, $charset = null)
     {
         parent::__construct($headers, $encoder, $cache, $idGenerator, $charset);
         $this->getHeaders()->defineOrdering(
@@ -55,7 +55,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
         );
         $this->getHeaders()->setAlwaysDisplayed(array('Date', 'Message-ID', 'From'));
         $this->getHeaders()->addTextHeader('MIME-Version', '1.0');
-        $this->setDate(time());
+        $this->setDate(new DateTimeImmutable());
         $this->setId($this->getId());
         $this->getHeaders()->addMailboxHeader('From');
     }
@@ -99,14 +99,14 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
     /**
      * Set the date at which this message was created.
      *
-     * @param int $date
+     * @param DateTimeInterface $dateTime
      *
      * @return $this
      */
-    public function setDate($date)
+    public function setDate(DateTimeInterface $dateTime)
     {
-        if (!$this->_setHeaderFieldModel('Date', $date)) {
-            $this->getHeaders()->addDateHeader('Date', $date);
+        if (!$this->_setHeaderFieldModel('Date', $dateTime)) {
+            $this->getHeaders()->addDateHeader('Date', $dateTime);
         }
 
         return $this;
@@ -115,7 +115,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
     /**
      * Get the date at which this message was created.
      *
-     * @return null|string
+     * @return null|DateTimeInterface
      */
     public function getDate()
     {
@@ -527,11 +527,11 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
     /**
      * Attach a {@link Swift_Mime_SimpleMimeEntity} such as an Attachment or MimePart.
      *
-     * @param Swift_Mime_SimpleMimeEntity $entity
+     * @param Swift_Mime_MimeEntity $entity
      *
      * @return $this
      */
-    public function attach(Swift_Mime_SimpleMimeEntity $entity)
+    public function attach(Swift_Mime_MimeEntity $entity)
     {
         $this->setChildren(array_merge($this->getChildren(), array($entity)));
 
@@ -541,11 +541,11 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
     /**
      * Remove an already attached entity.
      *
-     * @param Swift_Mime_SimpleMimeEntity $entity
+     * @param Swift_Mime_MimeEntity $entity
      *
      * @return $this
      */
-    public function detach(Swift_Mime_SimpleMimeEntity $entity)
+    public function detach(Swift_Mime_MimeEntity $entity)
     {
         $newChildren = array();
         foreach ($this->getChildren() as $child) {
@@ -562,11 +562,11 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
      * Attach a {@link Swift_Mime_SimpleMimeEntity} and return it's CID source.
      * This method should be used when embedding images or other data in a message.
      *
-     * @param Swift_Mime_SimpleMimeEntity $entity
+     * @param Swift_Mime_MimeEntity $entity
      *
      * @return string
      */
-    public function embed(Swift_Mime_SimpleMimeEntity $entity)
+    public function embed(Swift_Mime_MimeEntity $entity)
     {
         $this->attach($entity);
 
