@@ -9,7 +9,7 @@
  */
 
 /**
- * Attachment class for attaching files to a {@link Swift_Mime_SimpleMessage}.
+ * Attachment class for attaching files to a {@link Swift_Mime_Attachment}.
  *
  * @author Chris Corbyn
  */

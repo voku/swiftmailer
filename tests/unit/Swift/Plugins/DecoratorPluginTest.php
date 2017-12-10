@@ -177,8 +177,16 @@ class Swift_Plugins_DecoratorPluginTest extends \SwiftMailerTestCase
         $plugin->sendPerformed($evt);
     }
 
-    private function _createMessage($headers, $to = array(), $from = null, $subject = null,
-                                    $body = null)
+    /**
+     * @param $headers
+     * @param array $to
+     * @param mixed $from
+     * @param mixed $subject
+     * @param mixed $body
+     *
+     * @return \Mockery\Mock|Swift_Mime_Message
+     */
+    private function _createMessage($headers, array $to = array(), $from = null, $subject = null, $body = null)
     {
         $message = $this->getMockery('Swift_Mime_Message')->shouldIgnoreMissing();
         foreach ($to as $addr => $name) {
@@ -212,6 +220,11 @@ class Swift_Plugins_DecoratorPluginTest extends \SwiftMailerTestCase
         return $this->getMockery('Swift_Plugins_Decorator_Replacements')->shouldIgnoreMissing();
     }
 
+    /**
+     * @param Swift_Mime_Message $message
+     *
+     * @return \Mockery\Mock|Swift_Events_SendEvent
+     */
     private function _createSendEvent(Swift_Mime_Message $message)
     {
         $evt = $this->getMockery('Swift_Events_SendEvent')->shouldIgnoreMissing();
@@ -222,6 +235,13 @@ class Swift_Plugins_DecoratorPluginTest extends \SwiftMailerTestCase
         return $evt;
     }
 
+    /**
+     * @param $type
+     * @param $body
+     * @param $id
+     *
+     * @return \Mockery\Mock|Swift_Mime_MimeEntity
+     */
     private function _createPart($type, $body, $id)
     {
         $part = $this->getMockery('Swift_Mime_MimeEntity')->shouldIgnoreMissing();
@@ -238,8 +258,16 @@ class Swift_Plugins_DecoratorPluginTest extends \SwiftMailerTestCase
         return $part;
     }
 
-    private function _createHeaders($headers = array())
+    /**
+     * @param array $headers
+     *
+     * @return \Mockery\Mock|Swift_Mime_HeaderSet
+     */
+    private function _createHeaders(array $headers = array())
     {
+        /**
+         * @var $set \Mockery\Mock|Swift_Mime_HeaderSet
+         */
         $set = $this->getMockery('Swift_Mime_HeaderSet')->shouldIgnoreMissing();
         $set->shouldReceive('getAll')
             ->zeroOrMoreTimes()

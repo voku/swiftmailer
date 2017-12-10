@@ -37,6 +37,11 @@ interface Swift_Mime_Message extends Swift_Mime_MimeEntity
     public function getSubject();
 
     /**
+     * @return Swift_Mime_MimeEntity[]
+     */
+    public function getChildren();
+
+    /**
      * Set the origination date of the message.
      *
      * @param DateTimeInterface $dateTime
