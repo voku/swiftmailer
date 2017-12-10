@@ -89,20 +89,23 @@ abstract class Swift
     /**
      * php-strtolower with static-cache
      *
-     * @param $string
+     * @param mixed $string
      *
      * @return string
      */
-    public static function strtolowerWithStaticCache(string $string): string
+    public static function strtolowerWithStaticCache($string): string
     {
+        // init
+        $string = (string)$string;
+
         static $staticStrtolowerCache = array();
 
         if (isset($staticStrtolowerCache[$string])) {
             return $staticStrtolowerCache[$string];
         }
 
-      $staticStrtolowerCache[$string] = strtolower($string);
+        $staticStrtolowerCache[$string] = strtolower($string);
 
-      return $staticStrtolowerCache[$string];
+        return $staticStrtolowerCache[$string];
     }
 }
