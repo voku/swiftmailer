@@ -112,7 +112,7 @@ abstract class Swift_Mime_AbstractMimeEntityTest extends \SwiftMailerTestCase
    */
   protected function _createHeader($name, $model = null, $params = array(), $stub = true)
   {
-    $header = $this->getMockery('Swift_Mime_ParameterizedHeader')->shouldIgnoreMissing();
+    $header = $this->getMockery('Swift_Mime_Headers_ParameterizedHeader')->shouldIgnoreMissing();
 
     $header->shouldReceive('getFieldName')
            ->zeroOrMoreTimes()

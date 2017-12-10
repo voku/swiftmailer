@@ -98,7 +98,7 @@ interface Swift_Mime_HeaderSet extends Swift_Mime_CharsetObserver
      * @param string $name
      * @param int    $index
      *
-     * @return Swift_Mime_ParameterizedHeader|Swift_Mime_Headers_MailboxHeader
+     * @return Swift_Mime_Headers_ParameterizedHeader|Swift_Mime_Headers_MailboxHeader
      */
     public function get($name, $index = 0);
 

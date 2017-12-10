@@ -240,11 +240,11 @@ class Swift_Plugins_DecoratorPluginTest extends \SwiftMailerTestCase
      * @param $body
      * @param $id
      *
-     * @return \Mockery\Mock|Swift_Mime_MimeEntity
+     * @return \Mockery\Mock|Swift_Mime_SimpleMimeEntity
      */
     private function _createPart($type, $body, $id)
     {
-        $part = $this->getMockery('Swift_Mime_MimeEntity')->shouldIgnoreMissing();
+        $part = $this->getMockery('Swift_Mime_SimpleMimeEntity')->shouldIgnoreMissing();
         $part->shouldReceive('getContentType')
             ->zeroOrMoreTimes()
             ->andReturn($type);
@@ -261,14 +261,14 @@ class Swift_Plugins_DecoratorPluginTest extends \SwiftMailerTestCase
     /**
      * @param array $headers
      *
-     * @return \Mockery\Mock|Swift_Mime_HeaderSet
+     * @return \Mockery\Mock|Swift_Mime_SimpleHeaderSet
      */
     private function _createHeaders(array $headers = array())
     {
         /**
-         * @var $set \Mockery\Mock|Swift_Mime_HeaderSet
+         * @var $set \Mockery\Mock|Swift_Mime_SimpleHeaderSet
          */
-        $set = $this->getMockery('Swift_Mime_HeaderSet')->shouldIgnoreMissing();
+        $set = $this->getMockery('Swift_Mime_SimpleHeaderSet')->shouldIgnoreMissing();
         $set->shouldReceive('getAll')
             ->zeroOrMoreTimes()
             ->andReturn($headers);
@@ -280,6 +280,12 @@ class Swift_Plugins_DecoratorPluginTest extends \SwiftMailerTestCase
         return $set;
     }
 
+    /**
+     * @param $name
+     * @param string $body
+     *
+     * @return \Mockery\Mock|Swift_Mime_Header
+     */
     private function _createHeader($name, $body = '')
     {
         $header = $this->getMockery('Swift_Mime_Header')->shouldIgnoreMissing();

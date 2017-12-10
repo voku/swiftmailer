@@ -52,7 +52,7 @@ interface Swift_Mime_HeaderFactory extends Swift_Mime_CharsetObserver
      * @param string $value
      * @param array  $params
      *
-     * @return Swift_Mime_ParameterizedHeader
+     * @return Swift_Mime_Headers_ParameterizedHeader
      */
     public function createParameterizedHeader($name, $value = null, $params = array());
 
