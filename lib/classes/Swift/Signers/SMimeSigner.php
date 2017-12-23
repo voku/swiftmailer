@@ -78,7 +78,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
      *
      * @return self
      */
-    public static function newInstance($certificate = null, $privateKey = null)
+    public static function newInstance($certificate = null, $privateKey = null): \Swift_Signers_SMimeSigner
     {
         return new self($certificate, $privateKey);
     }
@@ -120,7 +120,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
      * @see http://www.php.net/manual/en/openssl.pkcs7.flags.php
      * @see http://nl3.php.net/manual/en/openssl.ciphers.php
      *
-     * @param string $recipientCerts Either an single X.509 certificate, or an assoc array of X.509 certificates.
+     * @param string|array $recipientCerts Either an single X.509 certificate, or an assoc array of X.509 certificates.
      * @param int          $cipher
      *
      * @return $this
@@ -147,7 +147,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     /**
      * @return string
      */
-    public function getSignCertificate()
+    public function getSignCertificate(): string
     {
         return $this->signCertificate;
     }
@@ -155,7 +155,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     /**
      * @return string
      */
-    public function getSignPrivateKey()
+    public function getSignPrivateKey(): string
     {
         return $this->signPrivateKey;
     }
@@ -181,7 +181,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     /**
      * @return bool
      */
-    public function isSignThenEncrypt()
+    public function isSignThenEncrypt(): bool
     {
         return $this->signThenEncrypt;
     }
@@ -214,6 +214,8 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     public function setWrapFullMessage($wrap)
     {
         $this->wrapFullMessage = $wrap;
+
+        return $this;
     }
 
     /**
@@ -236,6 +238,8 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
             $this->smimeEncryptMessage($message);
             $this->smimeSignMessage($message);
         }
+
+        return $this;
     }
 
     /**
@@ -243,7 +247,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
      *
      * @return string[]
      */
-    public function getAlteredHeaders()
+    public function getAlteredHeaders(): array
     {
         return array('Content-Type', 'Content-Transfer-Encoding', 'Content-Disposition');
     }
@@ -414,9 +418,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     /**
      * Remove all headers from a Swift message.
      *
-     * @param Swift_Message $fromMessage
-     * @param Swift_Message $toMessage
-     * @param string        $headerName
+     * @param Swift_Message $message
      */
     protected function clearAllHeaders(Swift_Message $message)
     {
@@ -433,7 +435,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
      *
      * @return Swift_MimePart
      */
-    protected function wrapMimeMessage(Swift_Message $message)
+    protected function wrapMimeMessage(Swift_Message $message): \Swift_MimePart
     {
         // Start by copying the original message into a message stream
         $messageStream = new Swift_ByteStream_TemporaryFileByteStream();
@@ -450,7 +452,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     protected function parseSSLOutput(Swift_InputByteStream $inputStream, Swift_Message $message)
     {
         $messageStream = new Swift_ByteStream_TemporaryFileByteStream();
-        $this->copyFromOpenSSLOutput($inputStream, $messageStream);
+        $this->copyFromOpenSSLOutput($messageStream, $inputStream);
 
         $this->streamToMime($messageStream, $message);
     }
@@ -460,9 +462,6 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
      *
      * @param Swift_OutputByteStream $fromStream
      * @param Swift_Message          $message
-     *
-     * @throws Swift_DependencyException
-     * @throws Swift_SwiftException
      */
     protected function streamToMime(Swift_OutputByteStream $fromStream, Swift_Message $message)
     {
@@ -507,11 +506,10 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
      * array and the email body as a string.
      *
      * @param Swift_OutputByteStream $emailStream
-     * @param Swift_InputByteStream  $toStream
      *
      * @return array
      */
-    protected function parseStream(Swift_OutputByteStream $emailStream)
+    protected function parseStream(Swift_OutputByteStream $emailStream): array
     {
         $bufferLength = 78;
         $headerData = '';
@@ -519,6 +517,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
 
         $emailStream->setReadPointer(0);
 
+        $headersPosEnd = 0;
         // Read out the headers section from the stream to a string
         while (false !== ($buffer = $emailStream->read($bufferLength))) {
             $headerData .= $buffer;

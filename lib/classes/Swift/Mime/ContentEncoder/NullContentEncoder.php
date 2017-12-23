@@ -42,7 +42,7 @@ class Swift_Mime_ContentEncoder_NullContentEncoder implements Swift_Mime_Content
      *
      * @return string
      */
-    public function encodeString($string, $firstLineOffset = 0, $maxLineLength = 0)
+    public function encodeString(string $string, int $firstLineOffset = 0, int $maxLineLength = 0)
     {
         return $string;
     }
@@ -50,8 +50,8 @@ class Swift_Mime_ContentEncoder_NullContentEncoder implements Swift_Mime_Content
     /**
      * Encode stream $in to stream $out.
      *
-     * @param Swift_OutputByteStream $in
-     * @param Swift_InputByteStream  $out
+     * @param Swift_OutputByteStream $os
+     * @param Swift_InputByteStream  $is
      * @param int                    $firstLineOffset ignored
      * @param int                    $maxLineLength   ignored
      */
