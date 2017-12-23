@@ -452,7 +452,7 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
     protected function parseSSLOutput(Swift_InputByteStream $inputStream, Swift_Message $message)
     {
         $messageStream = new Swift_ByteStream_TemporaryFileByteStream();
-        $this->copyFromOpenSSLOutput($messageStream, $inputStream);
+        $this->copyFromOpenSSLOutput($inputStream, $messageStream);
 
         $this->streamToMime($messageStream, $message);
     }
@@ -541,12 +541,16 @@ class Swift_Signers_SMimeSigner implements Swift_Signers_BodySigner
         // Transform header lines into an associative array
         foreach ($headerLines as $headerLine) {
             // Handle headers that span multiple lines
-            if (false === strpos($headerLine, ':')) {
+            if ($currentHeaderName && false === strpos($headerLine, ':')) {
                 $headers[$currentHeaderName] .= ' ' . trim($headerLine);
                 continue;
             }
 
             $header = \explode(':', $headerLine, 2);
+            if ($header[0] === '') {
+                continue;
+            }
+
             $currentHeaderName = Swift::strtolowerWithStaticCache($header[0]);
             $headers[$currentHeaderName] = trim($header[1]);
         }
