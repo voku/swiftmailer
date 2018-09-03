@@ -637,7 +637,7 @@ class Swift_Mime_SimpleMessageAcceptanceUtf8Test extends \PHPUnit_Framework_Test
             'Content-Type: text/plain; charset=UTF-8' . "\r\n" .
             'Content-Transfer-Encoding: quoted-printable' . "\r\n" .
             "\r\n" .
-            'Just s=C3=82=01=01me multi-' . "\r\n" .
+            'Just s=C2=01=01me multi-' . "\r\n" .
             'line message!',
             $message->toString()
         );
